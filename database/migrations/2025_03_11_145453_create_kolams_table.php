@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('kolams', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->enum('budaya', ['Probiotik', 'Bioflog']);
+            $table->enum('budaya', ['Probiotik', 'Bioflok']);
             $table->enum('status', ['Aktif', 'Tidak Aktif']);
             $table->integer('jumlah_ikan');
             $table->timestamps();

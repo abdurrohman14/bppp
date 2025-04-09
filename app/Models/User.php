@@ -49,4 +49,24 @@ class User extends Authenticatable
     public function role() {
         return $this->belongsTo(Role::class);
     }
+
+    CONST ROLE_ADMIN = 'admin';
+    CONST ROLE_PETUGASKOLAM = 'petugaskolam';
+    CONST ROLE_MANAJER = 'manajer';
+
+    public function isAdmin() {
+        return $this->role_id == self::ROLE_ADMIN;
+    }
+
+    public function isPetugasKolam() {
+        return $this->role_id == self::ROLE_PETUGASKOLAM;
+    }
+
+    public function isManajer() {
+        return $this->role_id == self::ROLE_MANAJER;
+    }
+
+    public function getRoleAttribute() {
+        return $this->role()->first()->name ?? null;
+    }
 }

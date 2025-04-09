@@ -8,61 +8,70 @@ use Illuminate\Http\Request;
 
 class SpesiesController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $spesies = Spesies::all();
         return view('admin.spesies.index', [
             'spesies' => $spesies,
-            'title' => 'Spesies'
+            'title' => 'Spesies',
         ]);
     }
 
-    public function create() {
+    public function create()
+    {
         return view('admin.spesies.create', [
-            'title' => 'Tambah Spesies'
-            ]);
+            'title' => 'Tambah Spesies',
+        ]);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         try {
             $request->validate([
                 'jenis_ikan' => 'required',
-                'deskripsi' => 'required',
+                'deskripsi' => 'nullable',
             ]);
             Spesies::create($request->all());
-            return redirect()->route('admin.spesies.index')->with('success', 'Data berhasil ditambahkan');
+            return redirect()->route('index.spesies')->with('success', 'Data berhasil ditambahkan');
         } catch (\Throwable $th) {
-            return redirect()->route('admin.spesies.index')->with('error', $th->getMessage());
+            return redirect()->route('index.spesies')->with('error', $th->getMessage());
         }
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         $spesies = Spesies::find($id);
         return view('admin.spesies.edit', [
             'spesies' => $spesies,
-            'title' => 'Edit Spesies'
+            'title' => 'Edit Spesies',
         ]);
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         try {
             $request->validate([
                 'jenis_ikan' => 'required',
                 'deskripsi' => 'required',
-                ]);
-                Spesies::find($id)->update($request->all());
-                return redirect()->route('admin.spesies.index')->with('success', 'Data berhasil di
-                update');
-                } catch (\Throwable $th) {
-                    return redirect()->route('admin.spesies.index')->with('error', $th->getMessage());
-                    }
-                    }
+            ]);
+            Spesies::find($id)->update($request->all());
+            return redirect()->route('index.spesies')->with(
+                'success',
+                'Data berhasil di
+                update',
+            );
+        } catch (\Throwable $th) {
+            return redirect()->route('index.spesies')->with('error', $th->getMessage());
+        }
+    }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         try {
             Spesies::destroy($id);
-        return redirect()->route('admin.spesies.index')->with('success', 'Data berhasil dihapus');
+            return redirect()->route('index.spesies')->with('success', 'Data berhasil dihapus');
         } catch (\Throwable $th) {
-            return redirect()->route('admin.spesies.index')->with('error', $th->getMessage());
+            return redirect()->route('index.spesies')->with('error', $th->getMessage());
         }
     }
 }
