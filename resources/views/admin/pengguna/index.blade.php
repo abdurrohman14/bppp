@@ -17,7 +17,7 @@
                     @foreach ($user as $key => $pengguna)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ $pengguna->role_id }}</td>
+                            <td>{{ $pengguna->role }}</td>
                             <td>{{ $pengguna->name }}</td>
                             <td>{{ $pengguna->email }}</td>
                         </tr>
