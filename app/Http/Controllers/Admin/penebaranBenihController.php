@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kolam;
+use App\Models\Spesies;
 use App\Models\penebaranBenih;
 use Illuminate\Http\Request;
 
@@ -11,7 +13,7 @@ class penebaranBenihController extends Controller
     public function index()
     {
         $penebaranBenih = penebaranBenih::all();
-        return view('admin.penebaranBenih.index', [
+        return view('admin.benih.index', [
             'penebaranBenih' => $penebaranBenih,
             'title' => 'Penebaran Benih',
         ]);
@@ -19,8 +21,12 @@ class penebaranBenihController extends Controller
 
     public function create()
     {
-        return view('admin.penebaranBenih.create', [
+        $kolam = Kolam::all();
+        $spesies = Spesies::all();
+        return view('admin.benih.create', [
             'title' => 'Tambah Penebaran Benih',
+            'kolam' => $kolam,
+            'spesies' => $spesies,
         ]);
     }
 
@@ -36,16 +42,16 @@ class penebaranBenihController extends Controller
                 'jumlah_benih' => 'required',
             ]);
             penebaranBenih::create($request->all());
-            return redirect()->route('penebaranBenih.index')->with('success', 'Data Berhasil Ditambahkan');
+            return redirect()->route('index.benih')->with('success', 'Data Berhasil Ditambahkan');
         } catch (\Throwable $th) {
-            return redirect()->route('penebaranBenih.index')->with('error', $th->getMessage());
+            return redirect()->route('index.benih')->with('error', $th->getMessage());
         }
     }
 
     public function edit($id)
     {
         $penebaranBenih = penebaranBenih::find($id);
-        return view('admin.penebaranBenih.edit', [
+        return view('admin.benih.edit', [
             'penebaranBenih' => $penebaranBenih,
             'title' => 'Edit Penebaran Benih',
         ]);
@@ -63,9 +69,9 @@ class penebaranBenihController extends Controller
                 'jumlah_benih' => 'required',
             ]);
             penebaranBenih::find($id)->update($request->all());
-            return redirect()->route('penebaranBenih.index')->with('success', 'Data Berhasil Di Update');
+            return redirect()->route('benih.index')->with('success', 'Data Berhasil Di Update');
         } catch (\Throwable $th) {
-            return redirect()->route('penebaranBenih.index')->with('error', $th->getMessage());
+            return redirect()->route('benih.index')->with('error', $th->getMessage());
         }
     }
 
@@ -73,13 +79,13 @@ class penebaranBenihController extends Controller
     {
         try {
             penebaranBenih::find($id)->delete();
-            return redirect()->route('penebaranBenih.index')->with(
+            return redirect()->route('benih.index')->with(
                 'success',
                 'Data
             Berhasil Dihapus',
             );
         } catch (\Throwable $th) {
-            return redirect()->route('penebaranBenih.index')->with('error', $th->getMessage());
+            return redirect()->route('benih.index')->with('error', $th->getMessage());
         }
     }
 }

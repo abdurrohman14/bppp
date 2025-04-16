@@ -13,10 +13,8 @@
                     Manajemen Kolam</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('index.spesies') }}"><i class="fas fa-fish"></i> Manajemen Spesies</a>
             </li>
-            <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-seedling"></i> Penebaran Benih</a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-skull-crossbones"></i> Manajemen
-                    Mortalitas</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('index.benih') }}"><i class="fas fa-seedling"></i> Penebaran Benih</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('index.kematian') }}"><i class="fas fa-seedling"></i> Manajemen Mortalitas</a></li>
             <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-tint"></i> Kualitas Air</a></li>
             <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-clipboard-list"></i> Manajemen
                     Panen</a></li>
@@ -43,10 +41,9 @@
                     Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('index.kolam') }}"><i class="fas fa-water"></i>
                     Manajemen Kolam</a></li>
-            <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-fish"></i> Manajemen Spesies</a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-seedling"></i> Penebaran Benih</a>
-            </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('index.spesies') }}"><i class="fas fa-fish"></i> Manajemen Spesies</a>
+                    </li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('index.benih') }}"><i class="fas fa-seedling"></i> Penebaran Benih</a></li>
             <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-skull-crossbones"></i> Manajemen
                     Mortalitas</a></li>
             <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-tint"></i> Kualitas Air</a></li>

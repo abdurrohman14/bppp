@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\KematianController;
 use App\Http\Controllers\Admin\KolamController;
+use App\Http\Controllers\Admin\penebaranBenihController;
 use App\Http\Controllers\Admin\SpesiesController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
@@ -36,7 +38,12 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
     });
     
     Route::prefix('kematian')->group(function() {
-    
+        Route::get('/', [KematianController::class, 'index'])->name('index.kematian');
+        Route::get('/create', [KematianController::class, 'create'])->name('create.kematian');
+        Route::post('/store', [KematianController::class, 'store'])->name('store.kematian');
+        Route::get('/edit/{id}', [KematianController::class, 'edit'])->name('edit.kematian');
+        Route::post('/update/{id}', [KematianController::class, 'update'])->name('update.kematian');
+        Route::delete('/delete/{id}', [KematianController::class, 'destroy'])->name('delete.kematian');
     });
     
     Route::prefix('kualitas-air')->group(function() {
@@ -60,7 +67,12 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
     });
     
     Route::prefix('penebaran-benih')->group(function() {
-    
+        Route::get('/', [penebaranBenihController::class, 'index'])->name('index.benih');
+        Route::get('/create', [penebaranBenihController::class, 'create'])->name('create.benih');
+        Route::post('/store', [penebaranBenihController::class, 'store'])->name('store.benih');
+        Route::get('/edit/{id}', [penebaranBenihController::class, 'edit'])->name('edit.benih');
+        Route::post('/update/{id}', [penebaranBenihController::class, 'update'])->name('update.benih');
+        Route::delete('/delete/{id}', [penebaranBenihController::class, 'destroy'])->name('delete.benih');
     });
     
     Route::prefix('spesies')->group(function() {

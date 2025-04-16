@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kematian;
+use App\Models\Kolam;
+use App\Models\Spesies;
 use Illuminate\Http\Request;
 
 class KematianController extends Controller
@@ -19,6 +21,14 @@ class KematianController extends Controller
 
     public function create()
     {
+        $kolam = Kolam::all();
+        $spesies = Spesies::all();
+        return view('admin.benih.create', [
+            'title' => 'Tambah Penebaran Benih',
+            'kolam' => $kolam,
+            'spesies' => $spesies,
+        ]);
+
         return view('admin.kematian.create', [
             'title' => 'Tambah Data Kematian',
         ]);
