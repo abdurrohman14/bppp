@@ -1,5 +1,4 @@
 @extends('partials.admin.main')
-
 @section('content')
     <div class="content">
         <div class="card shadow">
@@ -31,11 +30,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="tanggal_mati" class="form-label">Tanggal Kematian</label>
-                        <input type="date" class="form-control" name="tanggal_mati" required>
+                        <input type="date" class="form-control" name="tanggal_kematian" required>
                     </div>
                     <div class="mb-3">
                         <label for="jumlah_kematian" class="form-label">Jumlah Kematian</label>
-                        <input type="number" class="form-control" name="jumlah_kematian" required>
+                        <input type="number" class="form-control" name="jumlah_mati" required>
                     </div>
                     <div class="mb-3">
                         <label for="penyebab" class="form-label">Penyebab</label>

@@ -23,8 +23,8 @@ class KematianController extends Controller
     {
         $kolam = Kolam::all();
         $spesies = Spesies::all();
-        return view('admin.benih.create', [
-            'title' => 'Tambah Penebaran Benih',
+        return view('admin.kematian.create', [
+            'title' => 'Tambah Penebaran Kematian',
             'kolam' => $kolam,
             'spesies' => $spesies,
         ]);
@@ -38,15 +38,22 @@ class KematianController extends Controller
     {
         try {
             $request->validate([
-                'kolam_id' => 'required|integer:exists,id',
-                'spesies_id' => 'required|integer:exists,id',
+                'kolam_id' => 'required|exists:kolams,id',
+                'spesies_id' => 'required|exists:spesies,id',
                 'tanggal_kematian' => 'required|date',
                 'jumlah_mati' => 'required|integer|min:1',
+                'penyebab' => 'required|string',
             ]);
-            Kematian::create($request->all());
-            return redirect()->route('admin.kematian.index')->with('success', 'Data Kematian Berhasil Ditambahkan');
+            Kematian::create([
+                'kolam_id' => $request->kolam_id,
+                'spesies_id' => $request->spesies_id,
+                'tanggal_kematian' => $request->tanggal_kematian,
+                'jumlah_mati' => $request->jumlah_mati,
+                'penyebab' => $request->penyebab,
+            ]);
+            return redirect()->route('index.kematian')->with('success', 'Data Kematian Berhasil Ditambahkan');
         } catch (\Throwable $th) {
-            return redirect()->route('admin.kematian.index')->with('error', $th->getMessage());
+            return redirect()->route('index.kematian')->with('error', $th->getMessage());
         }
     }
 

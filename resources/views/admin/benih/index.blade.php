@@ -22,8 +22,8 @@
                     @foreach ($penebaranBenih as $key => $bnh)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ $bnh->nama_kolam }}</td>
-                            <td>{{ $bnh->jenis_ikan }}</td>
+                            <td>{{ $bnh->kolam->nama }}</td>
+                            <td>{{ $bnh->spesies->jenis_ikan }}</td>
                             <td>{{ $bnh->ukuran }}</td>
                             <td>{{ $bnh->asal_benih }}</td>
                             <td>{{ $bnh->tanggal_tebar }}</td>

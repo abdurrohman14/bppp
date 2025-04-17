@@ -10,8 +10,8 @@
                 <form action="{{ route('store.benih') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
-                        <label for="nama_kolam" class="form-label">Kolam</label>
-                        <select class="form-select" id="nama_kolam" name="nama_kolam" required>
+                        <label for="kolam_id" class="form-label">Kolam</label>
+                        <select class="form-select" id="kolam_id" name="kolam_id">
                             <option value="">-- Pilih Nama Kolam --</option>
                             @foreach($kolam as $kolam)
                                 <option value="{{ $kolam->id }}">
@@ -21,8 +21,8 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="jenis_ikan" class="form-label">Jenis Ikan</label>
-                        <select class="form-select" id="jenis_ikan" name="jenis_ikan" required>
+                        <label for="spesies_id" class="form-label">Jenis Ikan</label>
+                        <select class="form-select" id="spesies_id" name="spesies_id">
                             <option value="">-- Pilih Jenis Ikan --</option>
                             @foreach($spesies as $sps)
                                 <option value="{{ $sps->id }}">

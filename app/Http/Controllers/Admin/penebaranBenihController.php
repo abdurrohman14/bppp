@@ -34,14 +34,21 @@ class penebaranBenihController extends Controller
     {
         try {
             $request->validate([
-                'kolam_id' => 'required',
-                'spesies_id' => 'required',
+                'kolam_id' => 'required|exists:kolams,id',
+                'spesies_id' => 'required|exists:spesies,id',
                 'ukuran' => 'required',
                 'asal_benih' => 'required',
                 'tanggal_tebar' => 'required',
                 'jumlah_benih' => 'required',
             ]);
-            penebaranBenih::create($request->all());
+            penebaranBenih::create([
+                'kolam_id' => $request->kolam_id,
+                'spesies_id' => $request->spesies_id,
+                'ukuran' => $request->ukuran,
+                'asal_benih' => $request->asal_benih,
+                'tanggal_tebar' => $request->tanggal_tebar,
+                'jumlah_benih' => $request->jumlah_benih,
+            ]);
             return redirect()->route('index.benih')->with('success', 'Data Berhasil Ditambahkan');
         } catch (\Throwable $th) {
             return redirect()->route('index.benih')->with('error', $th->getMessage());
