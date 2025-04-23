@@ -15,10 +15,8 @@
             </li>
             <li class="nav-item"><a class="nav-link" href="{{ route('index.benih') }}"><i class="fas fa-seedling"></i> Penebaran Benih</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ route('index.kematian') }}"><i class="fas fa-seedling"></i> Manajemen Mortalitas</a></li>
-            <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-tint"></i> Kualitas Air</a></li>
-            <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-clipboard-list"></i> Manajemen
-                    Panen</a></li>
-            <li class="nav-item">
+            <li class="nav-item"><a class="nav-link" href="{{ route('kualitas_air.index') }}"><i class="fas fa-tint"></i> Kualitas Air</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('index.panen') }}"><i class="fas fa-tint"></i> Manajemen Panen</a></li>
                 <a class="nav-link active" href="#"><i class="fas fa-utensils"></i> Manajemen Pakan</a>
                 <ul class="nav flex-column ms-3">
                     <li><a class="nav-link" href="#">Pakan Keluar</a></li>

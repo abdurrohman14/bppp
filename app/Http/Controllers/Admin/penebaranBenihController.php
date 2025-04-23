@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Kolam;
 use App\Models\Spesies;
-use App\Models\penebaranBenih;
+use App\Models\PenebaranBenih; // huruf kapital di awal kata
 use Illuminate\Http\Request;
 
 class penebaranBenihController extends Controller
@@ -57,12 +57,14 @@ class penebaranBenihController extends Controller
 
     public function edit($id)
     {
-        $penebaranBenih = penebaranBenih::find($id);
+        $penebaranBenih = penebaranBenih::findOrFail($id);
         return view('admin.benih.edit', [
-            'penebaranBenih' => $penebaranBenih,
+            'benih' => $penebaranBenih,
+            'kolam' => Kolam::all(),
+            'spesies' => Spesies::all(),
             'title' => 'Edit Penebaran Benih',
         ]);
-    }
+    }    
 
     public function update(Request $request, $id)
     {
@@ -76,9 +78,9 @@ class penebaranBenihController extends Controller
                 'jumlah_benih' => 'required',
             ]);
             penebaranBenih::find($id)->update($request->all());
-            return redirect()->route('benih.index')->with('success', 'Data Berhasil Di Update');
+            return redirect()->route('index.benih')->with('success', 'Data Berhasil Di Update');
         } catch (\Throwable $th) {
-            return redirect()->route('benih.index')->with('error', $th->getMessage());
+            return redirect()->route('index.benih')->with('error', $th->getMessage());
         }
     }
 
@@ -86,13 +88,13 @@ class penebaranBenihController extends Controller
     {
         try {
             penebaranBenih::find($id)->delete();
-            return redirect()->route('benih.index')->with(
+            return redirect()->route('index.benih')->with(
                 'success',
                 'Data
             Berhasil Dihapus',
             );
         } catch (\Throwable $th) {
-            return redirect()->route('benih.index')->with('error', $th->getMessage());
+            return redirect()->route('index.benih')->with('error', $th->getMessage());
         }
     }
 }

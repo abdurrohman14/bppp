@@ -3,73 +3,83 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\kualitasAir;
+use App\Models\KualitasAir;
+use App\Models\Kolam;
 use Illuminate\Http\Request;
 
-class kualitasAirController extends Controller
+class KualitasAirController extends Controller
 {
     public function index() {
-        $air = kualitasAir::all();
-        return view('admin.kualitasair.index', [
+        $air = kualitasAir::with('kolam')->get();
+        return view('admin.kualitas_air.index', [
             'title' => 'Kualitas Air',
             'air' => $air
         ]);
     }
 
     public function create() {
-        return view('admin.kualitasair.create', [
-            'title' => 'Tambah Kualitas Air'
+        $kolams = Kolam::all();
+        return view('admin.kualitas_air.create', [
+            'title' => 'Tambah Kualitas Air',
+            'kolams' => $kolams
         ]);
     }
 
     public function store(Request $request) {
         try {
             $request->validate([
-                'kolam_id' => 'required',
-                'tanggal_pengukuran' => 'required',
-                'pH' => 'required',
-                'temperature' => 'required',
-                'do' => 'required',
-            ]);
-            kualitasAir::create($request->all());
-            return redirect()->route('kualitasair.index')->with('success', 'Data Berhasil Ditambahkan');
+                'kolam_id' => 'required|exists:kolams,id',
+                'tanggal_pengukuran' => 'required|date',
+                'ph' => 'required|numeric',
+                'temperatur' => 'required|numeric',
+                'oksigen_terlarut' => 'required|numeric',
+            ]);            
+
+            KualitasAir::create($request->all());
+
+            return redirect()->route('kualitas_air.index')->with('success', 'Data berhasil ditambahkan.');
         } catch (\Throwable $th) {
-            return redirect()->route('kualitasair.index')->with('error', $th->getMessage());
+            return redirect()->route('kualitas_air.index')->with('error', $th->getMessage());
         }
     }
 
     public function edit($id) {
-        $air = kualitasAir::find($id);
-        return view('admin.kualitasair.edit', [
+        $air = KualitasAir::findOrFail($id);
+        $kolams = Kolam::all();
+        return view('admin.kualitas_air.edit', [
             'title' => 'Edit Kualitas Air',
-            'air' => $air
+            'air' => $air,
+            'kolams' => $kolams
         ]);
     }
 
     public function update(Request $request, $id) {
         try {
             $request->validate([
-                'kolam_id' => 'required',
-                'tanggal_pengukuran' => 'required',
-                'pH' => 'required',
-                'temperature' => 'required',
-                'do' => 'required',
-                ]);
-                kualitasAir::find($id)->update($request->all());
-                return redirect()->route('kualitasair.index')->with('success', 'Data Berhasil
-                Diupdate');
+                'kolam_id' => 'required|exists:kolams,id',
+                'tanggal_pengukuran' => 'required|date',
+                'ph' => 'required|numeric',
+                'temperatur' => 'required|numeric',
+                'oksigen_terlarut' => 'required|numeric',
+            ]);
+
+            $air = KualitasAir::findOrFail($id);
+            $air->update($request->all());
+
+            return redirect()->route('kualitas_air.index')->with('success', 'Data berhasil diupdate.');
         } catch (\Throwable $th) {
-                return redirect()->route('kualitasair.index')->with('error', $th->getMessage());
+            return redirect()->route('kualitas_air.index')->with('error', $th->getMessage());
         }
     }
 
     public function destroy($id) {
         try {
-            kualitasAir::find($id)->delete();
-            return redirect()->route('kualitasair.index')->with('success', 'Data Berhasil
-            Dihapus');
+            $air = KualitasAir::findOrFail($id);
+            $air->delete();
+
+            return redirect()->route('kualitas_air.index')->with('success', 'Data berhasil dihapus.');
         } catch (\Throwable $th) {
-            return redirect()->route('kualitasair.index')->with('error', $th->getMessage());
+            return redirect()->route('kualitas_air.index')->with('error', $th->getMessage());
         }
     }
 }

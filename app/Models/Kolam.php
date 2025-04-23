@@ -9,4 +9,10 @@ class Kolam extends Model
     protected $fillable = [
         'nama', 'budaya', 'status', 'jumlah_ikan'
     ];
+
+    // Relasi ke kualitas air
+    public function kualitasAir()
+    {
+        return $this->hasMany(KualitasAir::class);
+    }
 }

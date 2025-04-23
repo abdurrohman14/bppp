@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('tanggal_panen');
             $table->decimal('berat_total');
             $table->float('harga_per_kg');
-            $table->integer('distribusi');
+            $table->integer('tujuan_distribusi');
             $table->timestamps();
         });
     }

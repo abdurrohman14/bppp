@@ -9,7 +9,7 @@
             <div class="card-body">
                 <form action="{{ route('update.kematian', $kematian->id) }}" method="POST">
                     @csrf
-                    @method('PUT')
+                    
                     <div class="mb-3">
                         <label for="kolam_id" class="form-label">Kolam</label>
                         <select class="form-select" name="kolam_id" required>
@@ -32,11 +32,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="tanggal_mati" class="form-label">Tanggal Kematian</label>
-                        <input type="date" class="form-control" name="tanggal_mati" value="{{ $kematian->tanggal_mati }}" required>
+                        <input type="date" class="form-control" name="tanggal_mati" value="{{ $kematian->tanggal_kematian }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="jumlah_kematian" class="form-label">Jumlah Kematian</label>
-                        <input type="number" class="form-control" name="jumlah_kematian" value="{{ $kematian->jumlah_kematian }}" required>
+                        <input type="number" class="form-control" name="jumlah_kematian" value="{{ $kematian->jumlah_mati }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="penyebab" class="form-label">Penyebab</label>

@@ -24,13 +24,9 @@ class KematianController extends Controller
         $kolam = Kolam::all();
         $spesies = Spesies::all();
         return view('admin.kematian.create', [
-            'title' => 'Tambah Penebaran Kematian',
+            'title' => 'Tambah Data Kematian',
             'kolam' => $kolam,
             'spesies' => $spesies,
-        ]);
-
-        return view('admin.kematian.create', [
-            'title' => 'Tambah Data Kematian',
         ]);
     }
 
@@ -44,13 +40,9 @@ class KematianController extends Controller
                 'jumlah_mati' => 'required|integer|min:1',
                 'penyebab' => 'required|string',
             ]);
-            Kematian::create([
-                'kolam_id' => $request->kolam_id,
-                'spesies_id' => $request->spesies_id,
-                'tanggal_kematian' => $request->tanggal_kematian,
-                'jumlah_mati' => $request->jumlah_mati,
-                'penyebab' => $request->penyebab,
-            ]);
+
+            Kematian::create($request->only(['kolam_id', 'spesies_id', 'tanggal_kematian', 'jumlah_mati', 'penyebab']));
+
             return redirect()->route('index.kematian')->with('success', 'Data Kematian Berhasil Ditambahkan');
         } catch (\Throwable $th) {
             return redirect()->route('index.kematian')->with('error', $th->getMessage());
@@ -59,10 +51,15 @@ class KematianController extends Controller
 
     public function edit($id)
     {
-        $kematian = Kematian::find($id);
+        $kematian = Kematian::findOrFail($id);
+        $kolam = Kolam::all();
+        $spesies = Spesies::all();
+
         return view('admin.kematian.edit', [
             'title' => 'Edit Data Kematian',
             'kematian' => $kematian,
+            'kolam' => $kolam,
+            'spesies' => $spesies,
         ]);
     }
 
@@ -70,35 +67,29 @@ class KematianController extends Controller
     {
         try {
             $request->validate([
-                'kolam_id' => 'required|integer:exists,id',
-                'spesies_id' => 'required|integer:exists,id',
-                'tanggal_kematian' => 'required|date',
-                'jumlah_mati' => 'required|integer|min:1',
+                'kolam_id' => 'required|exists:kolams,id',
+                'spesies_id' => 'required|exists:spesies,id',
+                'tanggal_kematian' => 'date',
+                'jumlah_mati' => 'integer|min:1',
+                'penyebab' => 'required|string',
             ]);
+
             $kematian = Kematian::findOrFail($id);
-            $kematian->fill($request->all());
-            $kematian->save();
-            return redirect()->route('admin.kematian.index')->with(
-                'success',
-                'Data Kemat
-                ian Berhasil Diupdate',
-            );
+            $kematian->update($request->only(['kolam_id', 'spesies_id', 'tanggal_kematian', 'jumlah_mati', 'penyebab']));
+
+            return redirect()->route('index.kematian')->with('success', 'Data Kematian Berhasil Diupdate');
         } catch (\Throwable $th) {
-            return redirect()->route('admin.kematian.index')->with('error', $th->getMessage());
+            return redirect()->route('index.kematian')->with('error', $th->getMessage());
         }
     }
 
     public function destroy($id)
     {
         try {
-            Kematian::find($id)->delete();
-            return redirect()->route('admin.kematian.index')->with(
-                'success',
-                'Data Kemat
-            ian Berhasil Dihapus',
-            );
+            Kematian::findOrFail($id)->delete();
+            return redirect()->route('index.kematian')->with('success', 'Data Kematian Berhasil Dihapus');
         } catch (\Throwable $th) {
-            return redirect()->route('admin.kematian.index')->with('error', $th->getMessage());
+            return redirect()->route('index.kematian')->with('error', $th->getMessage());
         }
     }
 }

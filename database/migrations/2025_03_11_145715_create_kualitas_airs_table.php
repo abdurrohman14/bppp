@@ -4,29 +4,23 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateKualitasAirsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('kualitas_airs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kolam_id')->references('id')->on('kolams')->onDelete('cascade');
+            $table->foreignId('kolam_id')->constrained('kolams')->onDelete('cascade');
             $table->date('tanggal_pengukuran');
-            $table->integer('pH');
-            $table->integer('temperature');
-            $table->integer('do');
+            $table->decimal('ph', 5, 2);
+            $table->decimal('temperatur', 5, 2);
+            $table->decimal('oksigen_terlarut', 5, 2);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('kualitas_airs');
     }
-};
+}

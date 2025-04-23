@@ -19,6 +19,7 @@ class KolamController extends Controller
 
     public function create()
     {
+        $kolam = Kolam::all();
         $budaya = ['Probiotik', 'Bioflok'];
         $status = ['Aktif', 'Tidak Aktif'];
         return view('admin.kolam.create', [

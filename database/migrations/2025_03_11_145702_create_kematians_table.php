@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('spesies_id')->references('id')->on('spesies')->onDelete('cascade');
             $table->date('tanggal_kematian');
             $table->integer('jumlah_mati');
+            $table->varchar('penyebab');
             $table->timestamps();
         });
     }
