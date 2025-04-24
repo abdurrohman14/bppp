@@ -39,7 +39,7 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::post('/update/{id}', [KolamController::class, 'update'])->name('update.kolam');
         Route::delete('/delete/{id}', [KolamController::class, 'destroy'])->name('delete.kolam');
     });
-    
+
     // Rute Kematian
     Route::prefix('kematian')->group(function() {
         Route::get('/', [KematianController::class, 'index'])->name('index.kematian');
@@ -69,7 +69,7 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::post('/update/{id}', [penebaranBenihController::class, 'update'])->name('update.benih');
         Route::delete('/delete/{id}', [penebaranBenihController::class, 'destroy'])->name('delete.benih');
     });
-    
+
     // Rute Spesies
     Route::prefix('spesies')->group(function() {
         Route::get('/', [SpesiesController::class, 'index'])->name('index.spesies');
@@ -81,7 +81,7 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
     });
 
     // Rute Panen
-    Route::prefix('')->group(function() {
+    Route::prefix('panen')->group(function() {
         Route::get('/', [PanenController::class, 'index'])->name('index.panen');
         Route::get('/create', [PanenController::class, 'create'])->name('create.panen');
         Route::post('/store', [PanenController::class, 'store'])->name('store.panen');

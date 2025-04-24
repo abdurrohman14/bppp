@@ -12,7 +12,7 @@ class Panen extends Model
         'tanggal_panen',
         'berat_total',
         'harga_per_kg',
-        'distribusi'
+        'tujuan_distribusi'
     ];
 
     // Relasi ke kolam

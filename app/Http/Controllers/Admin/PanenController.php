@@ -54,7 +54,7 @@ class PanenController extends Controller
             ]);
 
             // Redirect ke halaman index dengan pesan sukses
-            return redirect()->route('admin.index.panen')->with('success', 'Data berhasil ditambahkan');
+            return redirect()->route('index.panen')->with('success', 'Data berhasil ditambahkan');
         } catch (\Throwable $th) {
             // Jika terjadi error, tampilkan pesan error
             return redirect()->back()->with('error', $th->getMessage());
@@ -100,7 +100,7 @@ class PanenController extends Controller
             ]);
 
             // Redirect ke halaman index dengan pesan sukses
-            return redirect()->route('admin.index.panen')->with('success', 'Data berhasil diupdate');
+            return redirect()->route('index.panen')->with('success', 'Data berhasil diupdate');
         } catch (\Throwable $th) {
             // Jika terjadi error, tampilkan pesan error
             return redirect()->back()->with('error', $th->getMessage());
@@ -114,7 +114,7 @@ class PanenController extends Controller
             Panen::find($id)->delete();
 
             // Redirect ke halaman index dengan pesan sukses
-            return redirect()->route('admin.index.panen')->with('success', 'Data berhasil dihapus');
+            return redirect()->route('index.panen')->with('success', 'Data berhasil dihapus');
         } catch (\Throwable $th) {
             // Jika terjadi error, tampilkan pesan error
             return redirect()->back()->with('error', $th->getMessage());
