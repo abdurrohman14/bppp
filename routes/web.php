@@ -90,6 +90,11 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::delete('/delete/{id}', [PanenController::class, 'destroy'])->name('delete.panen');
     });
 
+    // Route Pakan Keluar
+    Route::prefix('pakan-keluar')->group(function() {
+
+    });
+
     // Rute Pengguna (User)
     Route::prefix('tambah-user')->group(function() {
         Route::get('/', [UserController::class, 'index'])->name('index.pengguna');
