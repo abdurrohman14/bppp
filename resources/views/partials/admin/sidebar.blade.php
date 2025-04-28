@@ -19,9 +19,9 @@
             <li class="nav-item"><a class="nav-link" href="{{ route('index.panen') }}"><i class="fas fa-tint"></i> Manajemen Panen</a></li>
                 <a class="nav-link active" href="#"><i class="fas fa-utensils"></i> Manajemen Pakan</a>
                 <ul class="nav flex-column ms-3">
-                    <li><a class="nav-link" href="#">Pakan Keluar</a></li>
-                    <li><a class="nav-link" href="#">Pakan Masuk</a></li>
-                    <li><a class="nav-link" href="#">Restok Pakan</a></li>
+                    <li><a class="nav-link {{ request()->is('pakan-keluar*') ? 'active' : '' }}" href="{{ route('index.pakan.keluar') }}">Pakan Keluar</a></li>
+                    <li><a class="nav-link {{ request()->is('pakan-masuk*') ? 'active' : '' }}" href="{{ route('index.pakan.masuk') }}">Pakan Masuk</a></li>
+                    <li><a class="nav-link {{ Request::is('pakan*') ? 'active' : '' }}" href="{{ route('index.pakan') }}">Pakan</a></li>
                 </ul>
             </li>
             <li class="nav-item"><a class="nav-link" href="{{ route('index.pengguna') }}"><i class="fas fa-user-plus"></i> Tambah Role</a>
@@ -52,7 +52,7 @@
                 <ul class="nav flex-column ms-3">
                     <li><a class="nav-link" href="#">Pakan Keluar</a></li>
                     <li><a class="nav-link" href="#">Pakan Masuk</a></li>
-                    <li><a class="nav-link" href="#">Restok Pakan</a></li>
+                    <li><a class="nav-link" href="#">Jenis Pakan</a></li>
                 </ul>
             </li>
             <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user-plus"></i> Tambah Role</a>
@@ -85,7 +85,7 @@
                 <ul class="nav flex-column ms-3">
                     <li><a class="nav-link" href="#">Pakan Keluar</a></li>
                     <li><a class="nav-link" href="#">Pakan Masuk</a></li>
-                    <li><a class="nav-link" href="#">Restok Pakan</a></li>
+                    <li><a class="nav-link" href="#">Jenis Pakan</a></li>
                 </ul>
             </li>
             <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user-plus"></i> Tambah Role</a>

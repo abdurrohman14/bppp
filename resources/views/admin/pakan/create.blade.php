@@ -28,7 +28,7 @@ class PakanController extends Controller
     {
         try {
             $request->validate([
-                'jenis_pakan' => 'required|string|max:255', // Mengganti jenis_pakan menjadi pakan
+                'jenis_pakan' => 'required|string|max:255',
                 'asal_pakan' => 'required|string|max:255',
                 'ukuran_pakan' => 'required|string|max:100',
                 'jumlah_pakan' => 'required|integer', // Menambahkan validasi untuk jumlah_pakan
@@ -36,7 +36,7 @@ class PakanController extends Controller
 
             // Memperbaiki penempatan 'jumlah_pakan' dalam array
             Pakan::create([
-                'jenis_pakan' => $request->jenis_pakan, // Mengganti jenis_pakan menjadi pakan
+                'jenis_pakan' => $request->jenis_pakan,
                 'asal_pakan' => $request->asal_pakan,
                 'ukuran_pakan' => $request->ukuran_pakan,
                 'jumlah_pakan' => $request->jumlah_pakan, // Menambahkan jumlah_pakan di sini
@@ -62,7 +62,7 @@ class PakanController extends Controller
     {
         try {
             $request->validate([
-                'pakan' => 'required|string|max:255', // Mengganti jenis_pakan menjadi pakan
+                'jenis_pakan' => 'required|string|max:255',
                 'asal_pakan' => 'required|string|max:255',
                 'ukuran_pakan' => 'required|string|max:100',
                 'jumlah_pakan' => 'required|integer', // Menambahkan validasi untuk jumlah_pakan

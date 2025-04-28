@@ -2,14 +2,17 @@
 
 use App\Http\Controllers\Admin\KematianController;
 use App\Http\Controllers\Admin\KolamController;
-use App\Http\Controllers\Admin\kualitasAirController;
+use App\Http\Controllers\Admin\KualitasAirController;
 use App\Http\Controllers\Admin\PanenController;
-use App\Http\Controllers\Admin\penebaranBenihController;
+use App\Http\Controllers\Admin\PenebaranBenihController;
 use App\Http\Controllers\Admin\SpesiesController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\PakanController;
+use App\Http\Controllers\Admin\pakanKeluarController;
+use App\Http\Controllers\Admin\pakanMasukController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -86,12 +89,39 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::get('/create', [PanenController::class, 'create'])->name('create.panen');
         Route::post('/store', [PanenController::class, 'store'])->name('store.panen');
         Route::get('/edit/{id}', [PanenController::class, 'edit'])->name('edit.panen');
-        Route::post('/update/{id}', [PanenController::class, 'update'])->name('update.panen');
+        Route::put('/update/{id}', [PanenController::class, 'update'])->name('update.panen');
         Route::delete('/delete/{id}', [PanenController::class, 'destroy'])->name('delete.panen');
     });
 
-    // Route Pakan Keluar
-    Route::prefix('pakan-keluar')->group(function() {
+    // Rute Pakan
+    Route::prefix('jenis-pakan')->group(function () {
+        Route::get('/', [PakanController::class, 'index'])->name('index.pakan');
+        Route::get('/create', [PakanController::class, 'create'])->name('pakan.create');
+        Route::post('/store', [PakanController::class, 'store'])->name('pakan.store');
+        Route::get('/{id}/edit', [PakanController::class, 'edit'])->name('pakan.edit');
+        Route::put('/update/{id}', [PakanController::class, 'update'])->name('pakan.update');
+        Route::delete('/delete/{id}', [PakanController::class, 'destroy'])->name('pakan.destroy');
+    });
+    
+    //Rute Pakan Keluar
+    Route::prefix('pakan-keluar')->group(function () {
+        Route::get('/', [pakanKeluarController::class, 'index'])->name('index.pakan.keluar');
+        Route::get('/create', [pakanKeluarController::class, 'create'])->name('pakan.keluar.create');
+        Route::post('/store', [pakanKeluarController::class, 'store'])->name('pakan.keluar.store');
+        Route::get('/{id}/edit', [pakanKeluarController::class, 'edit'])->name('pakan.keluar.edit');
+        Route::put('/update/{id}', [pakanKeluarController::class, 'update'])->name('pakan.keluar.update');
+        Route::delete('/delete/{id}', [pakanKeluarController::class, 'destroy'])->name('pakan.keluar.destroy');
+
+    });
+
+    //Rute Pakan masuk
+    Route::prefix('pakan-masuk')->group(function () {
+        Route::get('/', [pakanMasukController::class, 'index'])->name('index.pakan.masuk');
+        Route::get('/create', [pakanMasukController::class, 'create'])->name('pakan.masuk.create');
+        Route::post('/store', [pakanMasukController::class, 'store'])->name('pakan.masuk.store');
+        Route::get('/{id}/edit', [pakanMasukController::class, 'edit'])->name('pakan.masuk.edit');
+        Route::put('/update/{id}', [pakanMasukController::class, 'update'])->name('pakan.masuk.update');
+        Route::delete('/delete/{id}', [pakanMasukController::class, 'destroy'])->name('pakan.masuk.destroy');
 
     });
 
