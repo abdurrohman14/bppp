@@ -10,10 +10,10 @@ class PakanController extends Controller
 {
     public function index()
     {
-        $pakan = Pakan::all(); // Mengganti variabel dari jenis_pakan menjadi pakan
+        $pakan = Pakan::all(); // Mengambil semua data pakan
         return view('admin.pakan.index', [
             'title' => 'Pakan',
-            'pakan' => $pakan, // Mengganti variabel dari jenis_pakan menjadi pakan
+            'pakan' => $pakan,
         ]);
     }
 
@@ -28,18 +28,18 @@ class PakanController extends Controller
     {
         try {
             $request->validate([
-                'jenis_pakan' => 'required|string|max:255', // Mengganti jenis_pakan menjadi pakan
+                'pakan' => 'required|string|max:255', // Mengganti jenis_pakan menjadi pakan
                 'asal_pakan' => 'required|string|max:255',
                 'ukuran_pakan' => 'required|string|max:100',
-                'jumlah_pakan' => 'required|integer', // Menambahkan validasi untuk jumlah_pakan
+                'jumlah_pakan' => 'required|integer',
             ]);
 
-            // Memperbaiki penempatan 'jumlah_pakan' dalam array
+            // Menyimpan data baru ke dalam database
             Pakan::create([
-                'jenis_pakan' => $request->jenis_pakan, // Mengganti jenis_pakan menjadi pakan
+                'pakan' => $request->pakan, // Menggunakan pakan
                 'asal_pakan' => $request->asal_pakan,
                 'ukuran_pakan' => $request->ukuran_pakan,
-                'jumlah_pakan' => $request->jumlah_pakan, // Menambahkan jumlah_pakan di sini
+                'jumlah_pakan' => $request->jumlah_pakan,
             ]);
 
             return redirect()->route('index.pakan')->with('success', 'Pakan berhasil ditambahkan');
@@ -50,11 +50,10 @@ class PakanController extends Controller
 
     public function edit($id)
     {
-        $pakan = Pakan::findOrFail($id); // Mengganti variabel dari jenis_pakan menjadi pakan
-
+        $pakan = Pakan::findOrFail($id); // Mengambil data pakan berdasarkan id
         return view('admin.pakan.edit', [
             'title' => 'Edit Pakan',
-            'pakan' => $pakan, // Mengganti variabel dari jenis_pakan menjadi pakan
+            'pakan' => $pakan,
         ]);
     }
 
@@ -62,14 +61,14 @@ class PakanController extends Controller
     {
         try {
             $request->validate([
-                'pakan' => 'required|string|max:255', // Mengganti jenis_pakan menjadi pakan
+                'pakan' => 'required|string|max:255',
                 'asal_pakan' => 'required|string|max:255',
                 'ukuran_pakan' => 'required|string|max:100',
-                'jumlah_pakan' => 'required|integer', // Menambahkan validasi untuk jumlah_pakan
+                'jumlah_pakan' => 'required|integer',
             ]);
 
-            $pakan = Pakan::findOrFail($id);
-            $pakan->fill($request->all())->save(); // Mengganti model dari JenisPakan menjadi Pakan
+            $pakan = Pakan::findOrFail($id); // Menemukan pakan yang akan diupdate
+            $pakan->fill($request->all())->save(); // Menyimpan perubahan data pakan
 
             return redirect()->route('index.pakan')->with('success', 'Pakan berhasil diperbarui');
         } catch (\Throwable $th) {
@@ -80,7 +79,7 @@ class PakanController extends Controller
     public function destroy($id)
     {
         try {
-            Pakan::findOrFail($id)->delete(); // Mengganti model dari JenisPakan menjadi Pakan
+            Pakan::findOrFail($id)->delete(); // Menghapus pakan berdasarkan id
             return redirect()->route('index.pakan')->with('success', 'Pakan berhasil dihapus');
         } catch (\Throwable $th) {
             return redirect()->route('index.pakan')->with('error', $th->getMessage());

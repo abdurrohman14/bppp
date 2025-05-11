@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Spesies;
+
+class JadwalPakan extends Model
+{
+    // Tentukan nama tabel yang digunakan
+    protected $table = 'jadwal_pakan';
+
+    // Kolom yang bisa diisi
+    protected $fillable = ['spesies_id', 'jadwal_pakan'];
+
+    // Relasi ke tabel spesies
+    public function spesies()
+    {
+        return $this->belongsTo(Spesies::class, 'spesies_id');
+    }
+}

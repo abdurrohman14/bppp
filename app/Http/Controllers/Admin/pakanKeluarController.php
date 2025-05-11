@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\pakanKeluar;
-use App\Models\Kolam;  // Pastikan model Kolam di-import
-use App\Models\Spesies;  // Pastikan model Spesies di-import
-use App\Models\Pakan;    // Pastikan model Pakan di-import
+use App\Models\Kolam;
+use App\Models\Spesies;
+use App\Models\Pakan;
 use Illuminate\Http\Request;
 
 class pakanKeluarController extends Controller
@@ -22,16 +22,15 @@ class pakanKeluarController extends Controller
 
     public function create()
     {
-        // Mengambil data yang dibutuhkan
         $kolam = Kolam::all();
         $spesies = Spesies::all();
         $pakan = Pakan::all();
 
         return view('admin.pakanKeluar.create', [
             'title' => 'Tambah Pakan Keluar',
-            'kolam' => $kolam,     // Mengirim data kolam ke view
-            'spesies' => $spesies, // Mengirim data spesies ke view
-            'pakan' => $pakan,     // Mengirim data pakan ke view
+            'kolam' => $kolam,
+            'spesies' => $spesies,
+            'pakan' => $pakan,
         ]);
     }
 
@@ -46,7 +45,7 @@ class pakanKeluarController extends Controller
                 'jumlah_keluar' => 'required',
             ]);
             pakanKeluar::create($request->all());
-            return redirect()->route('pakanKeluar.index')->with('success', 'Data Berhasil Ditambahkan');
+            return redirect()->route('index.pakan.Keluar')->with('success', 'Data Berhasil Ditambahkan');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
@@ -55,8 +54,15 @@ class pakanKeluarController extends Controller
     public function edit($id)
     {
         $pakanKeluar = pakanKeluar::find($id);
+        $kolam = Kolam::all();
+        $spesies = Spesies::all();
+        $pakan = Pakan::all();
+
         return view('admin.pakanKeluar.edit', [
             'pakanKeluar' => $pakanKeluar,
+            'kolam' => $kolam,
+            'spesies' => $spesies,
+            'pakan' => $pakan,
             'title' => 'Edit Pakan Keluar',
         ]);
     }
@@ -72,7 +78,7 @@ class pakanKeluarController extends Controller
                 'jumlah_keluar' => 'required',
             ]);
             pakanKeluar::find($id)->update($request->all());
-            return redirect()->route('pakanKeluar.index')->with('success', 'Data Berhasil Diupdate');
+            return redirect()->route('index.pakan.Keluar')->with('success', 'Data Berhasil Diupdate');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }
@@ -82,7 +88,7 @@ class pakanKeluarController extends Controller
     {
         try {
             pakanKeluar::find($id)->delete();
-            return redirect()->route('pakanKeluar.index')->with('success', 'Data Berhasil Dihapus');
+            return redirect()->route('index.pakan.Keluar')->with('success', 'Data Berhasil Dihapus');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
         }

@@ -1,35 +1,40 @@
 @extends('partials.admin.main')
 
 @section('content')
-<div class="container">
-    <h1>Edit Pakan</h1>
-
-    <form action="{{ route('pakan.update', $pakan->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-
-        <div class="mb-3">
-            <label>Pakan</label>
-            <input type="text" name="pakan" class="form-control" value="{{ $pakan->pakan }}" required>
+    <div class="content">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Form Edit Pakan</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ route('pakan.update', $pakan->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="mb-3">
+                        <label for="pakan" class="form-label">Pakan</label>
+                        <input type="text" class="form-control" id="pakan" name="pakan" placeholder="Masukkan Nama Pakan" value="{{ $pakan->pakan }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="asalPakan" class="form-label">Asal Pakan</label>
+                        <input type="text" class="form-control" id="asalPakan" name="asal_pakan" placeholder="Masukkan Asal Pakan" value="{{ $pakan->asal_pakan }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ukuranPakan" class="form-label">Ukuran Pakan</label>
+                        <input type="text" class="form-control" id="ukuranPakan" name="ukuran_pakan" placeholder="Masukkan Ukuran Pakan" value="{{ $pakan->ukuran_pakan }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="jumlahPakan" class="form-label">Jumlah Pakan</label>
+                        <input type="number" class="form-control" id="jumlahPakan" name="jumlah_pakan" placeholder="Masukkan Jumlah Pakan" value="{{ $pakan->jumlah_pakan }}" required>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="reset" class="btn btn-info me-2 text-white">
+                            <a href="{{ route('index.pakan') }}" class="text-decoration-none text-white">Batal</a>
+                        </button>
+                        <button type="submit" class="btn btn-danger">Simpan</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <div class="mb-3">
-            <label>Asal Pakan</label>
-            <input type="text" name="asal_pakan" class="form-control" value="{{ $pakan->asal_pakan }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label>Ukuran Pakan</label>
-            <input type="text" name="ukuran_pakan" class="form-control" value="{{ $pakan->ukuran_pakan }}" required>
-        </div>
-
-        <div class="mb-3">
-            <label>Jumlah Pakan</label>
-            <input type="number" name="jumlah_pakan" class="form-control" value="{{ $pakan->jumlah_pakan }}" required>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{{ route('pakan.index') }}" class="btn btn-secondary">Batal</a>
-    </form>
-</div>
+    </div>
 @endsection

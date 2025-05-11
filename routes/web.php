@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\JadwalPakanController;
 use App\Http\Controllers\Admin\KematianController;
 use App\Http\Controllers\Admin\KolamController;
 use App\Http\Controllers\Admin\KualitasAirController;
@@ -13,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PakanController;
 use App\Http\Controllers\Admin\pakanKeluarController;
 use App\Http\Controllers\Admin\pakanMasukController;
+use App\Http\Controllers\Petugas\BnhController;
+use App\Http\Controllers\Petugas\KlmController;
+use App\Http\Controllers\Petugas\KmtnController;
+use App\Http\Controllers\Petugas\KuaController;
+use App\Http\Controllers\Petugas\SpsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -103,40 +109,113 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::delete('/delete/{id}', [PakanController::class, 'destroy'])->name('pakan.destroy');
     });
     
-    //Rute Pakan Keluar
+    // Rute Pakan Keluar
     Route::prefix('pakan-keluar')->group(function () {
-        Route::get('/', [pakanKeluarController::class, 'index'])->name('index.pakan.keluar');
-        Route::get('/create', [pakanKeluarController::class, 'create'])->name('pakan.keluar.create');
-        Route::post('/store', [pakanKeluarController::class, 'store'])->name('pakan.keluar.store');
-        Route::get('/{id}/edit', [pakanKeluarController::class, 'edit'])->name('pakan.keluar.edit');
-        Route::put('/update/{id}', [pakanKeluarController::class, 'update'])->name('pakan.keluar.update');
-        Route::delete('/delete/{id}', [pakanKeluarController::class, 'destroy'])->name('pakan.keluar.destroy');
-
+        Route::get('/', [pakanKeluarController::class, 'index'])->name('index.pakan.Keluar');
+        Route::get('/create', [pakanKeluarController::class, 'create'])->name('pakan.Keluar.create');
+        Route::post('/store', [pakanKeluarController::class, 'store'])->name('pakan.Keluar.store');
+        Route::get('/{id}/edit', [pakanKeluarController::class, 'edit'])->name('pakan.Keluar.edit');
+        Route::put('/update/{id}', [pakanKeluarController::class, 'update'])->name('pakan.Keluar.update');
+        Route::delete('/delete/{id}', [pakanKeluarController::class, 'destroy'])->name('pakan.Keluar.destroy');
     });
+    
 
-    //Rute Pakan masuk
+    // Rute Pakan masuk
     Route::prefix('pakan-masuk')->group(function () {
-        Route::get('/', [pakanMasukController::class, 'index'])->name('index.pakan.masuk');
-        Route::get('/create', [pakanMasukController::class, 'create'])->name('pakan.masuk.create');
-        Route::post('/store', [pakanMasukController::class, 'store'])->name('pakan.masuk.store');
-        Route::get('/{id}/edit', [pakanMasukController::class, 'edit'])->name('pakan.masuk.edit');
-        Route::put('/update/{id}', [pakanMasukController::class, 'update'])->name('pakan.masuk.update');
-        Route::delete('/delete/{id}', [pakanMasukController::class, 'destroy'])->name('pakan.masuk.destroy');
-
+        Route::get('/', [PakanMasukController::class, 'index'])->name('index.pakan.masuk');
+        Route::get('/create', [PakanMasukController::class, 'create'])->name('pakan.masuk.create');
+        Route::post('/store', [PakanMasukController::class, 'store'])->name('pakan.masuk.store');
+        Route::get('/edit/{id}', [PakanMasukController::class, 'edit'])->name('edit.pakan.masuk');
+        Route::put('/update/{id}', [PakanMasukController::class, 'update'])->name('update.pakan.masuk');
+        Route::delete('/delete/{id}', [PakanMasukController::class, 'destroy'])->name('pakan.masuk.destroy');
     });
 
-    // Rute Pengguna (User)
+            // Rute Jadwal Pakan
+    Route::prefix('jadwal-pakan')->group(function () {
+        Route::get('/', [JadwalPakanController::class, 'index'])->name('index.jadwal.pakan');
+        Route::get('/create', [JadwalPakanController::class, 'create'])->name('jadwal.pakan.create');
+        Route::post('/store', [JadwalPakanController::class, 'store'])->name('jadwal.pakan.store');
+        Route::get('/{id}/edit', [JadwalPakanController::class, 'edit'])->name('jadwal.pakan.edit');
+        Route::put('/update/{id}', [JadwalPakanController::class, 'update'])->name('jadwal.pakan.update');
+        Route::delete('/delete/{id}', [JadwalPakanController::class, 'destroy'])->name('jadwal.pakan.destroy');
+    });
+
+        // Rute Pengguna (User)
     Route::prefix('tambah-user')->group(function() {
         Route::get('/', [UserController::class, 'index'])->name('index.pengguna');
         Route::get('/create', [UserController::class, 'create'])->name('create.pengguna');
         Route::post('/store', [UserController::class, 'store'])->name('store.pengguna');
+        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit.pengguna');
+        Route::put('/{id}', [UserController::class, 'update'])->name('update.pengguna');
+        Route::delete('/{id}', [UserController::class, 'destroy'])->name('delete.pengguna');
     });
-});
+
+    });
 
 Route::middleware(['auth', 'role:petugasKolam'])->group(function() {
     Route::get('/petugasKolam', [RoleController::class, 'petugasKolam'])->name('petugasKolam.dashboard');
 
+    // Rute Kolam
+    Route::prefix('petugas-kolam')->group(function () {
+        Route::get('/', [KlmController::class, 'index'])->name('index.petugas.kolam');
+        Route::get('/create', [KlmController::class, 'create'])->name('create.petugas.kolam');
+        Route::post('/store', [KlmController::class, 'store'])->name('store.petugas.kolam');
+        Route::get('/edit/{id}', [KlmController::class, 'edit'])->name('edit.petugas.kolam');
+        Route::post('/update/{id}', [KlmController::class, 'update'])->name('update.petugas.kolam');
+        Route::delete('/delete/{id}', [KlmController::class, 'destroy'])->name('delete.petugas.kolam');
+    });
+
+    // Rute Spesies
+    Route::prefix('petugas-spesies')->group(function() {
+        Route::get('/', [SpsController::class, 'index'])->name('index.petugas.spesies');
+        Route::get('/create', [SpsController::class, 'create'])->name('create.petugas.spesies');
+        Route::post('/store', [SpsController::class, 'store'])->name('store.petugas.spesies');
+        Route::get('/edit/{id}', [SpsController::class, 'edit'])->name('edit.petugas.spesies');
+        Route::post('/update/{id}', [SpsController::class, 'update'])->name('update.petugas.spesies');
+        Route::delete('/delete/{id}', [SpsController::class, 'destroy'])->name('delete.petugas.spesies');
+    });
+
+     // Rute Penebaran Benih
+     Route::prefix('petugas-benih')->group(function() {
+        Route::get('/', [BnhController::class, 'index'])->name('index.petugas.benih');
+        Route::get('/create', [BnhController::class, 'create'])->name('create.petugas.benih');
+        Route::post('/store', [BnhController::class, 'store'])->name('store.petugas.benih');
+        Route::get('/edit/{id}', [BnhController::class, 'edit'])->name('edit.petugas.benih');
+        Route::post('/update/{id}', [BnhController::class, 'update'])->name('update.petugas.benih');
+        Route::delete('/delete/{id}', [BnhController::class, 'destroy'])->name('delete.petugas.benih');
+    });
+
+    // Rute Penebaran Benih
+    Route::prefix('petugas-kematian')->group(function() {
+        Route::get('/', [KmtnController::class, 'index'])->name('index.petugas.kematian');
+        Route::get('/create', [KmtnController::class, 'create'])->name('create.petugas.kematian');
+        Route::post('/store', [KmtnController::class, 'store'])->name('store.petugas.kematian');
+        Route::get('/edit/{id}', [KmtnController::class, 'edit'])->name('edit.petugas.kematian');
+        Route::post('/update/{id}', [KmtnController::class, 'update'])->name('update.petugas.kematian');
+        Route::delete('/delete/{id}', [KmtnController::class, 'destroy'])->name('delete.petugas.kematian');
+    });
+
+    // Rute Kematian
+    Route::prefix('petugas-kualitas-air')->group(function() {
+        Route::get('/', [KmtnController::class, 'index'])->name('index.petugas.kematian');
+        Route::get('/create', [KmtnController::class, 'create'])->name('create.petugas.kematian');
+        Route::post('/store', [KmtnController::class, 'store'])->name('store.petugas.kematian');
+        Route::get('/edit/{id}', [KmtnController::class, 'edit'])->name('edit.petugas.kematian');
+        Route::post('/update/{id}', [KmtnController::class, 'update'])->name('update.petugas.kematian');
+        Route::delete('/delete/{id}', [KmtnController::class, 'destroy'])->name('delete.petugas.kematian');
+    });
+
+     // Rute Kualitas Air
+     Route::prefix('petugas-kualitas-air')->group(function() {
+        Route::get('/', [KuaController::class, 'index'])->name('index.petugas.kualitasair');
+        Route::get('/create', [KuaController::class, 'create'])->name('create.petugas.kualitasair');
+        Route::post('/store', [KuaController::class, 'store'])->name('store.petugas.kualitasair');
+        Route::get('/edit/{id}', [KuaController::class, 'edit'])->name('edit.petugas.kualitasair');
+        Route::post('/update/{id}', [KuaController::class, 'update'])->name('update.petugas.kualitasair');
+        Route::delete('/delete/{id}', [KuaController::class, 'destroy'])->name('delete.petugas.kualitasair');
+    });
 });
+
 Route::middleware(['auth', 'role:manajer'])->group(function() {
     Route::get('/manajer', [RoleController::class, 'manajer'])->name('manajer.dashboard');
 });
