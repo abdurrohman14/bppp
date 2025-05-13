@@ -1,7 +1,7 @@
 @extends('partials.admin.main')
 
 @section('content')
-    <div class="content">
+<main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
         <div class="card shadow">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">Form Edit Pakan</h5>
@@ -10,7 +10,7 @@
                 <form action="{{ route('pakan.update', $pakan->id) }}" method="POST">
                     @csrf
                     @method('PUT')
-                    
+
                     <div class="mb-3">
                         <label for="pakan" class="form-label">Pakan</label>
                         <input type="text" class="form-control" id="pakan" name="pakan" placeholder="Masukkan Nama Pakan" value="{{ $pakan->pakan }}" required>
@@ -36,5 +36,5 @@
                 </form>
             </div>
         </div>
-    </div>
+    </main>
 @endsection

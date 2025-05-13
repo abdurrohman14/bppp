@@ -1,16 +1,18 @@
 @extends('partials.admin.main')
 
 @section('content')
-<div class="content">
+<main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
     <div class="card shadow">
-        <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+        <div class="card-header" style="color: #003049;">
             <h5 class="mb-0">Data Pakan Keluar</h5>
-            <a href="{{ route('pakan.Keluar.create') }}" class="btn btn-light btn-sm">Tambah Data</a>
         </div>
         <div class="card-body">
+            <button type="button" class="btn btn-primary btn-sm">
+                <a href="{{ route('pakan.Keluar.create') }}" class="text-decoration-none text-white">Tambah Data</a>
+            </button>
             <div class="table-responsive">
-                <table class="table table-bordered table-striped">
-                    <thead class="table-danger">
+                <table class="table table-bordered table-striped" id="example1">
+                    <thead>
                         <tr>
                             <th>No</th>
                             <th>Kolam</th>
@@ -36,18 +38,18 @@
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger btn-sm" type="submit">Hapus</button>
-                                </form>                                
+                                </form>
                             </td>
                         </tr>
                         @empty
-                        <tr>
+                        {{-- <tr>
                             <td colspan="7" class="text-center">Tidak ada data</td>
-                        </tr>
+                        </tr> --}}
                         @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</div>
+</main>
 @endsection

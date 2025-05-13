@@ -1,6 +1,6 @@
 @extends('partials.admin.main')
 @section('content')
-<div class="content">
+<main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
     <div class="card shadow">
         <div class="card-header bg-danger text-white">
             <h5 class="mb-0">Form Edit Data Pakan Keluar</h5>
@@ -9,7 +9,7 @@
             <form action="{{ route('pakan.Keluar.update', $pakanKeluar->id) }}" method="POST">
                 @csrf
                 @method('PUT')
-                
+
                 <!-- Kolam -->
                 <div class="mb-3">
                     <label for="kolam_id" class="form-label">Kolam</label>
@@ -21,7 +21,7 @@
                         @endforeach
                     </select>
                 </div>
-                
+
                 <!-- Spesies -->
                 <div class="mb-3">
                     <label for="spesies_id" class="form-label">Jenis Ikan</label>
@@ -33,7 +33,7 @@
                         @endforeach
                     </select>
                 </div>
-                
+
                 <!-- Pakan -->
                 <div class="mb-3">
                     <label for="pakan_id" class="form-label">Pakan</label>
@@ -45,13 +45,13 @@
                         @endforeach
                     </select>
                 </div>
-                
+
                 <!-- Tanggal Keluar -->
                 <div class="mb-3">
                     <label for="tanggal_keluar" class="form-label">Tanggal Keluar</label>
                     <input type="date" class="form-control" name="tanggal_keluar" value="{{ old('tanggal_keluar', $pakanKeluar->tanggal_keluar) }}" required>
                 </div>
-                
+
                 <!-- Jumlah Keluar -->
                 <div class="mb-3">
                     <label for="jumlah_keluar" class="form-label">Jumlah Keluar</label>
@@ -65,5 +65,5 @@
             </form>
         </div>
     </div>
-</div>
+</main>
 @endsection

@@ -1,6 +1,6 @@
 @extends('partials.admin.main')
 @section('content')
-<div class="content">
+<main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
     <div class="card shadow">
         <div class="card-header bg-danger text-white">
             <h5 class="mb-0">Form Tambah Data Pakan Keluar</h5>
@@ -50,5 +50,5 @@
             </form>
         </div>
     </div>
-</div>
+</main>
 @endsection

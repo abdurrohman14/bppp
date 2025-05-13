@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('jadwal_pakans', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('spesies_id')->constrained('spesies')->onDelete('cascade');
+            $table->json('jadwal_pakan');
             $table->timestamps();
         });
     }

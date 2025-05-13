@@ -1,16 +1,17 @@
 @extends('partials.admin.main')
 @section('content')
-    <div class="content">
-        <div class="card shadow">
-            <div class="card-header bg-info text-white">
-                <h5 class="mb-0">Data Panen</h5>
+<main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
+        <div class="card shadow border-0" style="min-height: 550px;">
+            <div class="card-header">
+                <h5 class="mb-0" style="color: #003049;">Data Panen</h5>
             </div>
             <div class="card-body">
-                <a href="{{ route('create.panen') }}" class="btn btn-success mb-3">Tambah Data Panen</a>
-                <table class="table table-bordered table-striped">
+                <div class="table-responsive">
+                    <a href="{{ route('create.panen') }}" class="btn btn-primary btn-sm">Tambah</a>
+                <table class="table table-bordered table-striped" id="example1">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>No</th>
                             <th>Kolam</th>
                             <th>Jenis Ikan</th>
                             <th>Tanggal Panen</th>
@@ -42,7 +43,8 @@
                         @endforeach
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
-    </div>
+</main>
 @endsection

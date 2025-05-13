@@ -1,15 +1,92 @@
-.sidebar {
-    width: 250px;
-    height: 100vh;
-    background: #f8f9fa;
-    position: fixed;
-    padding: 20px;
-}
-.content {
-    margin-left: 270px;
-    padding: 20px;
-}
-.card {
-    padding: 20px;
-    text-align: left;
-}
+
+      body {
+        min-height: 100vh;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .sidebar {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 235px;
+        height: calc(100vh - 60px);
+        background-color: #f8f9fa;
+        overflow-y: auto;
+        padding-top: 1rem;
+        transition: transform 0.3s ease-in-out;
+        z-index: 1040;
+      }
+      .sidebar a {
+        display: block;
+        padding: 10px 15px;
+        color: #003049;
+        text-decoration: none;
+      }
+      .sidebar a:hover {
+        background-color: #e9ecef;
+      }
+      .sidebar.hide {
+        transform: translateX(-100%);
+      }
+      .sidebar.show {
+        transform: translateX(0);
+      }
+      .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1050;
+      }
+      .navbar-brand {
+        color: #fff;
+        font-weight: bold;
+      }
+      .content {
+        margin-top: 60px;
+        margin-left: 220px;
+        padding: 20px;
+        height: calc(100vh - 60px);
+        overflow-y: auto;
+        transition: margin-left 0.3s;
+      }
+      /* Gaya untuk tombol accordion agar warnanya seragam dengan menu lainnya */
+      .accordion-button {
+        background-color: transparent;
+        color: #003049;
+        font-weight: bold;
+        padding: 10px 15px;
+        box-shadow: none;
+        font-size: 14px;
+      }
+
+      /* Hilangkan background saat diklik */
+      .accordion-button:not(.collapsed) {
+        background-color: #e9ecef;
+        color: #003049;
+      }
+
+      /* Hover effect seperti menu lainnya */
+      .accordion-button:hover {
+        background-color: #e9ecef;
+        color: #003049;
+      }
+
+      /* Sub-menu link style */
+      .accordion-body a {
+        color: #003049;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .accordion-body a:hover {
+        background-color: #e9ecef;
+      }
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+        }
+        .content {
+          margin-left: 0;
+        }
+      }

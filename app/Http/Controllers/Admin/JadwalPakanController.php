@@ -19,6 +19,9 @@ class JadwalPakanController extends Controller
         ]);
     }
 
+    /**
+     * Menampilkan form tambah jadwal pakan
+     */
     public function create()
     {
         $spesies = Spesies::all();
@@ -29,35 +32,37 @@ class JadwalPakanController extends Controller
         ]);
     }
 
+    /**
+     * Menyimpan jadwal pakan baru ke database
+     */
     public function store(Request $request)
     {
+        $request->validate([
+            'spesies_id' => 'required|exists:spesies,id',
+            'jadwal_pakan' => 'required|array|min:1',
+            'jadwal_pakan.*' => 'required|date_format:H:i',
+        ]);
+
         try {
-            // Menambahkan validasi input
-            $request->validate([
-                'spesies_id' => 'required|exists:spesies,id',
-                'jadwal_pakan' => 'required|array|min:1',  // Validasi bahwa jadwal_pakan adalah array dan tidak kosong
-                'jadwal_pakan.*' => 'required|date_format:H:i',  // Format waktu H:i untuk setiap elemen jadwal_pakan
-            ]);
-
-            // Menyimpan jadwal_pakan sebagai string yang dipisahkan oleh koma
-            $jadwal = implode(', ', $request->jadwal_pakan);
-
             JadwalPakan::create([
                 'spesies_id' => $request->spesies_id,
-                'jadwal_pakan' => $jadwal,
+                'jadwal_pakan' => json_encode($request->jadwal_pakan), // Simpan sebagai JSON
             ]);
 
             return redirect()->route('index.jadwal.pakan')->with('success', 'Jadwal pakan berhasil disimpan');
         } catch (\Exception $e) {
-            // Menangani error dengan pesan yang lebih jelas
             return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 
+    /**
+     * Menampilkan form edit jadwal pakan
+     */
     public function edit($id)
     {
         $jadwalPakan = JadwalPakan::findOrFail($id);
         $spesies = Spesies::all();
+       $jadwalPakan->jadwal_pakan = json_decode($jadwalPakan->jadwal_pakan);
 
         return view('admin.JadwalPakan.edit', [
             'jadwalPakan' => $jadwalPakan,
@@ -66,31 +71,33 @@ class JadwalPakanController extends Controller
         ]);
     }
 
+    /**
+     * Menyimpan perubahan pada jadwal pakan
+     */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'spesies_id' => 'required|exists:spesies,id',
+            'jadwal_pakan' => 'required|array|min:1',
+            'jadwal_pakan.*' => 'required|date_format:H:i',
+        ]);
+
         try {
-            // Menambahkan validasi input untuk update
-            $request->validate([
-                'spesies_id' => 'required|exists:spesies,id',
-                'jadwal_pakan' => 'required|array|min:1',
-                'jadwal_pakan.*' => 'required|date_format:H:i',
-            ]);
-
-            // Menyimpan jadwal_pakan yang sudah diperbarui
-            $jadwal = implode(', ', $request->jadwal_pakan);
-
             $jadwalPakan = JadwalPakan::findOrFail($id);
-            $jadwalPakan->spesies_id = $request->spesies_id;
-            $jadwalPakan->jadwal_pakan = $jadwal;
-            $jadwalPakan->save();
+            $jadwalPakan->update([
+                'spesies_id' => $request->spesies_id,
+                'jadwal_pakan' => json_encode($request->jadwal_pakan), // Update sebagai JSON
+            ]);
 
             return redirect()->route('index.jadwal.pakan')->with('success', 'Jadwal pakan berhasil diperbarui');
         } catch (\Exception $e) {
-            // Menangani error dengan pesan yang lebih jelas
             return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 
+    /**
+     * Menghapus jadwal pakan
+     */
     public function destroy($id)
     {
         try {

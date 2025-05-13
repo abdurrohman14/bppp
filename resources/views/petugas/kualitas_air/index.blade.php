@@ -1,13 +1,13 @@
 @extends('partials.admin.main')
 
 @section('content')
-    <div class="content">
+    <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
         <div class="card shadow">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">Daftar Kualitas Air</h5>
             </div>
             <div class="card-body">
-                <a href="{{ route('create.petugas.kualitasair') }}" class="btn btn-success mb-3">Tambah Data Kualitas Air</a>
+                <a href="{{ route('create.petugas.kualitasair') }}" class="btn btn-success mb-3">Tambah</a>
                 @if(session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
@@ -49,5 +49,5 @@
                 </table>
             </div>
         </div>
-    </div>
+    </main>
 @endsection

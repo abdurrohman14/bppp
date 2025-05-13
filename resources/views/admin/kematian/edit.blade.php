@@ -1,7 +1,7 @@
 @extends('partials.admin.main')
 
 @section('content')
-    <div class="content">
+<main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
         <div class="card shadow">
             <div class="card-header bg-warning text-white">
                 <h5 class="mb-0">Edit Data Kematian</h5>
@@ -9,7 +9,7 @@
             <div class="card-body">
                 <form action="{{ route('update.kematian', $kematian->id) }}" method="POST">
                     @csrf
-                    
+
                     <div class="mb-3">
                         <label for="kolam_id" class="form-label">Kolam</label>
                         <select class="form-select" name="kolam_id" required>
@@ -49,5 +49,5 @@
                 </form>
             </div>
         </div>
-    </div>
+    </main>
 @endsection

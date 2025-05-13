@@ -1,10 +1,17 @@
 @extends('partials.admin.main')
 @section('content')
 
-<div class="content">
-    <div class="table-container">
-        <a href="{{ route('pakan.masuk.create') }}" class="btn btn-primary mb-3 text-white">+ Tambah</a>
-        <table class="table table-bordered">
+<main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
+    <div class="card shadow border-0">
+        <div class="card-header">
+            <h5 class="mb-0">Data Pakan Masuk</h5>
+        </div>
+        <div class="card-body">
+            <button type="button" class="btn btn-primary btn-sm">
+                <a href="{{ route('pakan.masuk.create') }}" class="text-decoration-none text-white">Tambah</a>
+            </button>
+            <div class="table-responsive">
+        <table class="table table-bordered table-striped" id="example1">
             <thead>
                 <tr>
                     <th>No</th>
@@ -34,6 +41,8 @@
             </tbody>
         </table>
     </div>
-</div>
+        </div>
+    </div>
+</main>
 
 @endsection

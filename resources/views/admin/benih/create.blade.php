@@ -1,7 +1,6 @@
 @extends('partials.admin.main')
-
 @section('content')
-    <div class="content">
+    <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
         <div class="card shadow">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">Form Penebaran Benih</h5>
@@ -13,7 +12,7 @@
                         <label for="kolam_id" class="form-label">Kolam</label>
                         <select class="form-select" id="kolam_id" name="kolam_id">
                             <option value="">-- Pilih Nama Kolam --</option>
-                            @foreach($kolam as $kolam)
+                            @foreach ($kolam as $kolam)
                                 <option value="{{ $kolam->id }}">
                                     {{ $kolam->nama }}
                                 </option>
@@ -24,7 +23,7 @@
                         <label for="spesies_id" class="form-label">Jenis Ikan</label>
                         <select class="form-select" id="spesies_id" name="spesies_id">
                             <option value="">-- Pilih Jenis Ikan --</option>
-                            @foreach($spesies as $sps)
+                            @foreach ($spesies as $sps)
                                 <option value="{{ $sps->id }}">
                                     {{ $sps->jenis_ikan }}
                                 </option>
@@ -59,5 +58,5 @@
                 </form>
             </div>
         </div>
-    </div>
+    </main>
 @endsection

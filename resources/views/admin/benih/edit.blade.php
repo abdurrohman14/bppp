@@ -1,6 +1,6 @@
 @extends('partials.admin.main')
 @section('content')
-<div class="content">
+<main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
     <div class="card shadow">
         <div class="card-header bg-primary text-white">
             <h5 class="mb-0">Form Edit Penebaran Benih</h5>
@@ -9,7 +9,7 @@
             <form action="{{ route('update.benih', $benih->id) }}" method="POST">
                 @csrf
                 @method('POST') {{-- atau PUT kalau route-nya pakai method PUT --}}
-                
+
                 {{-- Kolam --}}
                 <div class="mb-3">
                     <label for="kolam_id" class="form-label">Nama Kolam</label>
@@ -71,5 +71,5 @@
             </form>
         </div>
     </div>
-</div>
+</main>
 @endsection

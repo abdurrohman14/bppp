@@ -1,37 +1,46 @@
 @extends('partials.admin.main')
 
 @section('content')
-<div class="content">
-    <div class="form-container">
-        <form action="{{ route('jadwal.pakan.store') }}" method="POST">
-            @csrf
-            <div class="form-group">
-                <label for="spesies_id">Spesies Ikan</label>
-                <select name="spesies_id" class="form-control" required>
-                    @foreach ($spesies as $item)
-                        <option value="{{ $item->id }}">{{ $item->jenis_ikan }}</option>
-                    @endforeach
-                </select>
+    <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
+        <div class="card shadow border-0">
+            <div class="card-header">
+                <h5 class="mb-0">Tambah Jadwal Pakan</h5>
             </div>
+            <div class="card-body">
+                <div class="form-container">
+                    <form action="{{ route('jadwal.pakan.store') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="spesies_id">Spesies Ikan</label>
+                            <select name="spesies_id" class="form-control" required>
+                                @foreach ($spesies as $item)
+                                    <option value="{{ $item->id }}">{{ $item->jenis_ikan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
-            <div class="form-group" id="jadwal_pakan_group">
-                <label for="jadwal_pakan">Jam Pakan</label>
-                <div class="jadwal_pakan">
-                    <input type="time" name="jadwal_pakan[]" class="form-control mb-2" required>
+                        <div class="form-group mt-2" id="jadwal_pakan_group">
+                            <label for="jadwal_pakan">Jam Pakan</label>
+                            <div class="jadwal_pakan">
+                                <input type="time" name="jadwal_pakan[]" class="form-control mb-2" required>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2 mt-2">
+                            <button type="button" class="btn btn-success btn-sm" id="add_waktu_pakan">Tambah Jam Pakan</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
+    </main>
 
-            <button type="button" class="btn btn-success" id="add_waktu_pakan">Tambah Jam Pakan</button>
-            <button type="submit" class="btn btn-primary mt-3">Simpan</button>
-        </form>
-    </div>
-</div>
-
-<script>
-    document.getElementById('add_waktu_pakan').addEventListener('click', function () {
-        var div = document.createElement('div');
-        div.innerHTML = '<input type="time" name="jadwal_pakan[]" class="form-control mb-2" required>';
-        document.getElementById('jadwal_pakan_group').appendChild(div);
-    });
-</script>
+    <script>
+        document.getElementById('add_waktu_pakan').addEventListener('click', function() {
+            var div = document.createElement('div');
+            div.innerHTML = '<input type="time" name="jadwal_pakan[]" class="form-control mb-2" required>';
+            document.getElementById('jadwal_pakan_group').appendChild(div);
+        });
+    </script>
 @endsection

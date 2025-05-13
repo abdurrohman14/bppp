@@ -7,8 +7,11 @@ use App\Models\Spesies;
 
 class JadwalPakan extends Model
 {
+    protected $casts = [
+        'jadwal_pakan' => 'array',
+    ];
     // Tentukan nama tabel yang digunakan
-    protected $table = 'jadwal_pakan';
+    protected $table = 'jadwal_pakans';
 
     // Kolom yang bisa diisi
     protected $fillable = ['spesies_id', 'jadwal_pakan'];
