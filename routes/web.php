@@ -14,10 +14,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PakanController;
 use App\Http\Controllers\Admin\pakanKeluarController;
 use App\Http\Controllers\Admin\pakanMasukController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\Petugas\BnhController;
+use App\Http\Controllers\Petugas\JenisPController;
 use App\Http\Controllers\Petugas\KlmController;
 use App\Http\Controllers\Petugas\KmtnController;
 use App\Http\Controllers\Petugas\KuaController;
+use App\Http\Controllers\Petugas\PakanKController;
+use App\Http\Controllers\Petugas\PakanMController;
+use App\Http\Controllers\Petugas\PanController;
 use App\Http\Controllers\Petugas\SpsController;
 
 Route::get('/', function () {
@@ -149,8 +154,12 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::put('/{id}', [UserController::class, 'update'])->name('update.pengguna');
         Route::delete('/{id}', [UserController::class, 'destroy'])->name('delete.pengguna');
     });
-
+    
+    Route::prefix('admin')->group(function () {
+        Route::get('/laporan', [LaporanController::class, 'index'])->name('index.admin.laporan');
+        Route::get('/laporan/pdf', [LaporanController::class, 'generate'])->name('generate.admin.laporan');
     });
+    
 
 Route::middleware(['auth', 'role:petugasKolam'])->group(function() {
     Route::get('/petugasKolam', [RoleController::class, 'petugasKolam'])->name('petugasKolam.dashboard');
@@ -214,11 +223,49 @@ Route::middleware(['auth', 'role:petugasKolam'])->group(function() {
         Route::post('/update/{id}', [KuaController::class, 'update'])->name('update.petugas.kualitasair');
         Route::delete('/delete/{id}', [KuaController::class, 'destroy'])->name('delete.petugas.kualitasair');
     });
+
+     // Rute Panen
+     Route::prefix('petugas-panen')->group(function() {
+        Route::get('/', [PanController::class, 'index'])->name('index.petugas.panen');
+        Route::get('/create', [PanController::class, 'create'])->name('create.petugas.panen');
+        Route::post('/store', [PanController::class, 'store'])->name('store.petugas.panen');
+        Route::get('/edit/{id}', [PanController::class, 'edit'])->name('edit.petugas.panen');
+        Route::put('/update/{id}', [PanController::class, 'update'])->name('update.petugas.panen');
+        Route::delete('/delete/{id}', [PanController::class, 'destroy'])->name('delete.petugas.panen');
+    });
+
+    // Rute Pakan Keluar
+    Route::prefix('petugas-pakan-keluar')->group(function () {
+        Route::get('/', [PakanKController::class, 'index'])->name('index.petugas.PakanKeluar');
+        Route::get('/create', [PakanKController::class, 'create'])->name('create.petugas.PakanKeluar');
+        Route::post('/store', [PakanKController::class, 'store'])->name('store.petugas.PakanKeluar');
+        Route::get('/{id}/edit', [PakanKController::class, 'edit'])->name('edit.petugas.PakanKeluar');
+        Route::put('/update/{id}', [PakanKController::class, 'update'])->name('update.petugas.PakanKeluar');
+        Route::delete('/delete/{id}', [PakanKController::class, 'destroy'])->name('destroy.petugas.PakanKeluar');
+    });
+
+        // Rute Pakan Masuk
+        Route::prefix('petugas-pakan-masuk')->group(function () {
+            Route::get('/', [PakanMController::class, 'index'])->name('index.petugas.PakanMasuk');
+            Route::get('/create', [PakanMController::class, 'create'])->name('create.petugas.PakanMasuk');
+            Route::post('/store', [PakanMController::class, 'store'])->name('store.petugas.PakanMasuk');
+            Route::get('/{id}/edit', [PakanMController::class, 'edit'])->name('edit.petugas.PakanMasuk');
+            Route::put('/update/{id}', [PakanMController::class, 'update'])->name('update.petugas.PakanMasuk');
+            Route::delete('/delete/{id}', [PakanMController::class, 'destroy'])->name('destroy.petugas.PakanMasuk');
+        });
+
+        // Rute Jenis Pakan
+    Route::prefix('petugas-jenis-pakan')->group(function () {
+        Route::get('/', [JenisPController::class, 'index'])->name('index.petugas.JenisPakan');
+        Route::get('/create', [JenisPController::class, 'create'])->name('create.petugas.JenisPakan');
+        Route::post('/store', [JenisPController::class, 'store'])->name('store.petugas.JenisPakan');
+        Route::get('/{id}/edit', [JenisPController::class, 'edit'])->name('edit.petugas.JenisPakan');
+        Route::put('/update/{id}', [JenisPController::class, 'update'])->name('update.petugas.JenisPakan');
+        Route::delete('/delete/{id}', [JenisPController::class, 'destroy'])->name('destroy.petugas.JenisPakan');
+    });
 });
 
 Route::middleware(['auth', 'role:manajer'])->group(function() {
     Route::get('/manajer', [RoleController::class, 'manajer'])->name('manajer.dashboard');
 });
-
-
-
+});

@@ -11,7 +11,7 @@ class JadwalPakan extends Model
         'jadwal_pakan' => 'array',
     ];
     // Tentukan nama tabel yang digunakan
-    protected $table = 'jadwal_pakans';
+    protected $table = 'jadwal_pakan';
 
     // Kolom yang bisa diisi
     protected $fillable = ['spesies_id', 'jadwal_pakan'];

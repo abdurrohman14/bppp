@@ -15,4 +15,22 @@ class Kolam extends Model
     {
         return $this->hasMany(KualitasAir::class);
     }
+
+    // Relasi ke penebaran
+    public function penebaran()
+    {
+        return $this->hasMany(penebaranBenih::class);
+    }
+
+    // Relasi ke mortalitas
+    public function mortalitas()
+    {
+        return $this->hasMany(Kematian::class);
+    }
+
+    // Relasi ke panen
+    public function panen()
+    {
+        return $this->hasMany(Panen::class);
+    }
 }

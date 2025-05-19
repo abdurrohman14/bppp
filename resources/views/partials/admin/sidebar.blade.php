@@ -69,7 +69,7 @@
                 <i class="bi bi-person-fill-add me-2"></i>
                 Tambah Role
             </a>
-            <a href="#" class="d-flex align-items-center px-3 py-2">
+            <a href="{{ route('index.admin.laporan') }}" class="d-flex align-items-center px-3 py-2">
                 <i class="bi bi-file-earmark-pdf-fill me-2"></i>
                 Laporan
             </a>
@@ -106,10 +106,36 @@
                 <i class="bi bi-droplet-fill me-2"></i>
                 Kualitas Air
             </a>
-            <a href="" class="d-flex align-items-center px-3 py-2">
+            <a href="{{ route('index.petugas.panen') }}" class="d-flex align-items-center px-3 py-2">
                 <i class="bi bi-collection-fill me-2"></i>
                 Manajemen Panen
             </a>
+            <div class="accordion" id="sidebarAccordion">
+                <div class="accordion-item border-0">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed px-3 py-2" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapsePakan" aria-expanded="false"><i class="bi bi-box-fill me-2"></i>
+                            Manajemen Pakan
+                        </button>
+                    </h2>
+                    <div id="collapsePakan" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
+                        <div class="accordion-body py-0 px-0">
+                            <a href="{{ route('index.petugas.PakanKeluar') }}"
+                                class="d-flex align-items-center px-3 py-2 text-dark">
+                                <i class="bi bi-circle me-2"></i> Pakan Keluar
+                            </a>
+                            <a href="{{ route('index.petugas.PakanMasuk') }}"
+                                class="d-flex align-items-center px-3 py-2 text-dark">
+                                <i class="bi bi-circle me-2"></i> Pakan Masuk
+                            </a>
+                            <a href="{{ route('index.petugas.JenisPakan') }}" class="d-flex align-items-center px-3 py-2 text-dark">
+                                <i class="bi bi-circle me-2"></i> Pakan
+                            </a>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit"
@@ -122,6 +148,10 @@
             <a href="{{ route('manajer.dashboard') }}" class="d-flex align-items-center px-3 py-2">
                 <i class="bi bi-house-fill me-2"></i>
                 Dashboard
+            </a>
+            <a href="#" class="d-flex align-items-center px-3 py-2">
+                <i class="bi bi-file-earmark-pdf-fill me-2"></i>
+                Laporan
             </a>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
