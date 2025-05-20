@@ -25,7 +25,7 @@
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $pakan->spesies->jenis_ikan }}</td>
-                                    <td>{{ $pakan->jadwal_pakan }}</td>
+                                    <td>{{ implode(', ', $pakan->jadwal_pakan) }}</td>
                                     <td>
                                         <a href="{{ route('jadwal.pakan.edit', $pakan->id) }}"
                                             class="btn btn-warning btn-sm">Edit</a>

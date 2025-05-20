@@ -69,7 +69,7 @@
                 <i class="bi bi-person-fill-add me-2"></i>
                 Tambah Role
             </a>
-            <a href="{{ route('index.admin.laporan') }}" class="d-flex align-items-center px-3 py-2">
+            <a href="{{ route('index.laporan') }}" class="d-flex align-items-center px-3 py-2">
                 <i class="bi bi-file-earmark-pdf-fill me-2"></i>
                 Laporan
             </a>

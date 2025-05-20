@@ -46,7 +46,7 @@ class JadwalPakanController extends Controller
         try {
             JadwalPakan::create([
                 'spesies_id' => $request->spesies_id,
-                'jadwal_pakan' => json_encode($request->jadwal_pakan), // Simpan sebagai JSON
+                'jadwal_pakan' => ($request->jadwal_pakan),
             ]);
 
             return redirect()->route('index.jadwal.pakan')->with('success', 'Jadwal pakan berhasil disimpan');

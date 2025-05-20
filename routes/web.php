@@ -1,29 +1,29 @@
 <?php
 
-use App\Http\Controllers\Admin\JadwalPakanController;
-use App\Http\Controllers\Admin\KematianController;
-use App\Http\Controllers\Admin\KolamController;
-use App\Http\Controllers\Admin\KualitasAirController;
-use App\Http\Controllers\Admin\PanenController;
-use App\Http\Controllers\Admin\PenebaranBenihController;
-use App\Http\Controllers\Admin\SpesiesController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\KolamController;
 use App\Http\Controllers\Admin\PakanController;
-use App\Http\Controllers\Admin\pakanKeluarController;
-use App\Http\Controllers\Admin\pakanMasukController;
-use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\Admin\PanenController;
 use App\Http\Controllers\Petugas\BnhController;
-use App\Http\Controllers\Petugas\JenisPController;
 use App\Http\Controllers\Petugas\KlmController;
-use App\Http\Controllers\Petugas\KmtnController;
 use App\Http\Controllers\Petugas\KuaController;
-use App\Http\Controllers\Petugas\PakanKController;
-use App\Http\Controllers\Petugas\PakanMController;
 use App\Http\Controllers\Petugas\PanController;
 use App\Http\Controllers\Petugas\SpsController;
+use App\Http\Controllers\Petugas\KmtnController;
+use App\Http\Controllers\Admin\LaporanController;
+use App\Http\Controllers\Admin\SpesiesController;
+use App\Http\Controllers\Admin\KematianController;
+use App\Http\Controllers\Petugas\JenisPController;
+use App\Http\Controllers\Petugas\PakanKController;
+use App\Http\Controllers\Petugas\PakanMController;
+use App\Http\Controllers\Admin\pakanMasukController;
+use App\Http\Controllers\Admin\JadwalPakanController;
+use App\Http\Controllers\Admin\KualitasAirController;
+use App\Http\Controllers\Admin\pakanKeluarController;
+use App\Http\Controllers\Admin\PenebaranBenihController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -113,7 +113,7 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::put('/update/{id}', [PakanController::class, 'update'])->name('pakan.update');
         Route::delete('/delete/{id}', [PakanController::class, 'destroy'])->name('pakan.destroy');
     });
-    
+
     // Rute Pakan Keluar
     Route::prefix('pakan-keluar')->group(function () {
         Route::get('/', [pakanKeluarController::class, 'index'])->name('index.pakan.Keluar');
@@ -123,7 +123,7 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::put('/update/{id}', [pakanKeluarController::class, 'update'])->name('pakan.Keluar.update');
         Route::delete('/delete/{id}', [pakanKeluarController::class, 'destroy'])->name('pakan.Keluar.destroy');
     });
-    
+
 
     // Rute Pakan masuk
     Route::prefix('pakan-masuk')->group(function () {
@@ -154,12 +154,13 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::put('/{id}', [UserController::class, 'update'])->name('update.pengguna');
         Route::delete('/{id}', [UserController::class, 'destroy'])->name('delete.pengguna');
     });
-    
-    Route::prefix('admin')->group(function () {
-        Route::get('/laporan', [LaporanController::class, 'index'])->name('index.admin.laporan');
-        Route::get('/laporan/pdf', [LaporanController::class, 'generate'])->name('generate.admin.laporan');
+
+    // Rute Laporan
+    Route::prefix('laporan')->group(function() {
+        Route::get('/', [LaporanController::class, 'index'])->name('index.laporan');
+        Route::get('/generate', [LaporanController::class, 'generate'])->name('generate.laporan');
     });
-    
+
 
 Route::middleware(['auth', 'role:petugasKolam'])->group(function() {
     Route::get('/petugasKolam', [RoleController::class, 'petugasKolam'])->name('petugasKolam.dashboard');
