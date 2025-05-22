@@ -26,7 +26,7 @@ use App\Http\Controllers\Admin\pakanKeluarController;
 use App\Http\Controllers\Admin\PenebaranBenihController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {

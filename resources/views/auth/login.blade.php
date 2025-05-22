@@ -1,47 +1,94 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login - BPPP Banyuwangi</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sanista+One&family=Sedan+SC&family=Roboto:wght@700&display=swap" rel="stylesheet">
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+  <style>
+    body {
+      background-color: white;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-card {
+      background: #3A86D1;
+      border-radius: 12px;
+      padding: 40px 30px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    .login-card img {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+    .smart-title {
+      font-family: 'Sedan SC', serif;
+      color: white;
+    }
+    .bppp-title {
+      font-family: 'Sanista One', cursive;
+      color: white;
+    }
+    .form-control::placeholder {
+      color: #999;
+    }
+    .form-icon {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      color: #000000;
+      font-size: 1.1rem;
+      z-index: 3;
+    }
+    .form-control {
+      padding-left: 45px !important;
+      background-color: #ffffff !important;
+      border: 1px solid #ffffff;
+      font-weight: bold;
+    }
+    .btn-dark {
+      background-color: #f0f0f0;
+      color: #000;
+      border: none;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 700;
+    }
+    .btn-dark:hover {
+      background-color: #f0f0f0;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+<div class="login-card">
+  <img src="{{ asset('assets/img/logo.png') }}" alt="Logo KKP" class="img-fluid" style="width:150px;">
+  <h6 class="text-uppercase smart-title">Smart Fisheries Village</h6>
+  <h5 class="fw-bold mb-4 bppp-title">Balai Pelatihan dan Penyuluhan Perikanan (BPPP) Banyuwangi</h5>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+  <form action="{{ route('login') }}" method="post">
+    @csrf
+    <div class="mb-3 position-relative">
+      <span class="form-icon"><i class="bi bi-envelope-fill"></i></span>
+      <input type="email" class="form-control" name="email" value="{{ old('email') }}" required placeholder="Email">
+    </div>
+    <div class="mb-4 position-relative">
+      <span class="form-icon"><i class="bi bi-lock-fill"></i></span>
+      <input type="password" class="form-control" name="password" required placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-dark shadow-sm px-5 py-2 d-block mx-auto">LOGIN</button>
+  </form>
+</div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

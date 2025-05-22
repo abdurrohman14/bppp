@@ -62,7 +62,7 @@ class JadwalPakanController extends Controller
     {
         $jadwalPakan = JadwalPakan::findOrFail($id);
         $spesies = Spesies::all();
-       $jadwalPakan->jadwal_pakan = json_decode($jadwalPakan->jadwal_pakan);
+       $jadwalPakan->jadwal_pakan = ($jadwalPakan->jadwal_pakan);
 
         return view('admin.JadwalPakan.edit', [
             'jadwalPakan' => $jadwalPakan,
@@ -86,7 +86,7 @@ class JadwalPakanController extends Controller
             $jadwalPakan = JadwalPakan::findOrFail($id);
             $jadwalPakan->update([
                 'spesies_id' => $request->spesies_id,
-                'jadwal_pakan' => json_encode($request->jadwal_pakan), // Update sebagai JSON
+                'jadwal_pakan' => ($request->jadwal_pakan), // Update sebagai JSON
             ]);
 
             return redirect()->route('index.jadwal.pakan')->with('success', 'Jadwal pakan berhasil diperbarui');
