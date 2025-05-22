@@ -8,11 +8,11 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <a href="{{ route('kualitas_air.create') }}" class="btn btn-primary btn-sm">Tambah</a>
-                @if(session('success'))
+                {{-- @if(session('success'))
                     <div class="alert alert-success">
                         {{ session('success') }}
                     </div>
-                @endif
+                @endif --}}
                 <table class="table table-bordered table-striped" id="example1">
                     <thead>
                         <tr>

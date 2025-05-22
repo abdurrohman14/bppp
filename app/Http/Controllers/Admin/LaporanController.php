@@ -9,60 +9,75 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class LaporanController extends Controller
 {
-     public function index(Request $request)
-    {
-        $jenis = $request->input('jenis', 'bulanan'); // Default to 'bulanan'
+    public function index(Request $request)
+{
+    $jenis = $request->input('jenis', 'bulanan');
+
+    if ($jenis === 'bulanan') {
+        $tahun_bulan = $request->input('tahun_bulan', date('Y-m'));
+        [$tahun, $bulan] = explode('-', $tahun_bulan);
+    } else {
         $tahun = $request->input('tahun', date('Y'));
-        $bulan = $request->input('bulan', date('m'));
-
-        // Get the filtered data
-        $laporan = Kolam::with(['penebaran', 'kualitasAir', 'mortalitas', 'panen'])
-            ->get()
-            ->map(function ($kolam) use ($jenis, $bulan, $tahun) {
-                $filter = fn($item) =>
-                    ($jenis === 'tahunan'
-                        ? $item->tahun == $tahun
-                        : ($item->tahun == $tahun && $item->bulan == $bulan));
-
-                $penebaran = $kolam->penebaran->filter($filter);
-                $kualitasAir = $kolam->kualitasAir->filter($filter);
-                $mortalitas = $kolam->mortalitas->filter($filter);
-                $panen = $kolam->panen->filter($filter);
-
-                return (object) [
-                    'nama_kolam' => $kolam->nama,
-                    'total_penebaran' => $penebaran->sum('jumlah'),
-                    'rata_rata_suhu' => round($kualitasAir->avg('suhu'), 2),
-                    'rata_rata_ph' => round($kualitasAir->avg('ph'), 2),
-                    'rata_rata_do' => round($kualitasAir->avg('do'), 2),
-                    'total_mortalitas' => $mortalitas->sum('jumlah'),
-                    'total_panen' => $panen->sum('berat'),
-                    'total_nilai_panen' => $panen->sum('total_harga'),
-                ];
-            });
-
-        return view('admin.laporan.index', [
-            'title' => 'Laporan',
-            'jenis' => $jenis,
-            'bulan' => $bulan,
-            'tahun' => $tahun,
-            'laporan' => $laporan,
-        ]);
+        $bulan = null;
     }
+
+    $laporan = Kolam::with(['penebaran', 'kualitasAir', 'mortalitas', 'panen'])
+        ->get()
+        ->map(function ($kolam) use ($jenis, $bulan, $tahun) {
+            // Filter berdasarkan tahun/bulan dari tanggal
+            $filter = function($item, $dateField) use ($jenis, $bulan, $tahun) {
+                $date = \Carbon\Carbon::parse($item->{$dateField});
+                return $jenis === 'tahunan'
+                    ? $date->year == $tahun
+                    : ($date->year == $tahun && $date->month == $bulan);
+            };
+
+            $penebaran = $kolam->penebaran->filter(fn($item) => $filter($item, 'tanggal_tebar'));
+            $kualitasAir = $kolam->kualitasAir->filter(fn($item) => $filter($item, 'tanggal_pengukuran'));
+            $mortalitas = $kolam->mortalitas->filter(fn($item) => $filter($item, 'tanggal_kematian'));
+            $panen = $kolam->panen->filter(fn($item) => $filter($item, 'tanggal_panen'));
+
+            return (object) [
+                'nama_kolam' => $kolam->nama,
+                'total_penebaran' => $penebaran->sum('jumlah_benih'),
+                'rata_rata_suhu' => round($kualitasAir->avg('temperatur'), 2),
+                'rata_rata_ph' => round($kualitasAir->avg('ph'), 2),
+                'rata_rata_do' => round($kualitasAir->avg('oksigen_terlarut'), 2),
+                'total_mortalitas' => $mortalitas->sum('jumlah_mati'),
+                'total_panen' => $panen->sum('berat_total'),
+                'total_nilai_panen' => $panen->sum(function ($item) {
+                    return $item->berat_total * $item->harga_per_kg;
+                }),
+            ];
+        });
+
+    return view('admin.laporan.index', [
+        'title' => 'Laporan',
+        'jenis' => $jenis,
+        'bulan' => $bulan,
+        'tahun' => $tahun,
+        'laporan' => $laporan,
+    ]);
+}
 
     public function generate(Request $request)
     {
         $jenis = $request->input('jenis', 'bulanan');
-        $tahun = $request->input('tahun', date('Y'));
-        $bulan = $request->input('bulan', date('m'));
+
+        if ($jenis === 'bulanan') {
+            $tahun_bulan = $request->input('tahun_bulan', date('Y-m'));
+            [$tahun, $bulan] = explode('-', $tahun_bulan);
+        } else {
+            $tahun = $request->input('tahun', date('Y'));
+            $bulan = null;
+        }
 
         $laporan = Kolam::with(['penebaran', 'kualitasAir', 'mortalitas', 'panen'])
             ->get()
             ->map(function ($kolam) use ($jenis, $bulan, $tahun) {
-                $filter = fn($item) =>
-                    ($jenis === 'tahunan'
-                        ? $item->tahun == $tahun
-                        : ($item->tahun == $tahun && $item->bulan == $bulan));
+                $filter = fn($item) => ($jenis === 'tahunan'
+                    ? $item->tahun == $tahun
+                    : ($item->tahun == $tahun && $item->bulan == $bulan));
 
                 $penebaran = $kolam->penebaran->filter($filter);
                 $kualitasAir = $kolam->kualitasAir->filter($filter);
@@ -71,13 +86,13 @@ class LaporanController extends Controller
 
                 return (object) [
                     'nama_kolam' => $kolam->nama,
-                    'total_penebaran' => $penebaran->sum('jumlah'),
-                    'rata_rata_suhu' => round($kualitasAir->avg('suhu'), 2),
+                    'total_penebaran' => $penebaran->sum('jumlah_benih'),
+                    'rata_rata_suhu' => round($kualitasAir->avg('temperatur'), 2),
                     'rata_rata_ph' => round($kualitasAir->avg('ph'), 2),
-                    'rata_rata_do' => round($kualitasAir->avg('do'), 2),
-                    'total_mortalitas' => $mortalitas->sum('jumlah'),
-                    'total_panen' => $panen->sum('berat'),
-                    'total_nilai_panen' => $panen->sum('total_harga'),
+                    'rata_rata_do' => round($kualitasAir->avg('oksigen_terlarut'), 2),
+                    'total_mortalitas' => $mortalitas->sum('jumlah_mati'),
+                    'total_panen' => $panen->sum('berat_total'),
+                    'total_nilai_panen' => $panen->sum('harga_per_kg'),
                 ];
             });
 
