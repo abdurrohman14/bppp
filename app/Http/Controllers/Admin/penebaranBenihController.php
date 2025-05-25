@@ -41,6 +41,17 @@ class penebaranBenihController extends Controller
                 'tanggal_tebar' => 'required',
                 'jumlah_benih' => 'required',
             ]);
+
+            // mendapatkan data kolam
+            $kolam = Kolam::findOrFail($request->kolam_id);
+
+            // hitung jumlah ikan setelah penebaran
+            $jumlahIkanSekarang = $kolam->jumlah_ikan + $request->jumlah_benih;
+
+            // validasi jumlah ikan tidak melebihi kapasitas kolam
+            if ($jumlahIkanSekarang > 2500) {
+                return redirect()->back()->with('error', 'Jumlah ikan melebihi kapasitas kolam');
+            }
             penebaranBenih::create([
                 'kolam_id' => $request->kolam_id,
                 'spesies_id' => $request->spesies_id,
@@ -49,6 +60,8 @@ class penebaranBenihController extends Controller
                 'tanggal_tebar' => $request->tanggal_tebar,
                 'jumlah_benih' => $request->jumlah_benih,
             ]);
+            // update jumlah ikan di kolam
+            $kolam->update(['jumlah_ikan' => $jumlahIkanSekarang]);
             return redirect()->route('index.benih')->with('success', 'Data Berhasil Ditambahkan');
         } catch (\Throwable $th) {
             return redirect()->route('index.benih')->with('error', $th->getMessage());
@@ -64,7 +77,7 @@ class penebaranBenihController extends Controller
             'spesies' => Spesies::all(),
             'title' => 'Edit Penebaran Benih',
         ]);
-    }    
+    }
 
     public function update(Request $request, $id)
     {

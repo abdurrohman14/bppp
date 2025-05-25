@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Panen extends Model
 {
+    protected $dates = [
+        'tanggal_panen',
+    ];
     protected $fillable = [
         'kolam_id',
         'spesies_id',

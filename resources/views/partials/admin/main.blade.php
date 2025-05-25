@@ -120,6 +120,6 @@
             $('#summernote').summernote()
         })
     </script>
+    @stack('scripts')
 </body>
-
 </html>

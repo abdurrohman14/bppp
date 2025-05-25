@@ -25,6 +25,7 @@ class KolamController extends Controller
         return view('admin.kolam.create', [
             'budaya' => $budaya,
             'status' => $status,
+            'kolam' => $kolam,
             'title' => 'Tambah Kolam',
         ]);
     }
