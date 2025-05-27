@@ -10,6 +10,6 @@ class Pakan extends Model
     use HasFactory;
 
     protected $fillable = [
-        'pakan', 'asal_pakan', 'ukuran_pakan', 'jumlah_pakan',
+        'jenis_pakan', 'asal_pakan', 'ukuran_pakan', 'jumlah_pakan',
     ];
 }

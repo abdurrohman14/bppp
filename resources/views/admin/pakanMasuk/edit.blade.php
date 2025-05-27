@@ -18,7 +18,7 @@
                             @foreach ($pakan as $pkt)
                                 <option value="{{ $pkt->id }}"
                                     {{ $pakanMasuk->pakan_id == $pkt->id ? 'selected' : '' }}>
-                                    {{ $pkt->pakan }}
+                                    {{ $pkt->jenis_pakan }}
                                 </option>
                             @endforeach
                         </select>

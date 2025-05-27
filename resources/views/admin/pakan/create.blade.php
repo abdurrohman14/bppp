@@ -11,7 +11,7 @@
                     @csrf
                     <div class="mb-3">
                         <label>Jenis Pakan</label>
-                        <input type="text" name="pakan" class="form-control" required>
+                        <input type="text" name="jenis_pakan" class="form-control" required>
                     </div>
 
                     <div class="mb-3">

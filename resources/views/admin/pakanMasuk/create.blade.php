@@ -16,7 +16,7 @@
                             <option value="">-- Pilih Pakan --</option>
                             @foreach ($pakan as $pkt)
                                 <option value="{{ $pkt->id }}">
-                                    {{ $pkt->pakan }}
+                                    {{ $pkt->jenis_pakan }}
                                 </option>
                             @endforeach
                         </select>

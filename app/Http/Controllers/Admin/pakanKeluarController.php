@@ -38,13 +38,24 @@ class pakanKeluarController extends Controller
     {
         try {
             $request->validate([
-                'pakan_id' => 'required',
-                'kolam_id' => 'required',
-                'spesies_id' => 'required',
+                'pakan_id' => 'required|exists:pakans,id',
+                'kolam_id' => 'required|exists:kolams,id',
+                'spesies_id' => 'required|exists:spesies,id',
                 'tanggal_keluar' => 'required',
                 'jumlah_keluar' => 'required',
             ]);
+
+            // mendapatkan data pakan berdasarkan ID
+            $pakan = Pakan::findOrFail($request->pakan_id); // Pastikan pakan_id valid
+            // hitung jumlah pakan keluar
+            $jumlahKeluar = $pakan->jumlah_pakan - $request->jumlah_keluar;
+            // validasi jumlah pakan tidak kurang dari 0
+            if ($jumlahKeluar < 0) {
+                return redirect()->back()->with('error', 'Jumlah pakan tidak cukup untuk dikeluarkan');
+            }
             pakanKeluar::create($request->all());
+            // Perbarui jumlah pakan di model Pakan
+            $pakan->update(['jumlah_pakan' => $jumlahKeluar]);
             return redirect()->route('index.pakan.Keluar')->with('success', 'Data Berhasil Ditambahkan');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
@@ -71,9 +82,9 @@ class pakanKeluarController extends Controller
     {
         try {
             $request->validate([
-                'pakan_id' => 'required',
-                'kolam_id' => 'required',
-                'spesies_id' => 'required',
+                'pakan_id' => 'required|exists:pakans,id',
+                'kolam_id' => 'required|exists:kolams,id',
+                'spesies_id' => 'required|exists:spesies,id',
                 'tanggal_keluar' => 'required',
                 'jumlah_keluar' => 'required',
             ]);
