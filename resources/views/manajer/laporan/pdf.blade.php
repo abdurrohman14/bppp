@@ -44,7 +44,6 @@
                 <th>Rata-rata pH</th>
                 <th>Rata-rata DO (mg/L)</th>
                 <th>Total Mortalitas (ekor)</th>
-                <th>Total Pakan Keluar (kg)</th>
                 <th>Total Panen (kg)</th>
                 <th>Total Nilai Panen (Rp)</th>
             </tr>
@@ -54,12 +53,11 @@
                 <tr>
                     <td>{{ $i + 1 }}</td>
                     <td>{{ $item->nama_kolam }}</td>
-                    <td>{{ number_format($item->total_penebaran, 0) }}</td>
+                    <td>{{ $item->total_penebaran }}</td>
                     <td>{{ number_format($item->rata_rata_suhu, 2) }}</td>
                     <td>{{ number_format($item->rata_rata_ph, 2) }}</td>
                     <td>{{ number_format($item->rata_rata_do, 2) }}</td>
-                    <td>{{ number_format($item->total_mortalitas, 0) }}</td>
-                    <td>{{ number_format($item->jumlah_keluar ?? 0, 2) }}</td>
+                    <td>{{ $item->total_mortalitas }}</td>
                     <td>{{ number_format($item->total_panen, 2) }}</td>
                     <td>Rp {{ number_format($item->total_nilai_panen, 0, ',', '.') }}</td>
                 </tr>

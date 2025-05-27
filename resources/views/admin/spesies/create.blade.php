@@ -3,7 +3,7 @@
 <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
         <div class="card shadow">
             <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Form Manajemen Spesies</h5>
+                <h5 class="mb-0">Manajemen Spesies</h5>
             </div>
             <div class="card-body">
                 <form action="{{ route('store.spesies') }}" method="POST" enctype="multipart/form-data">

@@ -1,48 +1,51 @@
 @extends('partials.admin.main')
-@section('content')
 
+@section('content')
 <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
-    <div class="card shadow border-0">
+    <div class="card shadow border-0" style="min-height: 550px;">
         <div class="card-header">
-            <h5 class="mb-0">Data Pakan Masuk</h5>
+            <h5 class="fw-bold" style="color: #003049;">Data Pakan Masuk</h5>
         </div>
         <div class="card-body">
-            <button type="button" class="btn btn-primary btn-sm">
-                <a href="{{ route('pakan.masuk.create') }}" class="text-decoration-none text-white">Tambah</a>
-            </button>
+            <div class="mb-3">
+                <button class="btn btn-primary btn-sm">
+                    <a href="{{ route('pakan.masuk.create') }}" class="text-decoration-none text-white">Tambah</a>
+                </button>
+            </div>
             <div class="table-responsive">
-        <table class="table table-bordered table-striped" id="example1">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Pakan</th> <!-- Menampilkan Nama Pakan -->
-                    <th>Tanggal Masuk</th>
-                    <th>Jumlah Masuk</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($pakanMasuk as $key => $item)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-                        <td>{{ $item->pakan->nama ?? 'Pakan Tidak Ditemukan' }}</td> <!-- Menampilkan Nama Pakan -->
-                        <td>{{ $item->tanggal_masuk }}</td>
-                        <td>{{ $item->jumlah_masuk }}</td>
-                        <td>
-                            <a href="{{ route('edit.pakan.masuk', $item->id) }}" class="btn btn-warning btn-sm mb-1">Edit</a>
-                            <form action="{{ route('pakan.masuk.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin hapus data?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger btn-sm">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+                <table class="table table-bordered table-striped" id="example1">
+                    <thead>
+                        <tr>
+                            <th class="text-start">No</th>
+                            <th class="text-start">Jenis Pakan</th>
+                            <th class="text-start">Tanggal Masuk</th>
+                            <th class="text-start">Jumlah Masuk</th>
+                            <th class="text-start">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($pakanMasuk as $key => $item)
+                            <tr>
+                                <td class="text-start">{{ $key + 1 }}</td>
+                                <td class="text-start">{{ $item->pakan->pakan ?? 'Pakan Tidak Ditemukan' }}</td>
+                                <td class="text-start">{{ $item->tanggal_masuk }}</td>
+                                <td class="text-start">{{ $item->jumlah_masuk }}</td>
+                                <td style="padding-left: 12px;">
+                                    <div class="d-flex gap-2">
+                                        <a href="{{ route('edit.pakan.masuk', $item->id) }}" class="btn btn-warning btn-sm text-white" style="width: 80px;">Edit</a>
+                                        <form action="{{ route('pakan.masuk.destroy', $item->id) }}" method="POST" style="width: 80px;" onsubmit="return confirm('Yakin hapus data?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm w-100">Hapus</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </main>
-
 @endsection

@@ -1,50 +1,58 @@
 @extends('partials.admin.main')
+
 @section('content')
 <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
-        <div class="card shadow border-0" style="min-height: 550px;">
-            <div class="card-header">
-                <h5 class="mb-0" style="color: #003049;">Data Panen</h5>
+    <div class="card shadow border-0" style="min-height: 550px;">
+        <div class="card-header">
+            <h5 class="fw-bold" style="color: #003049;">Data Panen</h5>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <button class="btn btn-primary btn-sm">
+                    <a href="{{ route('create.panen') }}" class="text-decoration-none text-white">Tambah</a>
+                </button>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <a href="{{ route('create.panen') }}" class="btn btn-primary btn-sm">Tambah</a>
+            <div class="table-responsive">
                 <table class="table table-bordered table-striped" id="example1">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Kolam</th>
-                            <th>Jenis Ikan</th>
-                            <th>Tanggal Panen</th>
-                            <th>Berat Total (kg)</th>
-                            <th>Harga per kg (Rp)</th>
-                            <th>Tujuan Distribusi</th>
+                            <th class="text-start">No</th>
+                            <th class="text-start">Kolam</th>
+                            <th class="text-start">Jenis Ikan</th>
+                            <th class="text-start">Tanggal Panen</th>
+                            <th class="text-start">Berat Total (kg)</th>
+                            <th class="text-start">Harga per kg (Rp)</th>
+                            <th class="text-start">Tujuan Distribusi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($panen as $index => $item)
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $item->kolam->nama ?? '-' }}</td>
-                                <td>{{ $item->spesies->jenis_ikan ?? '-' }}</td>
-                                <td>{{ $item->tanggal_panen }}</td>
-                                <td>{{ $item->berat_total }}</td>
-                                <td>{{ number_format($item->harga_per_kg, 0, ',', '.') }}</td>
-                                <td>{{ $item->tujuan_distribusi }}</td>
-                                <td>
-                                    <a href="{{ route('edit.panen', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('delete.panen', $item->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
-                                    </form>
+                                <td class="text-start">{{ $index + 1 }}</td>
+                                <td class="text-start">{{ $item->kolam->nama ?? '-' }}</td>
+                                <td class="text-start">{{ $item->spesies->jenis_ikan ?? '-' }}</td>
+                                <td class="text-start">{{ $item->tanggal_panen }}</td>
+                                <td class="text-start">{{ $item->berat_total }}</td>
+                                <td class="text-start">{{ number_format($item->harga_per_kg, 0, ',', '.') }}</td>
+                                <td class="text-start">{{ $item->tujuan_distribusi }}</td>
+                                <td style="padding-left: 12px;">
+                                    <div class="d-flex gap-2">
+                                        <a href="{{ route('edit.panen', $item->id) }}" class="btn btn-warning btn-sm text-white" style="width: 80px;">Edit</a>
+                                        <form action="{{ route('delete.panen', $item->id) }}" method="POST" style="width: 80px;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm w-100"
+                                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-                </div>
             </div>
         </div>
+    </div>
 </main>
 @endsection

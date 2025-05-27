@@ -149,10 +149,10 @@
                 <i class="bi bi-house-fill me-2"></i>
                 Dashboard
             </a>
-            <a href="#" class="d-flex align-items-center px-3 py-2">
+            {{-- <a href="{{ route('index.lprn') }}" class="d-flex align-items-center px-3 py-2">
                 <i class="bi bi-file-earmark-pdf-fill me-2"></i>
                 Laporan
-            </a>
+            </a> --}}
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit"

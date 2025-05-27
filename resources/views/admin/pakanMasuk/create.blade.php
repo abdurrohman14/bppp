@@ -11,7 +11,7 @@
                     @csrf
                     <!-- Pakan -->
                     <div class="mb-3">
-                        <label for="pakan_id" class="form-label">Pakan</label>
+                        <label for="pakan_id" class="form-label">Jenis Pakan</label>
                         <select class="form-select" id="pakan_id" name="pakan_id" required>
                             <option value="">-- Pilih Pakan --</option>
                             @foreach ($pakan as $pkt)

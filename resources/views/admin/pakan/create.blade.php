@@ -10,7 +10,7 @@
                 <form action="{{ route('pakan.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label>Pakan</label>
+                        <label>Jenis Pakan</label>
                         <input type="text" name="pakan" class="form-control" required>
                     </div>
 

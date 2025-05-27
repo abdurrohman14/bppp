@@ -2,10 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\KualitasAir;
+use App\Models\PenebaranBenih;
+use App\Models\Kematian;
+use App\Models\Panen;
+use App\Models\PakanKeluar;
 
 class Kolam extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'nama', 'budaya', 'status', 'jumlah_ikan'
     ];
@@ -16,10 +24,10 @@ class Kolam extends Model
         return $this->hasMany(KualitasAir::class);
     }
 
-    // Relasi ke penebaran
+    // Relasi ke penebaran benih
     public function penebaran()
     {
-        return $this->hasMany(penebaranBenih::class);
+        return $this->hasMany(PenebaranBenih::class);
     }
 
     // Relasi ke mortalitas
@@ -32,5 +40,11 @@ class Kolam extends Model
     public function panen()
     {
         return $this->hasMany(Panen::class);
+    }
+
+    // Relasi ke pakan keluar
+    public function pakanKeluar()
+    {
+        return $this->hasMany(PakanKeluar::class);
     }
 }

@@ -3,7 +3,7 @@
 <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
     <div class="card shadow">
         <div class="card-header bg-danger text-white">
-            <h5 class="mb-0">Form Edit Data Pakan Keluar</h5>
+            <h5 class="mb-0">Edit Data Pakan Keluar</h5>
         </div>
         <div class="card-body">
             <form action="{{ route('pakan.Keluar.update', $pakanKeluar->id) }}" method="POST">

@@ -22,8 +22,10 @@ use App\Http\Controllers\Petugas\PakanMController;
 use App\Http\Controllers\Admin\pakanMasukController;
 use App\Http\Controllers\Admin\JadwalPakanController;
 use App\Http\Controllers\Admin\KualitasAirController;
+use App\Http\Controllers\Admin\LprnController;
 use App\Http\Controllers\Admin\pakanKeluarController;
 use App\Http\Controllers\Admin\PenebaranBenihController;
+use App\Http\Controllers\Manajer\LprnController as ManajerLprnController;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -269,4 +271,10 @@ Route::middleware(['auth', 'role:petugasKolam'])->group(function() {
 Route::middleware(['auth', 'role:manajer'])->group(function() {
     Route::get('/manajer', [RoleController::class, 'manajer'])->name('manajer.dashboard');
 });
+
+// // Rute Laporan
+//     Route::prefix('laporan')->group(function() {
+//         Route::get('/', [LprnController::class, 'index'])->name('index.manajer.lprn');
+//         Route::get('/generate', [LprnController::class, 'generate'])->name('generate.manajer.lprn');
+//     });
 });

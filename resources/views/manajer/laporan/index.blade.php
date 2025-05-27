@@ -7,7 +7,7 @@
                 <h5 class="mb-0">Laporan {{ ucfirst($jenis) }} - {{ $jenis == 'bulanan' ? "$bulan/$tahun" : $tahun }}</h5>
             </div>
             <div class="card-body">
-                <form method="GET" action="{{ route('index.laporan') }}" class="mb-4 row g-3 align-items-end">
+                <form method="GET" action="{{ route('index.lprn') }}" class="mb-4 row g-3 align-items-end">
                     <div class="col-md-3">
                         <label for="jenis" class="form-label">Jenis Laporan</label>
                         <select name="jenis" id="jenis" class="form-select">
@@ -45,7 +45,6 @@
                                     <th>Rata-rata pH</th>
                                     <th>Rata-rata DO (mg/L)</th>
                                     <th>Total Mortalitas (ekor)</th>
-                                    <th>Total Pakan Keluar (kg)</th>
                                     <th>Total Panen (kg)</th>
                                     <th>Total Nilai Panen (Rp)</th>
                                 </tr>
@@ -60,9 +59,9 @@
                                         <td class="text-end">{{ number_format($item->rata_rata_ph, 2) }}</td>
                                         <td class="text-end">{{ number_format($item->rata_rata_do, 2) }}</td>
                                         <td class="text-end">{{ number_format($item->total_mortalitas, 0) }}</td>
-                                        <td class="text-end">{{ number_format($item->jumlah_keluar ?? 0, 2) }}</td>
                                         <td class="text-end">{{ number_format($item->total_panen, 2) }}</td>
-                                        <td class="text-end">Rp {{ number_format($item->total_nilai_panen, 0, ',', '.') }}</td>
+                                        <td class="text-end">Rp {{ number_format($item->total_nilai_panen, 0, ',', '.') }}
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -74,15 +73,15 @@
                                     <td></td>
                                     <td></td>
                                     <td class="text-end">{{ number_format($laporan->sum('total_mortalitas'), 0) }}</td>
-                                    <td class="text-end">{{ number_format($laporan->sum('jumlah_keluar'), 2) }}</td>
                                     <td class="text-end">{{ number_format($laporan->sum('total_panen'), 2) }}</td>
-                                    <td class="text-end">Rp {{ number_format($laporan->sum('total_nilai_panen'), 0, ',', '.') }}</td>
+                                    <td class="text-end">Rp
+                                        {{ number_format($laporan->sum('total_nilai_panen'), 0, ',', '.') }}</td>
                                 </tr>
                             </tfoot>
                         </table>
 
                         <div class="d-flex justify-content-end mt-3">
-                            <a href="{{ route('generate.laporan', request()->query()) }}" target="_blank"
+                            <a href="{{ route('generate.lprn', request()->query()) }}" target="_blank"
                                 class="btn btn-primary px-4">
                                 <i class="fas fa-file-pdf me-2"></i>Cetak PDF
                             </a>

@@ -13,7 +13,7 @@
 
                     <!-- Pilih Pakan -->
                     <div class="mb-3">
-                        <label for="pakan_id" class="form-label">Pakan</label>
+                        <label for="pakan_id" class="form-label">Jenis Pakan</label>
                         <select class="form-select" name="pakan_id" required>
                             @foreach ($pakan as $pkt)
                                 <option value="{{ $pkt->id }}"

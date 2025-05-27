@@ -16,30 +16,32 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>NO</th>
+                                <th class="text-start">NO</th>
                                 <th>Nama</th>
                                 <th>Budaya</th>
                                 <th>Status</th>
-                                <th>Jumlah Ikan</th>
+                                <th class="text-start">Jumlah Ikan</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($kolam as $key => $klm)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                    <td class="text-start">{{ $key + 1 }}</td>
                                     <td>{{ $klm->nama }}</td>
                                     <td>{{ $klm->budaya }}</td>
                                     <td>{{ $klm->status }}</td>
-                                    <td>{{ $klm->jumlah_ikan }}</td>
-                                    <td class="d-flex gap-2"> {{-- Menggunakan d-flex dan gap-2 untuk jarak antar tombol --}}
-                                        <a href="{{ route('edit.kolam', $klm->id) }}" class="btn btn-warning btn-sm text-white flex-fill">Edit</a>
-                                        <form action="{{ route('delete.kolam', $klm->id) }}" method="POST" class="flex-fill m-0"> {{-- Menambahkan flex-fill dan m-0 untuk form --}}
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm w-100"
-                                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
-                                        </form>
+                                    <td class="text-start">{{ $klm->jumlah_ikan }}</td>
+                                    <td style="padding-left: 12px;">
+                                        <div class="d-flex gap-2">
+                                            <a href="{{ route('edit.kolam', $klm->id) }}" class="btn btn-warning btn-sm text-white" style="width: 80px;">Edit</a>
+                                            <form action="{{ route('delete.kolam', $klm->id) }}" method="POST" style="width: 80px;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm w-100"
+                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
