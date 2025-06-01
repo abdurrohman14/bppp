@@ -27,7 +27,7 @@
                         @foreach($pakanMasuk as $key => $item)
                             <tr>
                                 <td class="text-start">{{ $key + 1 }}</td>
-                                <td class="text-start">{{ $item->pakan->pakan ?? 'Pakan Tidak Ditemukan' }}</td>
+                                <td class="text-start">{{ $item->pakan->jenis_pakan ?? 'Pakan Tidak Ditemukan' }}</td>
                                 <td class="text-start">{{ $item->tanggal_masuk }}</td>
                                 <td class="text-start">{{ $item->jumlah_masuk }}</td>
                                 <td style="padding-left: 12px;">
