@@ -34,7 +34,7 @@
                                             <form action="{{ route('jadwal.pakan.destroy', $pakan->id) }}" method="POST" style="width: 80px;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm w-100" 
+                                                <button type="submit" class="btn btn-danger btn-sm w-100"
                                                     onclick="return confirm('Apakah Anda yakin ingin menghapus jadwal ini?')">Hapus</button>
                                             </form>
                                         </div>
