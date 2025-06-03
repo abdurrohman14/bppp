@@ -161,6 +161,7 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
     Route::prefix('laporan')->group(function() {
         Route::get('/', [LaporanController::class, 'index'])->name('index.laporan');
         Route::get('/generate', [LaporanController::class, 'generate'])->name('generate.laporan');
+        Route::get('/laporan/export-excel', [LaporanController::class, 'exportExcel'])->name('laporan.export-excel');
     });
 
 

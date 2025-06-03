@@ -62,7 +62,8 @@
                                         <td class="text-end">{{ number_format($item->total_mortalitas, 0) }}</td>
                                         <td class="text-end">{{ number_format($item->jumlah_keluar ?? 0, 2) }}</td>
                                         <td class="text-end">{{ number_format($item->total_panen, 2) }}</td>
-                                        <td class="text-end">Rp {{ number_format($item->total_nilai_panen, 0, ',', '.') }}</td>
+                                        <td class="text-end">Rp {{ number_format($item->total_nilai_panen, 0, ',', '.') }}
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -76,7 +77,8 @@
                                     <td class="text-end">{{ number_format($laporan->sum('total_mortalitas'), 0) }}</td>
                                     <td class="text-end">{{ number_format($laporan->sum('jumlah_keluar'), 2) }}</td>
                                     <td class="text-end">{{ number_format($laporan->sum('total_panen'), 2) }}</td>
-                                    <td class="text-end">Rp {{ number_format($laporan->sum('total_nilai_panen'), 0, ',', '.') }}</td>
+                                    <td class="text-end">Rp
+                                        {{ number_format($laporan->sum('total_nilai_panen'), 0, ',', '.') }}</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -85,6 +87,10 @@
                             <a href="{{ route('generate.laporan', request()->query()) }}" target="_blank"
                                 class="btn btn-primary px-4">
                                 <i class="fas fa-file-pdf me-2"></i>Cetak PDF
+                            </a>
+                            <a href="{{ route('laporan.export-excel', ['jenis' => $jenis, 'tahun' => $tahun, 'bulan' => $bulan]) }}"
+                                class="btn btn-success">
+                                <i class="fas fa-file-excel"></i> Export Excel
                             </a>
                         </div>
                     @else
