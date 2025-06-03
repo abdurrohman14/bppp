@@ -28,14 +28,14 @@ class JenisPController extends Controller
     {
         try {
             $request->validate([
-                'pakan' => 'required|string|max:255',
+                'jenis_pakan' => 'required|string|max:255',
                 'asal_pakan' => 'required|string|max:255',
                 'ukuran_pakan' => 'required|string|max:100',
                 'jumlah_pakan' => 'required|integer',
             ]);
 
             Pakan::create([
-                'pakan' => $request->pakan,
+                'jenis_pakan' => $request->jenis_pakan,
                 'asal_pakan' => $request->asal_pakan,
                 'ukuran_pakan' => $request->ukuran_pakan,
                 'jumlah_pakan' => $request->jumlah_pakan,
@@ -60,7 +60,7 @@ class JenisPController extends Controller
     {
         try {
             $request->validate([
-                'pakan' => 'required|string|max:255',
+                'jenis_pakan' => 'required|string|max:255',
                 'asal_pakan' => 'required|string|max:255',
                 'ukuran_pakan' => 'required|string|max:100',
                 'jumlah_pakan' => 'required|integer',

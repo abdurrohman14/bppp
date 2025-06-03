@@ -31,7 +31,7 @@
                             <td class="text-start">{{ $loop->iteration }}</td>
                             <td class="text-start">{{ optional($item->kolam)->nama ?? '-' }}</td>
                             <td class="text-start">{{ optional($item->spesies)->jenis_ikan ?? '-' }}</td>
-                            <td class="text-start">{{ optional($item->pakan)->pakan ?? '-' }}</td>
+                            <td class="text-start">{{ optional($item->pakan)->jenis_pakan ?? '-' }}</td>
                             <td class="text-start">{{ $item->tanggal_keluar }}</td>
                             <td class="text-start">{{ $item->jumlah_keluar }}</td>
                             <td style="padding-left: 12px;">

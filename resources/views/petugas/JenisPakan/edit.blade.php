@@ -13,7 +13,7 @@
 
                 <div class="mb-3">
                     <label for="pakan">Pakan</label>
-                    <input type="text" name="pakan" class="form-control" value="{{ $pakan->pakan }}" required>
+                    <input type="text" name="jenis_pakan" class="form-control" value="{{ $pakan->jenis_pakan }}" required>
                 </div>
 
                 <div class="mb-3">

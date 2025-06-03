@@ -46,7 +46,7 @@ class KlmController extends Controller
 
     public function edit($id)
     {
-        $kolam = Kolam::find($id);
+        $kolam = Kolam::findOrFail($id);
         $budaya = ['Probiotik', 'Bioflok'];
         $status = ['Aktif', 'Tidak Aktif'];
         return view('petugas.kolam.edit', [
@@ -78,7 +78,7 @@ class KlmController extends Controller
     public function destroy($id)
     {
         try {
-            Kolam::find($id)->delete();
+            Kolam::findOrFail($id)->delete();
             return redirect()->route('index.petugas.kolam')->with('success', 'Data berhasil dihapus');
         } catch (\Throwable $th) {
             return redirect()->route('index.petugas.kolam')->with('error', $th->getMessage());

@@ -28,7 +28,7 @@
                             @foreach ($pakan as $index => $item)
                                 <tr>
                                     <td class="text-start">{{ $index + 1 }}</td>
-                                    <td class="text-start">{{ $item->pakan }}</td>
+                                    <td class="text-start">{{ $item->jenis_pakan }}</td>
                                     <td class="text-start">{{ $item->asal_pakan }}</td>
                                     <td class="text-start">{{ $item->ukuran_pakan }}</td>
                                     <td class="text-start">{{ $item->jumlah_pakan }}</td>

@@ -17,26 +17,27 @@
                         <thead>
                             <tr>
                                 <th class="text-start">NO</th>
-                                <th class="text-start">Nama</th>
-                                <th class="text-start">Budaya</th>
-                                <th class="text-start">Status</th>
+                                <th>Nama</th>
+                                <th>Budaya</th>
+                                <th>Status</th>
                                 <th class="text-start">Jumlah Ikan</th>
-                                <th class="text-start">Aksi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($kolam as $key => $klm)
                                 <tr>
                                     <td class="text-start">{{ $key + 1 }}</td>
-                                    <td class="text-start">{{ $klm->nama }}</td>
-                                    <td class="text-start">{{ $klm->budaya }}</td>
-                                    <td class="text-start">{{ $klm->status }}</td>
+                                    <td>{{ $klm->nama }}</td>
+                                    <td>{{ $klm->budaya }}</td>
+                                    <td>{{ $klm->status }}</td>
                                     <td class="text-start">{{ $klm->jumlah_ikan }}</td>
-                                    <td class="text-start" style="padding-left: 12px;">
+                                    <td style="padding-left: 12px;">
                                         <div class="d-flex gap-2">
                                             <a href="{{ route('edit.petugas.kolam', $klm->id) }}" 
                                                class="btn btn-warning btn-sm text-white" style="width: 80px;">Edit</a>
-                                            <form action="{{ route('delete.petugas.kolam', $klm->id) }}" method="POST" style="width: 80px;"
+                                            <form action="{{ route('delete.petugas.kolam', $klm->id) }}" 
+                                                  method="POST" style="width: 80px;"
                                                   onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                 @csrf
                                                 @method('DELETE')
