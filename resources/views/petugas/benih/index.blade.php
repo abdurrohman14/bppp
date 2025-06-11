@@ -7,7 +7,9 @@
             <h5 class="fw-bold" style="color: #003049;">Manajemen Penebaran Benih</h5>
         </div>
         <div class="card-body">
-            <a href="{{ route('create.benih') }}" class="btn btn-primary btn-sm mb-3">Tambah</a>
+            <div class="mb-3">
+                <a href="{{ route('create.petugas.benih') }}" class="btn btn-primary btn-sm">Tambah</a>
+            </div>
             <div class="table-responsive">
                 <table id="example1" class="table table-bordered table-striped">
                     <thead>
@@ -34,8 +36,8 @@
                                 <td class="text-start">{{ $bnh->jumlah_benih }}</td>
                                 <td style="padding-left: 12px;">
                                     <div class="d-flex gap-2">
-                                        <a href="{{ route('edit.benih', $bnh->id) }}" class="btn btn-warning btn-sm text-white" style="width: 80px;">Edit</a>
-                                        <form action="{{ route('delete.benih', $bnh->id) }}" method="POST" style="width: 80px;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                        <a href="{{ route('edit.petugas.benih', $bnh->id) }}" class="btn btn-warning btn-sm text-white" style="width: 80px;">Edit</a>
+                                        <form action="{{ route('delete.petugas.benih', $bnh->id) }}" method="POST" style="width: 80px;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm w-100">Hapus</button>

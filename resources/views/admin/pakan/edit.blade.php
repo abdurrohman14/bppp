@@ -13,7 +13,7 @@
 
                     <div class="mb-3">
                         <label for="pakan" class="form-label">Jenis Pakan</label>
-                        <input type="text" class="form-control" id="pakan" name="pakan" placeholder="Masukkan Nama Pakan" value="{{ $pakan->pakan }}" required>
+                        <input type="text" class="form-control" id="pakan" name="jenis_pakan" placeholder="Masukkan Nama Pakan" value="{{ $pakan->jenis_pakan }}" required>
                     </div>
                     <div class="mb-3">
                         <label for="asalPakan" class="form-label">Asal Pakan</label>

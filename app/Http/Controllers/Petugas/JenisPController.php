@@ -10,7 +10,7 @@ class JenisPController extends Controller
 {
     public function index()
     {
-        $pakan = Pakan::all();
+        $pakan = Pakan::all(); // Mengambil semua data pakan
         return view('petugas.JenisPakan.index', [
             'title' => 'Jenis Pakan',
             'pakan' => $pakan,
@@ -34,6 +34,7 @@ class JenisPController extends Controller
                 'jumlah_pakan' => 'required|integer',
             ]);
 
+            // Menyimpan data baru ke dalam database
             Pakan::create([
                 'jenis_pakan' => $request->jenis_pakan,
                 'asal_pakan' => $request->asal_pakan,
@@ -49,8 +50,8 @@ class JenisPController extends Controller
 
     public function edit($id)
     {
-        $pakan = Pakan::findOrFail($id);
-        return view('petugas.JenisPakan.edit', [  // Perbaikan di sini
+        $pakan = Pakan::findOrFail($id); // Mengambil data pakan berdasarkan id
+        return view('petugas.JenisPakan.edit', [
             'title' => 'Edit Jenis Pakan',
             'pakan' => $pakan,
         ]);
@@ -66,8 +67,8 @@ class JenisPController extends Controller
                 'jumlah_pakan' => 'required|integer',
             ]);
 
-            $pakan = Pakan::findOrFail($id);
-            $pakan->fill($request->all())->save();
+            $pakan = Pakan::findOrFail($id); // Menemukan pakan yang akan diupdate
+            $pakan->fill($request->all())->save(); // Menyimpan perubahan data pakan
 
             return redirect()->route('index.petugas.JenisPakan')->with('success', 'Jenis Pakan berhasil diperbarui');
         } catch (\Throwable $th) {
@@ -78,7 +79,7 @@ class JenisPController extends Controller
     public function destroy($id)
     {
         try {
-            Pakan::findOrFail($id)->delete();
+            Pakan::findOrFail($id)->delete(); // Menghapus pakan berdasarkan id
             return redirect()->route('index.petugas.JenisPakan')->with('success', 'Jenis Pakan berhasil dihapus');
         } catch (\Throwable $th) {
             return redirect()->route('index.petugas.JenisPakan')->with('error', $th->getMessage());

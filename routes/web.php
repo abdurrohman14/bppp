@@ -198,18 +198,8 @@ Route::middleware(['auth', 'role:petugasKolam'])->group(function() {
         Route::delete('/delete/{id}', [BnhController::class, 'destroy'])->name('delete.petugas.benih');
     });
 
-    // Rute Penebaran Benih
-    Route::prefix('petugas-kematian')->group(function() {
-        Route::get('/', [KmtnController::class, 'index'])->name('index.petugas.kematian');
-        Route::get('/create', [KmtnController::class, 'create'])->name('create.petugas.kematian');
-        Route::post('/store', [KmtnController::class, 'store'])->name('store.petugas.kematian');
-        Route::get('/edit/{id}', [KmtnController::class, 'edit'])->name('edit.petugas.kematian');
-        Route::post('/update/{id}', [KmtnController::class, 'update'])->name('update.petugas.kematian');
-        Route::delete('/delete/{id}', [KmtnController::class, 'destroy'])->name('delete.petugas.kematian');
-    });
-
     // Rute Kematian
-    Route::prefix('petugas-kualitas-air')->group(function() {
+    Route::prefix('petugas-kematian')->group(function() {
         Route::get('/', [KmtnController::class, 'index'])->name('index.petugas.kematian');
         Route::get('/create', [KmtnController::class, 'create'])->name('create.petugas.kematian');
         Route::post('/store', [KmtnController::class, 'store'])->name('store.petugas.kematian');
@@ -224,7 +214,7 @@ Route::middleware(['auth', 'role:petugasKolam'])->group(function() {
         Route::get('/create', [KuaController::class, 'create'])->name('create.petugas.kualitasair');
         Route::post('/store', [KuaController::class, 'store'])->name('store.petugas.kualitasair');
         Route::get('/edit/{id}', [KuaController::class, 'edit'])->name('edit.petugas.kualitasair');
-        Route::post('/update/{id}', [KuaController::class, 'update'])->name('update.petugas.kualitasair');
+        Route::put('/update/{id}', [KuaController::class, 'update'])->name('update.petugas.kualitasair');
         Route::delete('/delete/{id}', [KuaController::class, 'destroy'])->name('delete.petugas.kualitasair');
     });
 

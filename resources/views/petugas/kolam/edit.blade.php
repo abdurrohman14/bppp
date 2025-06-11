@@ -9,7 +9,7 @@
         <div class="card-body">
             <form action="{{ route('update.petugas.kolam', $kolam->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
+
 
                 <div class="mb-3">
                     <label for="namaKolam" class="form-label">Nama Kolam</label>
@@ -19,7 +19,7 @@
                 <div class="mb-3">
                     <label for="sistem" class="form-label">Sistem yang Digunakan</label>
                     <select class="form-select" id="sistem" name="budaya" required>
-                        @foreach ($budaya as $key => $budayaKolam)
+                        @foreach ($budaya as $budayaKolam)
                             <option value="{{ $budayaKolam }}" {{ $kolam->budaya == $budayaKolam ? 'selected' : '' }}>{{ $budayaKolam }}</option>
                         @endforeach
                     </select>
@@ -28,7 +28,7 @@
                 <div class="mb-3">
                     <label for="status" class="form-label">Status</label>
                     <select class="form-select" id="status" name="status" required>
-                        @foreach ($status as $key => $statusKolam)
+                        @foreach ($status as $statusKolam)
                             <option value="{{ $statusKolam }}" {{ $kolam->status == $statusKolam ? 'selected' : '' }}>{{ $statusKolam }}</option>
                         @endforeach
                     </select>

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Models\Kolam;
+use App\Models\Panen;
 use App\Models\Kematian;
 use App\Models\KualitasAir;
 use Illuminate\Http\Request;
@@ -12,49 +13,54 @@ class RoleController extends Controller
 {
     public function admin()
     {
-        // total kolam
+        // Total kolam
         $totalKolam = Kolam::count();
 
-        // total jumlah ikan per kolam
+        // Daftar kolam
         $kolams = Kolam::select('id', 'nama', 'jumlah_ikan')->get();
 
-        // total hasil panen terbaru (ambil 1 bulan terakhir)
-        $totalHasilPanen = Kolam::with(['panen' => function ($query) {
-            $query->where('tanggal_panen', '>=', now()->subMonth());
-        }])->get()->sum(function ($kolam) {
-            return $kolam->panen->sum('jumlah_ikan');
-        });
+        // Total hasil panen hari ini
+        $totalHasilPanen = Panen::whereDate('tanggal_panen', today())->sum('berat_total');
 
-        // ambil panen terbaru
+        // Ambil panen terbaru per kolam
         $panenTerbaru = Kolam::with(['panen' => function ($query) {
-            $query->orderBy('tanggal_panen', 'desc')->first();
+            $query->orderBy('tanggal_panen', 'desc')->limit(1);
         }])->get();
 
-        // data kualitas air untuk chart
+        // Data kualitas air selama 7 hari terakhir per kolam
+        // Data kualitas air selama 7 hari terakhir per kolam
         $dataKualitasAir = [];
         foreach ($kolams as $kolam) {
-            $waterQualityData[$kolam->id] = [
+            $data = KualitasAir::where('kolam_id', $kolam->id)
+                ->whereBetween('tanggal_pengukuran', [now()->startOfWeek(), now()->endOfWeek()])
+                ->orderBy('tanggal_pengukuran')
+                ->get()
+                ->map(function ($item) {
+                    $item->tanggal = \Carbon\Carbon::parse($item->tanggal_pengukuran)->format('Y-m-d');
+                    return $item;
+                });
+
+            $dataKualitasAir[$kolam->id] = [
                 'nama' => $kolam->nama,
-                'data' => KualitasAir::where('kolam_id', $kolam->id)
-                    ->where('tanggal_pengukuran', '>=', now()->subDays(7))
-                    ->orderBy('tanggal_pengukuran')
-                    ->get()
+                'data' => $data
             ];
         }
 
-        // data mortalitas 1 bulan terakhir
+        // Data mortalitas hari ini, dikelompokkan per kolam dan penyebab
         $dataMortalitas = Kematian::with('kolam')
-                        ->selectRaw('kolam_id, penyebab, COUNT(*) as jumlah, DATE(tanggal_kematian) as tanggal_kematian')
-                        ->where('tanggal_kematian', '>=', now()->subMonth())
-                        ->groupBy('kolam_id', 'penyebab', DB::raw('DATE(tanggal_kematian)'))
-                        ->get()
-                        ->groupBy(['kolam_id', 'penyebab']);
+            ->selectRaw('kolam_id, penyebab, COUNT(*) as jumlah, DATE(tanggal_kematian) as tanggal_kematian')
+            ->whereDate('tanggal_kematian', today())
+            ->groupBy('kolam_id', 'penyebab', DB::raw('DATE(tanggal_kematian)'))
+            ->get()
+            ->groupBy(['kolam_id', 'penyebab']);
 
-         $penyebabKematian = Kematian::selectRaw('penyebab, COUNT(*) as total')
-                            ->groupBy('penyebab')
-                            ->orderByDesc('total')
-                            ->limit(5)
-                            ->get();
+        // Top 5 penyebab kematian hari ini
+        $penyebabKematian = Kematian::selectRaw('penyebab, COUNT(*) as total')
+            ->whereDate('tanggal_kematian', today())
+            ->groupBy('penyebab')
+            ->orderByDesc('total')
+            ->limit(5)
+            ->get();
 
         return view('partials.adminDashboard', [
             'totalKolam' => $totalKolam,
@@ -67,10 +73,12 @@ class RoleController extends Controller
             'title' => 'Dashboard Admin',
         ]);
     }
+
     public function petugasKolam()
     {
         return view('partials.petugasKolamDashboard');
     }
+
     public function manajer()
     {
         return view('partials.manajerDashboard');

@@ -1,8 +1,9 @@
 @extends('partials.admin.main')
+
 @section('content')
 <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
     <div class="card shadow">
-        <div class="card-header bg-danger text-white">
+        <div class="card-header bg-primary text-white">
             <h5 class="mb-0">Edit Data Pakan Keluar</h5>
         </div>
         <div class="card-body">
@@ -36,11 +37,11 @@
 
                 <!-- Pakan -->
                 <div class="mb-3">
-                    <label for="pakan_id" class="form-label">Pakan</label>
+                    <label for="pakan_id" class="form-label">Jenis Pakan</label>
                     <select class="form-select" id="pakan_id" name="pakan_id" required>
                         @foreach($pakan as $pkt)
                             <option value="{{ $pkt->id }}" {{ old('pakan_id', $pakanKeluar->pakan_id) == $pkt->id ? 'selected' : '' }}>
-                                {{ $pkt->pakan }}
+                                {{ $pkt->jenis_pakan ?? $pkt->pakan ?? 'Nama Pakan Tidak Ditemukan' }}
                             </option>
                         @endforeach
                     </select>

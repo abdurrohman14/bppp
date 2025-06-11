@@ -39,7 +39,9 @@ class KolamController extends Controller
                 'status' => 'required|in:Aktif,Tidak Aktif',
                 'jumlah_ikan' => 'nullable|integer',
             ]);
+
             Kolam::create($request->all());
+
             return redirect()->route('index.kolam')->with('success', 'Data berhasil ditambahkan');
         } catch (\Throwable $th) {
             return redirect()->route('index.kolam')->with('error', $th->getMessage());
@@ -48,7 +50,7 @@ class KolamController extends Controller
 
     public function edit($id)
     {
-        $kolam = Kolam::find($id);
+        $kolam = Kolam::findOrFail($id);
         $budaya = ['Probiotik', 'Bioflok'];
         $status = ['Aktif', 'Tidak Aktif'];
         return view('admin.kolam.edit', [
@@ -64,26 +66,25 @@ class KolamController extends Controller
         try {
             $request->validate([
                 'nama' => 'required|string|max:255',
-                'budaya' => 'required|string|max:255',
-                'status' => 'required|string|max:50',
+                'budaya' => 'required|in:Probiotik,Bioflok',
+                'status' => 'required|in:Aktif,Tidak Aktif',
                 'jumlah_ikan' => 'nullable|integer',
             ]);
+
             $kolam = Kolam::findOrFail($id);
             $kolam->fill($request->all());
             $kolam->save();
-            return redirect()->route('index.kolam')->with(
-                'success',
-                'Data berhasil di
-                update',
-            );
+
+            return redirect()->route('index.kolam')->with('success', 'Data berhasil diupdate');
         } catch (\Throwable $th) {
             return redirect()->route('index.kolam')->with('error', $th->getMessage());
         }
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         try {
-            Kolam::find($id)->delete();
+            Kolam::findOrFail($id)->delete();
             return redirect()->route('index.kolam')->with('success', 'Data berhasil dihapus');
         } catch (\Throwable $th) {
             return redirect()->route('index.kolam')->with('error', $th->getMessage());

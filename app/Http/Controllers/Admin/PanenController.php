@@ -95,6 +95,7 @@ class PanenController extends Controller
                 'spesies_id' => $request->spesies_id,
                 'tanggal_panen' => $request->tanggal_panen,
                 'berat_total' => $request->berat_total,
+                
                 'harga_per_kg' => $request->harga_per_kg,
                 'tujuan_distribusi' => $request->tujuan_distribusi,  // Pastikan tujuan distribusi dimasukkan
             ]);

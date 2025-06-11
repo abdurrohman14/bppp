@@ -61,9 +61,9 @@
                                 </td>
                             </tr>
                         @empty
-                            {{-- <tr>
+                            <tr>
                                 <td colspan="7" class="text-center">Data kualitas air belum tersedia.</td>
-                            </tr> --}}
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>

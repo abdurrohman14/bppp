@@ -9,11 +9,11 @@
         <div class="card-body">
             <div class="mb-3">
                 <button class="btn btn-primary btn-sm">
-                    <a href="{{ route('create.petugas.PakanKeluar') }}" class="text-decoration-none text-white">Tambah Data</a>
+                    <a href="{{ route('create.petugas.PakanKeluar') }}" class="text-decoration-none text-white">Tambah</a>
                 </button>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered table-striped" id="example1">
+                <table id="example1" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th class="text-start">No</th>
@@ -37,11 +37,10 @@
                             <td style="padding-left: 12px;">
                                 <div class="d-flex gap-2">
                                     <a href="{{ route('edit.petugas.PakanKeluar', $item->id) }}" class="btn btn-warning btn-sm text-white" style="width: 80px;">Edit</a>
-                                    <form action="{{ route('destroy.petugas.PakanKeluar', $item->id) }}" method="POST" style="width: 80px;">
+                                    <form action="{{ route('destroy.petugas.PakanKeluar', $item->id) }}" method="POST" style="width: 80px;" onsubmit="return confirm('Yakin ingin menghapus?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm w-100"
-                                            onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                                        <button type="submit" class="btn btn-danger btn-sm w-100">Hapus</button>
                                     </form>
                                 </div>
                             </td>

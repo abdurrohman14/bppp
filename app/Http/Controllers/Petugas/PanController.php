@@ -32,25 +32,31 @@ class PanController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'kolam_id' => 'required',
-            'spesies_id' => 'required',
-            'tanggal_panen' => 'required',
-            'berat_total' => 'required',
-            'harga_per_kg' => 'required',
-            'tujuan_distribusi' => 'required',
-        ]);
+        try {
+            $request->validate([
+                'kolam_id' => 'required',
+                'spesies_id' => 'required',
+                'tanggal_panen' => 'required',
+                'berat_total' => 'required',
+                'harga_per_kg' => 'required',
+                'tujuan_distribusi' => 'required',
+                // 'jumlah_ikan_panen' => 'required|integer',
+            ]);
 
-        Panen::create([
-            'kolam_id' => $request->kolam_id,
-            'spesies_id' => $request->spesies_id,
-            'tanggal_panen' => $request->tanggal_panen,
-            'berat_total' => $request->berat_total,
-            'harga_per_kg' => $request->harga_per_kg,
-            'tujuan_distribusi' => $request->tujuan_distribusi,
-        ]);
+            Panen::create([
+                'kolam_id' => $request->kolam_id,
+                'spesies_id' => $request->spesies_id,
+                'tanggal_panen' => $request->tanggal_panen,
+                'berat_total' => $request->berat_total,
+                'harga_per_kg' => $request->harga_per_kg,
+                'tujuan_distribusi' => $request->tujuan_distribusi,
+                // 'jumlah_ikan_panen' => $request->jumlah_ikan_panen,
+            ]);
 
-        return redirect()->route('index.petugas.panen')->with('success', 'Data berhasil ditambahkan');
+            return redirect()->route('index.petugas.panen')->with('success', 'Data berhasil ditambahkan');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
 
     public function edit($id)
@@ -69,30 +75,40 @@ class PanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'kolam_id' => 'required',
-            'spesies_id' => 'required',
-            'tanggal_panen' => 'required',
-            'berat_total' => 'required',
-            'harga_per_kg' => 'required',
-            'tujuan_distribusi' => 'required',
-        ]);
+        try {
+            $request->validate([
+                'kolam_id' => 'required',
+                'spesies_id' => 'required',
+                'tanggal_panen' => 'required',
+                'berat_total' => 'required',
+                'harga_per_kg' => 'required',
+                'tujuan_distribusi' => 'required',
+                // 'jumlah_ikan_panen' => 'required|integer',
+            ]);
 
-        Panen::findOrFail($id)->update([
-            'kolam_id' => $request->kolam_id,
-            'spesies_id' => $request->spesies_id,
-            'tanggal_panen' => $request->tanggal_panen,
-            'berat_total' => $request->berat_total,
-            'harga_per_kg' => $request->harga_per_kg,
-            'tujuan_distribusi' => $request->tujuan_distribusi,
-        ]);
+            Panen::findOrFail($id)->update([
+                'kolam_id' => $request->kolam_id,
+                'spesies_id' => $request->spesies_id,
+                'tanggal_panen' => $request->tanggal_panen,
+                'berat_total' => $request->berat_total,
+                'harga_per_kg' => $request->harga_per_kg,
+                'tujuan_distribusi' => $request->tujuan_distribusi,
+                // 'jumlah_ikan_panen' => $request->jumlah_ikan_panen,
+            ]);
 
-        return redirect()->route('index.petugas.panen')->with('success', 'Data berhasil diupdate');
+            return redirect()->route('index.petugas.panen')->with('success', 'Data berhasil diupdate');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
 
     public function destroy($id)
     {
-        Panen::findOrFail($id)->delete();
-        return redirect()->route('index.petugas.panen')->with('success', 'Data berhasil dihapus');
+        try {
+            Panen::findOrFail($id)->delete();
+            return redirect()->route('index.petugas.panen')->with('success', 'Data berhasil dihapus');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
 }

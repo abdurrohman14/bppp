@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 class="card-title mb-1">Total Panen (1 Bulan)</h5>
+                                <h5 class="card-title mb-1">Total Panen (Hari ini)</h5>
                                 <h2 class="mb-0">{{ $totalHasilPanen }} kg</h2>
                             </div>
                             <i class="fas fa-fish fa-3x opacity-50"></i>
@@ -54,7 +54,7 @@
         <!-- Water Quality Chart Section -->
         <div class="card shadow mt-4">
             <div class="card-header bg-white border-0">
-                <h5 class="mb-0">Kualitas Air (7 Hari Terakhir)</h5>
+                <h5 class="mb-0">Kualitas Air (Hari ini)</h5>
             </div>
             <div class="card-body">
                 <ul class="nav nav-tabs" id="waterQualityTabs" role="tablist">
@@ -83,7 +83,7 @@
         <div class="card shadow mt-4">
             <div class="card-header bg-white border-0">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Tren Mortalitas (1 Bulan Terakhir)</h5>
+                    <h5 class="mb-0">Tren Mortalitas (Hari ini)</h5>
                     <div class="dropdown">
                         <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="mortalityFilter"
                             data-bs-toggle="dropdown">
@@ -227,30 +227,28 @@
     new Chart(ctxWater{{ $kolamId }}, {
         type: 'line',
         data: {
-            labels: {!! json_encode($data['data']->pluck('tanggal')->map(function($date) {
-                return \Carbon\Carbon::parse($date)->format('d M');
-            })) !!},
+            labels: {!! json_encode($data['data']->pluck('tanggal')->map(fn($d) => \Carbon\Carbon::parse($d)->format('d M'))) !!},
             datasets: [
                 {
                     label: 'pH',
                     data: {!! json_encode($data['data']->pluck('ph')) !!},
                     borderColor: 'rgba(255, 99, 132, 1)',
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    tension: 0.1
+                    tension: 0.4
                 },
                 {
                     label: 'Suhu (°C)',
                     data: {!! json_encode($data['data']->pluck('suhu')) !!},
                     borderColor: 'rgba(54, 162, 235, 1)',
                     backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    tension: 0.1
+                    tension: 0.4
                 },
                 {
                     label: 'DO (mg/L)',
                     data: {!! json_encode($data['data']->pluck('do')) !!},
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    tension: 0.1
+                    tension: 0.4
                 }
             ]
         },

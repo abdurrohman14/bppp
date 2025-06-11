@@ -31,7 +31,9 @@ class SpesiesController extends Controller
                 'jenis_ikan' => 'required',
                 'deskripsi' => 'nullable',
             ]);
+
             Spesies::create($request->all());
+
             return redirect()->route('index.spesies')->with('success', 'Data berhasil ditambahkan');
         } catch (\Throwable $th) {
             return redirect()->route('index.spesies')->with('error', $th->getMessage());
@@ -54,12 +56,10 @@ class SpesiesController extends Controller
                 'jenis_ikan' => 'required',
                 'deskripsi' => 'required',
             ]);
+
             Spesies::find($id)->update($request->all());
-            return redirect()->route('index.spesies')->with(
-                'success',
-                'Data berhasil di
-                update',
-            );
+
+            return redirect()->route('index.spesies')->with('success', 'Data berhasil diupdate');
         } catch (\Throwable $th) {
             return redirect()->route('index.spesies')->with('error', $th->getMessage());
         }

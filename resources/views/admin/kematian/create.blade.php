@@ -3,7 +3,7 @@
 @section('content')
 <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
     <div class="card shadow">
-        <div class="card-header bg-danger text-white">
+        <div class="card-header bg-primary text-white">
             <h5 class="mb-0">Kematian</h5>
         </div>
         <div class="card-body">
@@ -63,7 +63,7 @@
 
                 <div class="d-flex justify-content-end">
                     <a href="{{ route('index.kematian') }}" class="btn btn-secondary me-2">Batal</a>
-                    <button type="submit" class="btn btn-danger">Simpan</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
         </div>

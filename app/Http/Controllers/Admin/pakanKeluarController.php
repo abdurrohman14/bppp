@@ -42,20 +42,19 @@ class pakanKeluarController extends Controller
                 'kolam_id' => 'required|exists:kolams,id',
                 'spesies_id' => 'required|exists:spesies,id',
                 'tanggal_keluar' => 'required',
-                'jumlah_keluar' => 'required',
+                'jumlah_keluar' => 'required|numeric',
             ]);
 
-            // mendapatkan data pakan berdasarkan ID
-            $pakan = Pakan::findOrFail($request->pakan_id); // Pastikan pakan_id valid
-            // hitung jumlah pakan keluar
+            $pakan = Pakan::findOrFail($request->pakan_id);
             $jumlahKeluar = $pakan->jumlah_pakan - $request->jumlah_keluar;
-            // validasi jumlah pakan tidak kurang dari 0
+
             if ($jumlahKeluar < 0) {
                 return redirect()->back()->with('error', 'Jumlah pakan tidak cukup untuk dikeluarkan');
             }
+
             pakanKeluar::create($request->all());
-            // Perbarui jumlah pakan di model Pakan
             $pakan->update(['jumlah_pakan' => $jumlahKeluar]);
+
             return redirect()->route('index.pakan.Keluar')->with('success', 'Data Berhasil Ditambahkan');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
@@ -64,7 +63,7 @@ class pakanKeluarController extends Controller
 
     public function edit($id)
     {
-        $pakanKeluar = pakanKeluar::find($id);
+        $pakanKeluar = pakanKeluar::findOrFail($id);
         $kolam = Kolam::all();
         $spesies = Spesies::all();
         $pakan = Pakan::all();
@@ -86,9 +85,30 @@ class pakanKeluarController extends Controller
                 'kolam_id' => 'required|exists:kolams,id',
                 'spesies_id' => 'required|exists:spesies,id',
                 'tanggal_keluar' => 'required',
-                'jumlah_keluar' => 'required',
+                'jumlah_keluar' => 'required|numeric',
             ]);
-            pakanKeluar::find($id)->update($request->all());
+
+            $pakanKeluar = pakanKeluar::findOrFail($id);
+            $pakan = Pakan::findOrFail($request->pakan_id);
+
+            // Hitung selisih dari jumlah keluar sebelumnya dan sekarang
+            $jumlahLama = $pakanKeluar->jumlah_keluar;
+            $jumlahBaru = $request->jumlah_keluar;
+            $selisih = $jumlahBaru - $jumlahLama;
+
+            // Koreksi stok pakan
+            $stokBaru = $pakan->jumlah_pakan - $selisih;
+
+            if ($stokBaru < 0) {
+                return redirect()->back()->with('error', 'Jumlah pakan tidak cukup setelah perubahan');
+            }
+
+            // Update data pakan keluar
+            $pakanKeluar->update($request->all());
+
+            // Update stok pakan
+            $pakan->update(['jumlah_pakan' => $stokBaru]);
+
             return redirect()->route('index.pakan.Keluar')->with('success', 'Data Berhasil Diupdate');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
@@ -98,7 +118,7 @@ class pakanKeluarController extends Controller
     public function destroy($id)
     {
         try {
-            pakanKeluar::find($id)->delete();
+            pakanKeluar::findOrFail($id)->delete();
             return redirect()->route('index.pakan.Keluar')->with('success', 'Data Berhasil Dihapus');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());

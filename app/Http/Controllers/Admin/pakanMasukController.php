@@ -78,16 +78,26 @@ class PakanMasukController extends Controller
         try {
             // Validasi input dari form
             $request->validate([
-                'pakan_id' => 'required', // Pastikan 'pakan_id' ada di form
-                'jumlah_masuk' => 'required|numeric', // Validasi angka untuk jumlah masuk
-                'tanggal_masuk' => 'required|date', // Validasi tanggal
+                'pakan_id' => 'required|exists:pakans,id', // Validasi pakan_id
+                'jumlah_masuk' => 'required|numeric',      // Validasi angka
+                'tanggal_masuk' => 'required|date',        // Validasi tanggal
             ]);
 
+            // Ambil data lama pakan masuk
             $pakanMasuk = PakanMasuk::findOrFail($id);
-            // Perbarui record berdasarkan data input
+            $pakan = Pakan::findOrFail($request->pakan_id);
+
+            // Hitung selisih antara jumlah lama dan jumlah baru
+            $selisihJumlah = $request->jumlah_masuk - $pakanMasuk->jumlah_masuk;
+
+            // Update stok pakan berdasarkan selisih
+            $pakan->jumlah_pakan += $selisihJumlah;
+            $pakan->save();
+
+            // Update data pakan masuk
             $pakanMasuk->update($request->only(['pakan_id', 'jumlah_masuk', 'tanggal_masuk']));
 
-            return redirect()->route('index.pakan.masuk')->with('success', 'Data Berhasil Diupdate');
+            return redirect()->route('index.pakan.masuk')->with('success', 'Data Berhasil Diupdate dan Stok Diperbarui');
         } catch (\Throwable $th) {
             return redirect()->route('index.pakan.masuk')->with('error', 'Terjadi Kesalahan: ' . $th->getMessage());
         }

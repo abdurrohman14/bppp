@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class PakanMController extends Controller
 {
-    // Tampilkan seluruh data Pakan Masuk
+    // Menampilkan seluruh data Pakan Masuk
     public function index()
     {
         $pakanMasuk = PakanMasuk::all();
@@ -19,27 +19,32 @@ class PakanMController extends Controller
         ]);
     }
 
-    // Form tambah data
+    // Form untuk menambah data Pakan Masuk
     public function create()
     {
         $pakan = Pakan::all();
+
         return view('petugas.pakanMasuk.create', [
             'pakan' => $pakan,
             'title' => 'Tambah Pakan Masuk',
         ]);
     }
 
-    // Simpan data
+    // Menyimpan data Pakan Masuk
     public function store(Request $request)
     {
         try {
             $request->validate([
-                'pakan_id' => 'required',
+                'pakan_id' => 'required|exists:pakans,id',
                 'jumlah_masuk' => 'required|numeric',
                 'tanggal_masuk' => 'required|date',
             ]);
 
+            $pakan = Pakan::findOrFail($request->pakan_id);
+            $jumlahMasuk = $pakan->jumlah_pakan + $request->jumlah_masuk;
+
             PakanMasuk::create($request->only(['pakan_id', 'jumlah_masuk', 'tanggal_masuk']));
+            $pakan->update(['jumlah_pakan' => $jumlahMasuk]);
 
             return redirect()->route('index.petugas.PakanMasuk')->with('success', 'Data Berhasil Ditambahkan');
         } catch (\Throwable $th) {
@@ -47,11 +52,12 @@ class PakanMController extends Controller
         }
     }
 
-    // Form edit data
+    // Form untuk mengedit data Pakan Masuk
     public function edit($id)
     {
         $pakanMasuk = PakanMasuk::findOrFail($id);
         $pakan = Pakan::all();
+
         return view('petugas.pakanMasuk.edit', [
             'pakanMasuk' => $pakanMasuk,
             'pakan' => $pakan,
@@ -59,12 +65,12 @@ class PakanMController extends Controller
         ]);
     }
 
-    // Update data
+    // Memperbarui data Pakan Masuk
     public function update(Request $request, $id)
     {
         try {
             $request->validate([
-                'pakan_id' => 'required',
+                'pakan_id' => 'required|exists:pakans,id',
                 'jumlah_masuk' => 'required|numeric',
                 'tanggal_masuk' => 'required|date',
             ]);
@@ -78,7 +84,7 @@ class PakanMController extends Controller
         }
     }
 
-    // Hapus data
+    // Menghapus data Pakan Masuk
     public function destroy($id)
     {
         try {
