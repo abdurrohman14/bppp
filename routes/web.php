@@ -52,7 +52,7 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::get('/create', [KolamController::class, 'create'])->name('create.kolam');
         Route::post('/store', [KolamController::class, 'store'])->name('store.kolam');
         Route::get('/edit/{id}', [KolamController::class, 'edit'])->name('edit.kolam');
-        Route::post('/update/{id}', [KolamController::class, 'update'])->name('update.kolam');
+        Route::put('/update/{id}', [KolamController::class, 'update'])->name('update.kolam');
         Route::delete('/delete/{id}', [KolamController::class, 'destroy'])->name('delete.kolam');
     });
 

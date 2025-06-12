@@ -19,10 +19,10 @@
                         <label for="asalPakan" class="form-label">Asal Pakan</label>
                         <input type="text" class="form-control" id="asalPakan" name="asal_pakan" placeholder="Masukkan Asal Pakan" value="{{ $pakan->asal_pakan }}" required>
                     </div>
-                    <div class="mb-3">
+                    {{-- <div class="mb-3">
                         <label for="ukuranPakan" class="form-label">Ukuran Pakan</label>
                         <input type="text" class="form-control" id="ukuranPakan" name="ukuran_pakan" placeholder="Masukkan Ukuran Pakan" value="{{ $pakan->ukuran_pakan }}" required>
-                    </div>
+                    </div> --}}
                     <div class="mb-3">
                         <label for="jumlahPakan" class="form-label">Jumlah Pakan</label>
                         <input type="number" class="form-control" id="jumlahPakan" name="jumlah_pakan" placeholder="Masukkan Jumlah Pakan" value="{{ $pakan->jumlah_pakan }}" required>

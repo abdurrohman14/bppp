@@ -17,16 +17,16 @@
                 Manajemen Kolam
             </a>
             <a href="{{ route('index.spesies') }}" class="d-flex align-items-center px-3 py-2" style="font-size: 11px;">
-                <i class="bi bi-fishs me-2"></i>
-                Spesies
+                <i class="bi bi-bing me-2"></i>
+                Jenis Spesies
             </a>
             <a href="{{ route('index.benih') }}" class="d-flex align-items-center px-3 py-2" style="font-size: 11px;">
-                <i class="bi bi-droplet-fill me-2"></i>
+                <i class="bi bi-basket me-2"></i>
                 Penebaran Benih
             </a>
             <a href="{{ route('index.kematian') }}" class="d-flex align-items-center px-3 py-2" style="font-size: 11px;">
-                <i class="bi bi-droplet-fill me-2"></i>
-                Manajemen Mortalitas
+                <i class="bi bi-exclamation-octagon me-2"></i>
+                Mortalitas
             </a>
             <a href="{{ route('kualitas_air.index') }}" class="d-flex align-items-center px-3 py-2" style="font-size: 11px;">
                 <i class="bi bi-droplet-fill me-2"></i>
@@ -34,7 +34,7 @@
             </a>
             <a href="{{ route('index.panen') }}" class="d-flex align-items-center px-3 py-2" style="font-size: 11px;">
                 <i class="bi bi-collection-fill me-2"></i>
-                Manajemen Panen
+                Panen
             </a>
 
             <div class="accordion" id="sidebarAccordion">
@@ -42,7 +42,7 @@
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed px-3 py-2 bg-transparent" type="button"
                             data-bs-toggle="collapse" data-bs-target="#collapsePakan" aria-expanded="false" style="font-size: 11px;">
-                            <i class="bi bi-box-fill me-2"></i> Manajemen Pakan
+                            <i class="bi bi-box-fill me-2"></i>Manajemen Pakan
                         </button>
                     </h2>
                     <div id="collapsePakan" class="accordion-collapse collapse" data-bs-parent="#sidebarAccordion">
@@ -91,16 +91,16 @@
                 Manajemen Kolam
             </a>
             <a href="{{ route('index.petugas.spesies') }}" class="d-flex align-items-center px-3 py-2" style="font-size: 11px;">
-                <i class="bi bi-droplet-fill me-2"></i>
-                Manajemen Spesies
+                <i class="bi bi-bing me-2"></i>
+                Jenis Spesies
             </a>
             <a href="{{ route('index.petugas.benih') }}" class="d-flex align-items-center px-3 py-2" style="font-size: 11px;">
-                <i class="bi bi-droplet-fill me-2"></i>
+                <i class="bi bi-basket me-2"></i>
                 Penebaran Benih
             </a>
             <a href="{{ route('index.petugas.kematian') }}" class="d-flex align-items-center px-3 py-2" style="font-size: 11px;">
-                <i class="bi bi-droplet-fill me-2"></i>
-                Manajemen Mortalitas
+                <i class="bi bi-exclamation-octagon me-2"></i>
+                Mortalitas
             </a>
             <a href="{{ route('index.petugas.kualitasair') }}" class="d-flex align-items-center px-3 py-2" style="font-size: 11px;">
                 <i class="bi bi-droplet-fill me-2"></i>
@@ -108,7 +108,7 @@
             </a>
             <a href="{{ route('index.petugas.panen') }}" class="d-flex align-items-center px-3 py-2" style="font-size: 11px;">
                 <i class="bi bi-collection-fill me-2"></i>
-                Manajemen Panen
+                Panen
             </a>
 
             <div class="accordion" id="sidebarAccordion">

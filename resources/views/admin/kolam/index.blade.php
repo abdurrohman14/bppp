@@ -36,6 +36,7 @@
                                 <th>Budaya</th>
                                 <th>Status</th>
                                 <th class="text-start">Jumlah Ikan</th>
+                                <th class="text-start">Ukuran Kolam (mm)</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -47,6 +48,7 @@
                                     <td>{{ $klm->budaya }}</td>
                                     <td>{{ $klm->status }}</td>
                                     <td class="text-start">{{ $klm->jumlah_ikan }}</td>
+                                    <td class="text-start">{{ $klm->ukuran_kolam }}</td>
                                     <td style="padding-left: 12px;">
                                         <div class="d-flex gap-2">
                                             <a href="{{ route('edit.kolam', $klm->id) }}" class="btn btn-warning btn-sm text-white" style="width: 80px;">Edit</a>
