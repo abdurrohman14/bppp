@@ -2,7 +2,7 @@
 
 @section('content')
     <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
-        <div class="card shadow border-0" style="min-height: 550px;">
+        <div class="card shadow border-0" style="min-height: 500px;">
             <div class="card-header">
                 <h5 class="fw-bold" style="color: #003049;">Manajemen Kolam</h5>
             </div>
@@ -51,6 +51,7 @@
                                     <td class="text-start">{{ $klm->ukuran_kolam }}</td>
                                     <td style="padding-left: 12px;">
                                         <div class="d-flex gap-2">
+                                            <a href="{{ route('detail.kolam', $klm->id) }}" class="btn btn-info btn-sm text-white" style="width: 80px;">Detail</a>
                                             <a href="{{ route('edit.kolam', $klm->id) }}" class="btn btn-warning btn-sm text-white" style="width: 80px;">Edit</a>
                                             <form action="{{ route('delete.kolam', $klm->id) }}" method="POST" style="width: 80px;">
                                                 @csrf

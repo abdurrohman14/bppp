@@ -209,14 +209,14 @@
         </div>
 
         <!-- Chart -->
-        <div class="card shadow mt-3">
+        {{-- <div class="card shadow mt-3">
             <div class="card-header bg-white border-0">
                 <h5 class="mb-0">Statistik Panen</h5>
             </div>
             <div class="card-body">
                 <canvas id="myChart" height="100"></canvas>
             </div>
-        </div>
+        </div> --}}
     </main>
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

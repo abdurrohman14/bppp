@@ -42,7 +42,7 @@
 
                 <div class="mb-3">
                     <label for="ukuran_kolam" class="form-label">Ukuran Kolam (mm) </label>
-                    <input type="text" class="form-control" id="ukuran_kolam" name="ukuran_kolam"
+                    <input type="text" class="form-control" id="ukuran_kolam" name="ukuran_kolam">
                         {{-- placeholder="Contoh: 2000mm x 1000mm x 800mm" required> --}}
                 </div>
 

@@ -54,6 +54,7 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::get('/edit/{id}', [KolamController::class, 'edit'])->name('edit.kolam');
         Route::put('/update/{id}', [KolamController::class, 'update'])->name('update.kolam');
         Route::delete('/delete/{id}', [KolamController::class, 'destroy'])->name('delete.kolam');
+        Route::get('/detail/{id}', [KolamController::class, 'show'])->name('detail.kolam');
     });
 
     // Rute Kematian

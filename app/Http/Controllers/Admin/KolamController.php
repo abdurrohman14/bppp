@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Kolam;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class KolamController extends Controller
 {
@@ -41,7 +43,7 @@ class KolamController extends Controller
         ]);
 
         try {
-            Kolam::create([
+            $kolam = Kolam::create([
                 'nama' => $request->nama,
                 'budaya' => $request->budaya,
                 'status' => $request->status,
@@ -49,10 +51,35 @@ class KolamController extends Controller
                 'ukuran_kolam' => $request->ukuran_kolam,
             ]);
 
+            // Buat data untun QR Code
+            $qrData = route('detail.kolam', $kolam->id); // pastikan route ini ada
+
+            $qrImageName = 'qr_kolam_' . $kolam->id . '.svg';
+            $qrPath = 'qrcodes/' . $qrImageName;
+
+            // Simpan QR Code ke storage/app/public/qrcodes
+            $qrCode = QrCode::format('svg')->size(300)->generate($qrData);
+            Storage::disk('public')->put($qrPath, $qrCode);
+
+            // Update kolam dengan path QR Code
+            $kolam->update([
+                'qr_code' => $qrPath,
+            ]);
+
             return redirect()->route('index.kolam')->with('success', 'Data berhasil ditambahkan');
         } catch (\Throwable $th) {
             return redirect()->route('index.kolam')->with('error', $th->getMessage());
         }
+    }
+
+    public function show($id)
+    {
+        $kolam = Kolam::findOrFail($id);
+
+        return view('admin.kolam.detail', [
+            'title' => 'Detail Kolam',
+            'kolam' => $kolam,
+        ]);
     }
 
     public function edit($id)

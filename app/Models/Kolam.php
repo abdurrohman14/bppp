@@ -20,17 +20,14 @@ class Kolam extends Model
         'budaya',
         'status',
         'jumlah_ikan',
-        'ukuran_kolam', // foreign key ke tabel ukuran_kolam
+        'ukuran_kolam',
+        'qr_code'
     ];
 
     /**
      * Relasi ke model UkuranKolam
      * Kolam dimiliki oleh satu ukuran kolam.
      */
-    public function ukuranKolam()
-    {
-        return $this->belongsTo(UkuranKolam::class, 'ukuran_kolam');
-    }
 
     /**
      * Relasi ke kualitas air

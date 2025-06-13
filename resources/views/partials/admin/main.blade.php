@@ -18,7 +18,7 @@
 <body>
     @include('partials.admin.navbar')
 
-    <div class="container-fluid">
+    <div class="container-fluid mt-4">
         <div class="row">
             @include('partials.admin.sidebar')
 
@@ -34,33 +34,33 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Chart
-        const ctx = document.getElementById("myChart");
-        new Chart(ctx, {
-            type: "line",
-            data: {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-                datasets: [{
-                        label: "Suhu",
-                        borderColor: "blue",
-                        data: [30, 32, 31, 33, 35, 36],
-                    },
-                    {
-                        label: "pH",
-                        borderColor: "green",
-                        data: [7.2, 7.4, 7.3, 7.5, 7.6, 7.7],
-                    },
-                    {
-                        label: "Oksigen",
-                        borderColor: "red",
-                        data: [6.8, 7, 6.9, 7.1, 7.2, 7.3],
-                    },
-                ],
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-            },
-        });
+        // const ctx = document.getElementById("myChart");
+        // new Chart(ctx, {
+        //     type: "line",
+        //     data: {
+        //         labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        //         datasets: [{
+        //                 label: "Suhu",
+        //                 borderColor: "blue",
+        //                 data: [30, 32, 31, 33, 35, 36],
+        //             },
+        //             {
+        //                 label: "pH",
+        //                 borderColor: "green",
+        //                 data: [7.2, 7.4, 7.3, 7.5, 7.6, 7.7],
+        //             },
+        //             {
+        //                 label: "Oksigen",
+        //                 borderColor: "red",
+        //                 data: [6.8, 7, 6.9, 7.1, 7.2, 7.3],
+        //             },
+        //         ],
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         maintainAspectRatio: false,
+        //     },
+        // });
         // Sidebar toggle
         const toggleBtn = document.getElementById("toggleSidebar");
         const sidebar = document.getElementById("sidebar");

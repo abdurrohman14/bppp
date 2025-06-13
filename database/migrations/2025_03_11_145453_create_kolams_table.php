@@ -17,6 +17,8 @@ return new class extends Migration
             $table->enum('budaya', ['Probiotik', 'Bioflok']);
             $table->enum('status', ['Aktif', 'Tidak Aktif']);
             $table->integer('jumlah_ikan');
+            $table->integer('ukuran_kolam');
+            $table->string('qr_code')->nullable();
             $table->timestamps();
         });
     }

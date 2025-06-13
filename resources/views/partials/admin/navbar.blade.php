@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="navbar navbar-dark bg-primary px-3 py-3" style="height: 90px;">
+<nav class="navbar navbar-dark bg-primary px-3 py-3" style="height: 80px;">
   <div class="d-flex align-items-center w-100 justify-content-between">
     <div class="d-flex align-items-center" style="gap: 10px;">
       <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" width="60" height="60" style="margin-top: -4px;" />
