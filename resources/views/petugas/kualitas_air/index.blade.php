@@ -4,7 +4,7 @@
 <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
     <div class="card shadow border-0" style="min-height: 550px;">
         <div class="card-header">
-            <h5 class="fw-bold" style="color: #003049;">Daftar Kualitas Air</h5>
+            <h5 class="fw-bold" style="color: #003049;">Kualitas Air</h5>
         </div>
 
         <div class="card-body">

@@ -3,7 +3,7 @@
 @section('content')
 <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
     <div class="card shadow">
-        <div class="card-header bg- text-white">
+        <div class="card-header bg-primary text-white">
             <h5 class="mb-0">Edit Data Panen</h5>
         </div>
         <div class="card-body">
@@ -63,8 +63,8 @@
 
                 {{-- Tombol Aksi --}}
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('index.petugas.panen') }}" class="btn btn-secondary me-2">Batal</a>
-                    <button type="submit" class="btn btn-success">Update</button>
+                    <a href="{{ route('index.petugas.panen') }}" class="btn btn-info me-2 text-white">Batal</a>
+                    <button type="submit" class="btn btn-danger">Update</button>
                 </div>
             </form>
         </div>

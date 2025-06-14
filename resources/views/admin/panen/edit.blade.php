@@ -1,7 +1,7 @@
 @extends('partials.admin.main')
 @section('content')
 <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
-        <div class="card shadow">
+        <div class="card shadow" style="min-height: 500px;">
             <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">Edit Data Panen</h5>
             </div>
@@ -41,13 +41,17 @@
                         <label for="harga_per_kg" class="form-label">Harga per kg (Rp)</label>
                         <input type="number" class="form-control" name="harga_per_kg" value="{{ $panen->harga_per_kg }}" required>
                     </div>
+                     <div class="mb-3">
+                        <label for="harga_per_kg" class="form-label">Jumlah Ikan </label>
+                        <input type="number" class="form-control" name="jumlah_ikan" value="{{ $panen->jumlah_ikan }}" required>
+                    </div>
                     <div class="mb-3">
                         <label for="tujuan_distribusi" class="form-label">Tujuan Distribusi</label>
                         <textarea class="form-control" name="tujuan_distribusi" rows="3" required>{{ $panen->tujuan_distribusi }}</textarea>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('index.panen') }}" class="btn btn-secondary me-2">Batal</a>
-                        <button type="submit" class="btn btn-success">Update</button>
+                        <a href="{{ route('index.panen') }}" class="btn btn-info me-2 text-white">Batal</a>
+                        <button type="submit" class="btn btn-danger text-white">Update</button>
                     </div>
                 </form>
             </div>

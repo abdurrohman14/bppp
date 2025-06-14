@@ -13,6 +13,7 @@ class PanController extends Controller
     public function index()
     {
         $panen = Panen::all();
+
         return view('petugas.panen.index', [
             'panen' => $panen,
             'title' => 'Panen',
@@ -23,6 +24,7 @@ class PanController extends Controller
     {
         $kolam = Kolam::all();
         $spesies = Spesies::all();
+
         return view('petugas.panen.create', [
             'title' => 'Tambah Data Panen',
             'kolam' => $kolam,
@@ -36,11 +38,11 @@ class PanController extends Controller
             $request->validate([
                 'kolam_id' => 'required',
                 'spesies_id' => 'required',
-                'tanggal_panen' => 'required',
-                'berat_total' => 'required',
-                'harga_per_kg' => 'required',
-                'tujuan_distribusi' => 'required',
-                // 'jumlah_ikan_panen' => 'required|integer',
+                'tanggal_panen' => 'required|date',
+                'berat_total' => 'required|numeric',
+                'jumlah_ikan' => 'required|integer',
+                'harga_per_kg' => 'required|numeric',
+                'tujuan_distribusi' => 'required|string',
             ]);
 
             Panen::create([
@@ -48,9 +50,9 @@ class PanController extends Controller
                 'spesies_id' => $request->spesies_id,
                 'tanggal_panen' => $request->tanggal_panen,
                 'berat_total' => $request->berat_total,
+                'jumlah_ikan' => $request->jumlah_ikan,
                 'harga_per_kg' => $request->harga_per_kg,
                 'tujuan_distribusi' => $request->tujuan_distribusi,
-                // 'jumlah_ikan_panen' => $request->jumlah_ikan_panen,
             ]);
 
             return redirect()->route('index.petugas.panen')->with('success', 'Data berhasil ditambahkan');
@@ -79,11 +81,11 @@ class PanController extends Controller
             $request->validate([
                 'kolam_id' => 'required',
                 'spesies_id' => 'required',
-                'tanggal_panen' => 'required',
-                'berat_total' => 'required',
-                'harga_per_kg' => 'required',
-                'tujuan_distribusi' => 'required',
-                // 'jumlah_ikan_panen' => 'required|integer',
+                'tanggal_panen' => 'required|date',
+                'berat_total' => 'required|numeric',
+                'jumlah_ikan' => 'required|integer',
+                'harga_per_kg' => 'required|numeric',
+                'tujuan_distribusi' => 'required|string',
             ]);
 
             Panen::findOrFail($id)->update([
@@ -91,9 +93,9 @@ class PanController extends Controller
                 'spesies_id' => $request->spesies_id,
                 'tanggal_panen' => $request->tanggal_panen,
                 'berat_total' => $request->berat_total,
+                'jumlah_ikan' => $request->jumlah_ikan,
                 'harga_per_kg' => $request->harga_per_kg,
                 'tujuan_distribusi' => $request->tujuan_distribusi,
-                // 'jumlah_ikan_panen' => $request->jumlah_ikan_panen,
             ]);
 
             return redirect()->route('index.petugas.panen')->with('success', 'Data berhasil diupdate');

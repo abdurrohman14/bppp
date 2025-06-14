@@ -28,10 +28,10 @@
                         <label>Jumlah Pakan</label>
                         <input type="number" name="jumlah_pakan" class="form-control" required>
                     </div>
-
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                    <a href="{{ route('index.pakan') }}" class="btn btn-secondary">Batal</a>
-                </form>
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('index.pakan.masuk') }}" class="btn btn-info me-2 text-white">Batal</a>
+                        <button type="submit" class="btn btn-danger">Simpan</button>
+                    </div>
             </div>
         </div>
     </main>

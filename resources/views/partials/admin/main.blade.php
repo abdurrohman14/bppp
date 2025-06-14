@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Admin Dashboard</title>
+    <title>{{ $title ?? 'Judul Default' }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,25 +68,25 @@
         toggleBtn.addEventListener("click", function() {
             sidebar.classList.toggle("show");
         });
-        document.addEventListener('DOMContentLoaded', function() {
-            @if (session('success'))
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil',
-                    text: '{{ session('success') }}',
-                    confirmButtonText: 'OK',
-                });
-            @endif
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     @if (session('success'))
+        //         Swal.fire({
+        //             icon: 'success',
+        //             title: 'Berhasil',
+        //             text: '{{ session('success') }}',
+        //             confirmButtonText: 'OK',
+        //         });
+        //     @endif
 
-            @if (session('error'))
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal',
-                    text: '{{ session('error') }}',
-                    confirmButtonText: 'OK',
-                });
-            @endif
-        });
+        //     @if (session('error'))
+        //         Swal.fire({
+        //             icon: 'error',
+        //             title: 'Gagal',
+        //             text: '{{ session('error') }}',
+        //             confirmButtonText: 'OK',
+        //         });
+        //     @endif
+        // });
     </script>
     <script>
         $(function() {

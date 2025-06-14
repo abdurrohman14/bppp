@@ -39,8 +39,21 @@ class BnhController extends Controller
                 'ukuran' => 'required',
                 'asal_benih' => 'required',
                 'tanggal_tebar' => 'required',
-                'jumlah_benih' => 'required',
+                'jumlah_benih' => 'required|numeric|min:1',
             ]);
+
+            // Ambil data kolam
+            $kolam = Kolam::findOrFail($request->kolam_id);
+
+            // Hitung total ikan setelah ditambah benih
+            $jumlahIkanSekarang = $kolam->jumlah_ikan + $request->jumlah_benih;
+
+            // Validasi kapasitas maksimum kolam
+            if ($jumlahIkanSekarang > 2500) {
+                return redirect()->back()->with('error', 'Jumlah ikan melebihi kapasitas kolam');
+            }
+
+            // Simpan data penebaran benih
             PenebaranBenih::create([
                 'kolam_id' => $request->kolam_id,
                 'spesies_id' => $request->spesies_id,
@@ -49,6 +62,10 @@ class BnhController extends Controller
                 'tanggal_tebar' => $request->tanggal_tebar,
                 'jumlah_benih' => $request->jumlah_benih,
             ]);
+
+            // Update jumlah ikan di kolam
+            $kolam->update(['jumlah_ikan' => $jumlahIkanSekarang]);
+
             return redirect()->route('index.petugas.benih')->with('success', 'Data Berhasil Ditambahkan');
         } catch (\Throwable $th) {
             return redirect()->route('index.petugas.benih')->with('error', $th->getMessage());
@@ -70,14 +87,23 @@ class BnhController extends Controller
     {
         try {
             $request->validate([
-                'kolam_id' => 'required',
-                'spesies_id' => 'required',
+                'kolam_id' => 'required|exists:kolams,id',
+                'spesies_id' => 'required|exists:spesies,id',
                 'ukuran' => 'required',
                 'asal_benih' => 'required',
                 'tanggal_tebar' => 'required',
-                'jumlah_benih' => 'required',
+                'jumlah_benih' => 'required|numeric|min:1',
             ]);
-            PenebaranBenih::find($id)->update($request->all());
+
+            PenebaranBenih::findOrFail($id)->update([
+                'kolam_id' => $request->kolam_id,
+                'spesies_id' => $request->spesies_id,
+                'ukuran' => $request->ukuran,
+                'asal_benih' => $request->asal_benih,
+                'tanggal_tebar' => $request->tanggal_tebar,
+                'jumlah_benih' => $request->jumlah_benih,
+            ]);
+
             return redirect()->route('index.petugas.benih')->with('success', 'Data Berhasil Di Update');
         } catch (\Throwable $th) {
             return redirect()->route('index.petugas.benih')->with('error', $th->getMessage());
@@ -87,7 +113,7 @@ class BnhController extends Controller
     public function destroy($id)
     {
         try {
-            PenebaranBenih::find($id)->delete();
+            PenebaranBenih::findOrFail($id)->delete();
             return redirect()->route('index.petugas.benih')->with('success', 'Data Berhasil Dihapus');
         } catch (\Throwable $th) {
             return redirect()->route('index.petugas.benih')->with('error', $th->getMessage());

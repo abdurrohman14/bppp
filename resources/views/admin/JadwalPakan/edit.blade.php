@@ -11,13 +11,13 @@
                     <form action="{{ route('jadwal.pakan.update', $jadwalPakan->id) }}" method="POST">
                         @csrf
                         @method('PUT')
+
                         <div class="form-group">
                             <label for="spesies_id">Spesies Ikan</label>
                             <select name="spesies_id" class="form-control" required>
-                                @foreach ($spesies as $spesies)
-                                    <option value="{{ $spesies->id }}"
-                                        {{ $jadwalPakan->spesies_id == $spesies->id ? 'selected' : '' }}>
-                                        {{ $spesies->jenis_ikan }}
+                                @foreach ($spesies as $sp)
+                                    <option value="{{ $sp->id }}" {{ $jadwalPakan->spesies_id == $sp->id ? 'selected' : '' }}>
+                                        {{ $sp->jenis_ikan }}
                                     </option>
                                 @endforeach
                             </select>
@@ -35,10 +35,16 @@
                             </div>
                         </div>
 
-                        <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-success btn-sm" id="add_waktu_pakan">Tambah Jam Pakan</button>
-                            <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div>
+                                <button type="button" class="btn btn-success text-white" id="add_waktu_pakan">Tambah Jam Pakan</button>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="{{ route('index.jadwal.pakan') }}" class="btn btn-danger text-white">Batal</a>
+                                <button type="submit" class="btn btn-info text-white">Simpan</button>
+                            </div>
                         </div>
+
                     </form>
                 </div>
             </div>

@@ -93,7 +93,7 @@ Route::middleware(['auth', 'role:admin'])->group(function() {
         Route::get('/create', [SpesiesController::class, 'create'])->name('create.spesies');
         Route::post('/store', [SpesiesController::class, 'store'])->name('store.spesies');
         Route::get('/edit/{id}', [SpesiesController::class, 'edit'])->name('edit.spesies');
-        Route::post('/update/{id}', [SpesiesController::class, 'update'])->name('update.spesies');
+        Route::put('/update/{id}', [SpesiesController::class, 'update'])->name('update.spesies');
         Route::delete('/delete/{id}', [SpesiesController::class, 'destroy'])->name('delete.spesies');
     });
 

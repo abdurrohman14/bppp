@@ -2,11 +2,24 @@
 
 @section('content')
 <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
-    <div class="card shadow border-0" style="min-height: 550px;">
+    <div class="card shadow border-0" style="min-height: 500px;">
         <div class="card-header">
             <h5 class="fw-bold" style="color: #003049;">Data Panen</h5>
         </div>
         <div class="card-body">
+            @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
             <div class="mb-3">
                 <button class="btn btn-primary btn-sm">
                     <a href="{{ route('create.panen') }}" class="text-decoration-none text-white">Tambah</a>
@@ -22,6 +35,7 @@
                             <th class="text-start">Tanggal Panen</th>
                             <th class="text-start">Berat Total (kg)</th>
                             <th class="text-start">Harga per kg (Rp)</th>
+                            <th class="text-start">Jumlah Ikan</th>
                             <th class="text-start">Tujuan Distribusi</th>
                             <th>Aksi</th>
                         </tr>
@@ -35,6 +49,7 @@
                                 <td class="text-start">{{ $item->tanggal_panen }}</td>
                                 <td class="text-start">{{ $item->berat_total }}</td>
                                 <td class="text-start">{{ number_format($item->harga_per_kg, 0, ',', '.') }}</td>
+                                <td class="text-start">{{ $item->jumlah_ikan }}</td>
                                 <td class="text-start">{{ $item->tujuan_distribusi }}</td>
                                 <td style="padding-left: 12px;">
                                     <div class="d-flex gap-2">

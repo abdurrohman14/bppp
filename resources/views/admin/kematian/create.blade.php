@@ -62,8 +62,8 @@
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('index.kematian') }}" class="btn btn-secondary me-2">Batal</a>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <a href="{{ route('index.kematian') }}" class="btn btn-info me-2 text-white">Batal</a>
+                    <button type="submit" class=" btn btn-danger">Simpan</button>
                 </div>
             </form>
         </div>

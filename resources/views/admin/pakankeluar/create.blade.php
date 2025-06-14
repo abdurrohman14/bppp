@@ -44,7 +44,7 @@
                     <input type="number" class="form-control" name="jumlah_keluar" required>
                 </div>
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('index.pakan.Keluar') }}" class="btn btn-secondary me-2">Batal</a>
+                    <a href="{{ route('index.pakan.Keluar') }}" class="btn btn-info me-2 text-white">Batal</a>
                     <button type="submit" class="btn btn-danger">Simpan</button>
                 </div>
             </form>

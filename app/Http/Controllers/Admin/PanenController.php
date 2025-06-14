@@ -12,7 +12,10 @@ class PanenController extends Controller
 {
     public function index()
     {
+        // Ambil semua data panen
         $panen = Panen::all();
+
+        // Kirim data ke view
         return view('admin.panen.index', [
             'panen' => $panen,
             'title' => 'Panen',
@@ -21,8 +24,11 @@ class PanenController extends Controller
 
     public function create()
     {
+        // Ambil data kolam dan spesies
         $kolam = Kolam::all();
         $spesies = Spesies::all();
+
+        // Kirim data ke view
         return view('admin.panen.create', [
             'title' => 'Tambah Data Panen',
             'kolam' => $kolam,
@@ -39,8 +45,9 @@ class PanenController extends Controller
                 'spesies_id' => 'required',
                 'tanggal_panen' => 'required',
                 'berat_total' => 'required',
+                'jumlah_ikan' => 'required|integer',
                 'harga_per_kg' => 'required',
-                'tujuan_distribusi' => 'required',  // Pastikan ada validasi untuk tujuan distribusi
+                'tujuan_distribusi' => 'required',
             ]);
 
             // Simpan data panen ke database
@@ -49,8 +56,9 @@ class PanenController extends Controller
                 'spesies_id' => $request->spesies_id,
                 'tanggal_panen' => $request->tanggal_panen,
                 'berat_total' => $request->berat_total,
+                'jumlah_ikan' => $request->jumlah_ikan,
                 'harga_per_kg' => $request->harga_per_kg,
-                'tujuan_distribusi' => $request->tujuan_distribusi,  // Pastikan tujuan distribusi dimasukkan
+                'tujuan_distribusi' => $request->tujuan_distribusi,
             ]);
 
             // Redirect ke halaman index dengan pesan sukses
@@ -63,11 +71,14 @@ class PanenController extends Controller
 
     public function edit($id)
     {
+        // Ambil data panen berdasarkan ID
         $panen = Panen::find($id);
+
+        // Ambil data kolam dan spesies
         $kolam = Kolam::all();
         $spesies = Spesies::all();
 
-        // Mengirim data kolam dan spesies ke halaman edit
+        // Kirim data ke view edit
         return view('admin.panen.edit', [
             'panen' => $panen,
             'kolam' => $kolam,
@@ -85,8 +96,9 @@ class PanenController extends Controller
                 'spesies_id' => 'required',
                 'tanggal_panen' => 'required',
                 'berat_total' => 'required',
+                'jumlah_ikan' => 'required|integer',
                 'harga_per_kg' => 'required',
-                'tujuan_distribusi' => 'required',  // Pastikan ada validasi untuk tujuan distribusi
+                'tujuan_distribusi' => 'required',
             ]);
 
             // Update data panen berdasarkan ID
@@ -95,9 +107,9 @@ class PanenController extends Controller
                 'spesies_id' => $request->spesies_id,
                 'tanggal_panen' => $request->tanggal_panen,
                 'berat_total' => $request->berat_total,
-                
+                'jumlah_ikan' => $request->jumlah_ikan,
                 'harga_per_kg' => $request->harga_per_kg,
-                'tujuan_distribusi' => $request->tujuan_distribusi,  // Pastikan tujuan distribusi dimasukkan
+                'tujuan_distribusi' => $request->tujuan_distribusi,
             ]);
 
             // Redirect ke halaman index dengan pesan sukses

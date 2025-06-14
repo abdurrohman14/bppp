@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class PakanMController extends Controller
 {
-    // Menampilkan seluruh data Pakan Masuk
+    // Menampilkan seluruh data Pakan Masuk (role petugas)
     public function index()
     {
         $pakanMasuk = PakanMasuk::all();
@@ -19,7 +19,7 @@ class PakanMController extends Controller
         ]);
     }
 
-    // Form untuk menambah data Pakan Masuk
+    // Form untuk menambah data Pakan Masuk (role petugas)
     public function create()
     {
         $pakan = Pakan::all();
@@ -30,7 +30,7 @@ class PakanMController extends Controller
         ]);
     }
 
-    // Menyimpan data Pakan Masuk
+    // Menyimpan data Pakan Masuk + update stok (sama seperti admin)
     public function store(Request $request)
     {
         try {
@@ -46,13 +46,15 @@ class PakanMController extends Controller
             PakanMasuk::create($request->only(['pakan_id', 'jumlah_masuk', 'tanggal_masuk']));
             $pakan->update(['jumlah_pakan' => $jumlahMasuk]);
 
-            return redirect()->route('index.petugas.PakanMasuk')->with('success', 'Data Berhasil Ditambahkan');
+            return redirect()->route('petugas.pakanMasuk.index')
+                ->with('success', 'Data Berhasil Ditambahkan dan Stok Diperbarui');
         } catch (\Throwable $th) {
-            return redirect()->route('index.petugas.PakanMasuk')->with('error', 'Terjadi Kesalahan: ' . $th->getMessage());
+            return redirect()->route('petugas.pakanMasuk.index')
+                ->with('error', 'Terjadi Kesalahan: ' . $th->getMessage());
         }
     }
 
-    // Form untuk mengedit data Pakan Masuk
+    // Form untuk edit data Pakan Masuk (role petugas)
     public function edit($id)
     {
         $pakanMasuk = PakanMasuk::findOrFail($id);
@@ -65,7 +67,7 @@ class PakanMController extends Controller
         ]);
     }
 
-    // Memperbarui data Pakan Masuk
+    // Update data Pakan Masuk + update stok (sama seperti admin)
     public function update(Request $request, $id)
     {
         try {
@@ -76,24 +78,36 @@ class PakanMController extends Controller
             ]);
 
             $pakanMasuk = PakanMasuk::findOrFail($id);
+            $pakan = Pakan::findOrFail($request->pakan_id);
+
+            // update stok berdasarkan selisih
+            $selisihJumlah = $request->jumlah_masuk - $pakanMasuk->jumlah_masuk;
+            $pakan->jumlah_pakan += $selisihJumlah;
+            $pakan->save();
+
+            // perbarui record pakan masuk
             $pakanMasuk->update($request->only(['pakan_id', 'jumlah_masuk', 'tanggal_masuk']));
 
-            return redirect()->route('index.petugas.PakanMasuk')->with('success', 'Data Berhasil Diupdate');
+            return redirect()->route('petugas.pakanMasuk.index')
+                ->with('success', 'Data Berhasil Diupdate dan Stok Diperbarui');
         } catch (\Throwable $th) {
-            return redirect()->route('index.petugas.PakanMasuk')->with('error', 'Terjadi Kesalahan: ' . $th->getMessage());
+            return redirect()->route('petugas.pakanMasuk.index')
+                ->with('error', 'Terjadi Kesalahan: ' . $th->getMessage());
         }
     }
 
-    // Menghapus data Pakan Masuk
+    // Menghapus data Pakan Masuk (role petugas)
     public function destroy($id)
     {
         try {
             $pakanMasuk = PakanMasuk::findOrFail($id);
             $pakanMasuk->delete();
 
-            return redirect()->route('index.petugas.PakanMasuk')->with('success', 'Data Berhasil Dihapus');
+            return redirect()->route('petugas.pakanMasuk.index')
+                ->with('success', 'Data Berhasil Dihapus');
         } catch (\Throwable $th) {
-            return redirect()->route('index.petugas.PakanMasuk')->with('error', 'Terjadi Kesalahan: ' . $th->getMessage());
+            return redirect()->route('petugas.pakanMasuk.index')
+                ->with('error', 'Terjadi Kesalahan: ' . $th->getMessage());
         }
     }
 }

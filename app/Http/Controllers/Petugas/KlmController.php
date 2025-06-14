@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Kolam;
 use App\Models\UkuranKolam;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class KlmController extends Controller
 {
     public function index()
     {
-        $kolam = Kolam::with('ukuranKolam')->get();
+        $kolam = Kolam::all();
+
         return view('petugas.kolam.index', [
             'title' => 'Kolam',
             'kolam' => $kolam,
@@ -22,33 +25,58 @@ class KlmController extends Controller
     {
         $budaya = ['Probiotik', 'Bioflok'];
         $status = ['Aktif', 'Tidak Aktif'];
-        $ukuranKolam = UkuranKolam::all();
 
         return view('petugas.kolam.create', [
             'title' => 'Tambah Kolam',
             'budaya' => $budaya,
             'status' => $status,
-            'ukuranKolam' => $ukuranKolam,
         ]);
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'budaya' => 'required|in:Probiotik,Bioflok',
+            'status' => 'required|in:Aktif,Tidak Aktif',
+            'jumlah_ikan' => 'nullable|integer',
+            'ukuran_kolam' => 'required|',
+        ]);
+
         try {
-            $request->validate([
-                'nama' => 'required|string|max:255',
-                'budaya' => 'required|in:Probiotik,Bioflok',
-                'status' => 'required|in:Aktif,Tidak Aktif',
-                'jumlah_ikan' => 'nullable|integer',
-                'ukuran_kolam' => 'required|exists:ukuran_kolam,id',
+            $kolam = Kolam::create([
+                'nama' => $request->nama,
+                'budaya' => $request->budaya,
+                'status' => $request->status,
+                'jumlah_ikan' => $request->jumlah_ikan,
+                'ukuran_kolam' => $request->ukuran_kolam,
             ]);
 
-            Kolam::create($request->all());
+            $qrData = route('detail.petugas.kolam', $kolam->id); // pastikan route ini ada
+            $qrImageName = 'qr_kolam_' . $kolam->id . '.svg';
+            $qrPath = 'qrcodes/' . $qrImageName;
+
+            $qrCode = QrCode::format('svg')->size(300)->generate($qrData);
+            Storage::disk('public')->put($qrPath, $qrCode);
+
+            $kolam->update([
+                'qr_code' => $qrPath,
+            ]);
 
             return redirect()->route('index.petugas.kolam')->with('success', 'Data berhasil ditambahkan');
         } catch (\Throwable $th) {
             return redirect()->route('index.petugas.kolam')->with('error', $th->getMessage());
         }
+    }
+
+    public function show($id)
+    {
+        $kolam = Kolam::findOrFail($id);
+
+        return view('petugas.kolam.detail', [
+            'title' => 'Detail Kolam',
+            'kolam' => $kolam,
+        ]);
     }
 
     public function edit($id)
@@ -69,18 +97,23 @@ class KlmController extends Controller
 
     public function update(Request $request, $id)
     {
-        try {
-            $request->validate([
-                'nama' => 'required|string|max:255',
-                'budaya' => 'required|string|max:255',
-                'status' => 'required|string|max:50',
-                'jumlah_ikan' => 'nullable|integer',
-                'ukuran_kolam' => 'required|exists:ukuran_kolam,id',
-            ]);
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'budaya' => 'required|in:Probiotik,Bioflok',
+            'status' => 'required|in:Aktif,Tidak Aktif',
+            'jumlah_ikan' => 'nullable|integer',
+            'ukuran_kolam' => 'required|',
+        ]);
 
+        try {
             $kolam = Kolam::findOrFail($id);
-            $kolam->fill($request->all());
-            $kolam->save();
+            $kolam->update([
+                'nama' => $request->nama,
+                'budaya' => $request->budaya,
+                'status' => $request->status,
+                'jumlah_ikan' => $request->jumlah_ikan,
+                'ukuran_kolam' => $request->ukuran_kolam,
+            ]);
 
             return redirect()->route('index.petugas.kolam')->with('success', 'Data berhasil diupdate');
         } catch (\Throwable $th) {

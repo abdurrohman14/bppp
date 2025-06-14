@@ -7,11 +7,28 @@
                 <h5 class="fw-bold" style="color: #003049;">Manajemen Benih</h5>
             </div>
             <div class="card-body">
+
+                {{-- Notifikasi Flash Message --}}
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
                 <div class="mb-3">
                     <button class="btn btn-primary btn-sm">
                         <a href="{{ route('create.benih') }}" class="text-decoration-none text-white">Tambah</a>
                     </button>
                 </div>
+
                 <div class="table-responsive">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
@@ -38,12 +55,13 @@
                                     <td class="text-start">{{ $bnh->jumlah_benih }}</td>
                                     <td style="padding-left: 12px;">
                                         <div class="d-flex gap-2">
-                                            <a href="{{ route('edit.benih', $bnh->id) }}" class="btn btn-warning btn-sm text-white" style="width: 80px;">Edit</a>
-                                            <form action="{{ route('delete.benih', $bnh->id) }}" method="POST" style="width: 80px;">
+                                            <a href="{{ route('edit.benih', $bnh->id) }}"
+                                               class="btn btn-warning btn-sm text-white" style="width: 80px;">Edit</a>
+                                            <form action="{{ route('delete.benih', $bnh->id) }}" method="POST" style="width: 80px;"
+                                                  onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm w-100"
-                                                    onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
+                                                <button type="submit" class="btn btn-danger btn-sm w-100">Hapus</button>
                                             </form>
                                         </div>
                                     </td>
@@ -52,6 +70,7 @@
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </div>
     </main>

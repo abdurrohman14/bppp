@@ -2,7 +2,7 @@
 @section('content')
 <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
         <div class="card shadow">
-            <div class="card-header bg-success text-white">
+            <div class="card-header bg-primary text-white">
                 <h5 class="mb-0">Form Tambah Data Panen</h5>
             </div>
             <div class="card-body">
@@ -39,6 +39,10 @@
                         <input type="number" class="form-control" name="harga_per_kg" required>
                     </div>
                     <div class="mb-3">
+                        <label for="berat_total" class="form-label">Jumlah Ikan </label>
+                        <input type="number" class="form-control" name="jumlah_ikan" required step="any">
+                    </div>
+                    <div class="mb-3">
                         <label for="tujuan_distribusi" class="form-label">Tujuan Distribusi</label>
                         <input type="text" name="tujuan_distribusi" class="form-control" required>
                         @error('tujuan_distribusi')
@@ -46,8 +50,8 @@
                         @enderror
                     </div>
                     <div class="d-flex justify-content-end">
-                        <a href="{{ route('index.panen') }}" class="btn btn-secondary me-2">Batal</a>
-                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <a href="{{ route('index.panen') }}" class="btn btn-info me-2 text-white">Batal</a>
+                        <button type="submit" class="btn btn-danger">Simpan</button>
                     </div>
                 </form>
             </div>

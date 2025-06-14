@@ -41,9 +41,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="ukuran_kolam" class="form-label">Ukuran Kolam (mm) </label>
+                    <label for="ukuran_kolam" class="form-label">Ukuran Kolam (m) </label>
                     <input type="text" class="form-control" id="ukuran_kolam" name="ukuran_kolam">
-                        {{-- placeholder="Contoh: 2000mm x 1000mm x 800mm" required> --}}
                 </div>
 
                 <div class="d-flex justify-content-end">

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('spesies_id')->references('id')->on('spesies')->onDelete('cascade');
             $table->date('tanggal_panen');
             $table->decimal('berat_total');
+            $table->float('jumlah_ikan');
             $table->float('harga_per_kg');
             $table->integer('tujuan_distribusi');
             $table->timestamps();
