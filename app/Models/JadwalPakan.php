@@ -58,4 +58,6 @@ class JadwalPakan extends Model
                "Jadwal: " . implode(", ", $jadwalArray) . "\n" .
                "Silakan berikan pakan sesuai jadwal di atas.";
     }
+
+
 }

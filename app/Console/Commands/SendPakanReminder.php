@@ -42,8 +42,8 @@ class SendPakanReminder extends Command
 
                     $response = $fonnteService->sendWhatsapp($phone, $pesan);
 
-                    if ($response && $response['status'] ?? false) {
-                        $this->info("✅ Sukses: " . $response['message'] ?? 'Terkirim');
+                    if ($response && ($response['status'] ?? false)) {
+                        $this->info("✅ Sukses: " . ($response['message'] ?? 'Terkirim'));
                     } else {
                         $this->error("❌ Gagal: " . ($response['message'] ?? 'Unknown error'));
                         $this->error("Detail: " . json_encode($response));
