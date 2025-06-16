@@ -11,7 +11,7 @@
                     <p><strong>Budaya:</strong> {{ $kolam->budaya }}</p>
                     <p><strong>Status:</strong> {{ $kolam->status }}</p>
                     <p><strong>Jumlah Ikan:</strong> {{ $kolam->jumlah_ikan ?? 'Kosong' }}</p>
-                    <p><strong>Ukuran Kolam:</strong> {{ $kolam->ukuran_kolam }}</p>
+                    <p><strong>Diameter Kolam:</strong> {{ $kolam->ukuran_kolam }}</p>
 
                     @if ($kolam->qr_code && file_exists(public_path('storage/' . $kolam->qr_code)))
                         <div class="mt-3">

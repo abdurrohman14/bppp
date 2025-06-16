@@ -3,115 +3,109 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\PakanMasuk; // Pastikan nama model PakanMasuk mengikuti konvensi penamaan
-use App\Models\Pakan; // Pastikan model Pakan sudah ada
+use App\Models\PakanMasuk;
+use App\Models\Pakan;
 use Illuminate\Http\Request;
 
 class PakanMasukController extends Controller
 {
-    // Menampilkan seluruh data Pakan Masuk
     public function index()
     {
-        // Ambil data PakanMasuk
-        $pakanMasuk = PakanMasuk::all(); // Tidak perlu dengan relasi 'pakan' karena hanya pakan_id yang digunakan
+        $pakanMasuk = PakanMasuk::all();
         return view('admin.pakanMasuk.index', [
             'pakanMasuk' => $pakanMasuk,
             'title' => 'Pakan Masuk',
         ]);
     }
 
-    // Form untuk menambah data Pakan Masuk
     public function create()
     {
-        // Ambil data pakan
-        $pakan = Pakan::all(); // Ambil data pakan dari model Pakan
-
+        $pakan = Pakan::all();
         return view('admin.pakanMasuk.create', [
-            'pakan' => $pakan, // Pass data pakan
+            'pakan' => $pakan,
             'title' => 'Tambah Pakan Masuk',
         ]);
     }
 
-    // Menyimpan data Pakan Masuk
     public function store(Request $request)
     {
         try {
-            // Validasi input dari form
             $request->validate([
-                'pakan_id' => 'required|exists:pakans,id', // Pastikan 'pakan_id' ada di form
-                'jumlah_masuk' => 'required|numeric', // Pastikan jumlah masuk adalah angka
-                'tanggal_masuk' => 'required|date', // Menambahkan validasi tanggal
+                'pakan_id' => 'required|exists:pakans,id',
+                'jumlah_masuk' => 'required|numeric',
+                'tanggal_masuk' => 'required|date',
             ]);
 
-            // mendapatkan data pakan berdasarkan ID
-            $pakan = Pakan::findOrFail($request->pakan_id); // Pastikan pakan_id valid
+            $pakan = Pakan::findOrFail($request->pakan_id);
+            $pakan->jumlah_pakan += $request->jumlah_masuk;
+            $pakan->save();
 
-            // hitung jumlah pakan masuk
-            $jumlahMasuk = $pakan->jumlah_pakan + $request->jumlah_masuk;
-
-            // Membuat record baru di database
             PakanMasuk::create($request->only(['pakan_id', 'jumlah_masuk', 'tanggal_masuk']));
-            // Perbarui jumlah pakan di model Pakan
-            $pakan->update(['jumlah_pakan' => $jumlahMasuk]);
-            return redirect()->route('index.pakan.masuk')->with('success', 'Data Berhasil Ditambahkan');
+
+            return redirect()->route('index.pakan.masuk')->with('success', 'Data Berhasil Ditambahkan dan Stok Diperbarui');
         } catch (\Throwable $th) {
             return redirect()->route('index.pakan.masuk')->with('error', 'Terjadi Kesalahan: ' . $th->getMessage());
         }
     }
 
-    // Form untuk mengedit data Pakan Masuk
     public function edit($id)
     {
-        $pakanMasuk = PakanMasuk::findOrFail($id);  // Temukan data berdasarkan ID
-        $pakan = Pakan::all(); // Ambil data pakan
-
+        $pakanMasuk = PakanMasuk::findOrFail($id);
+        $pakan = Pakan::all();
         return view('admin.pakanMasuk.edit', [
             'pakanMasuk' => $pakanMasuk,
-            'pakan' => $pakan, // Pass data pakan
+            'pakan' => $pakan,
             'title' => 'Edit Pakan Masuk',
         ]);
     }
 
-    // Memperbarui data Pakan Masuk
     public function update(Request $request, $id)
     {
         try {
-            // Validasi input dari form
             $request->validate([
-                'pakan_id' => 'required|exists:pakans,id', // Validasi pakan_id
-                'jumlah_masuk' => 'required|numeric',      // Validasi angka
-                'tanggal_masuk' => 'required|date',        // Validasi tanggal
+                'pakan_id' => 'required|exists:pakans,id',
+                'jumlah_masuk' => 'required|numeric',
+                'tanggal_masuk' => 'required|date',
             ]);
 
-            // Ambil data lama pakan masuk
-            $pakanMasuk = PakanMasuk::findOrFail($id);
-            $pakan = Pakan::findOrFail($request->pakan_id);
+            $pakanMasukLama = PakanMasuk::findOrFail($id);
 
-            // Hitung selisih antara jumlah lama dan jumlah baru
-            $selisihJumlah = $request->jumlah_masuk - $pakanMasuk->jumlah_masuk;
+            // Kurangi stok dari pakan lama
+            $pakanLama = Pakan::findOrFail($pakanMasukLama->pakan_id);
+            $pakanLama->jumlah_pakan -= $pakanMasukLama->jumlah_masuk;
+            $pakanLama->save();
 
-            // Update stok pakan berdasarkan selisih
-            $pakan->jumlah_pakan += $selisihJumlah;
-            $pakan->save();
+            // Tambahkan stok ke pakan baru
+            $pakanBaru = Pakan::findOrFail($request->pakan_id);
+            $pakanBaru->jumlah_pakan += $request->jumlah_masuk;
+            $pakanBaru->save();
 
             // Update data pakan masuk
-            $pakanMasuk->update($request->only(['pakan_id', 'jumlah_masuk', 'tanggal_masuk']));
+            $pakanMasukLama->update([
+                'pakan_id' => $request->pakan_id,
+                'jumlah_masuk' => $request->jumlah_masuk,
+                'tanggal_masuk' => $request->tanggal_masuk,
+            ]);
 
-            return redirect()->route('index.pakan.masuk')->with('success', 'Data Berhasil Diupdate dan Stok Diperbarui');
+            return redirect()->route('index.pakan.masuk')->with('success', 'Data dan Stok Berhasil Diperbarui');
         } catch (\Throwable $th) {
             return redirect()->route('index.pakan.masuk')->with('error', 'Terjadi Kesalahan: ' . $th->getMessage());
         }
     }
 
-    // Menghapus data Pakan Masuk
     public function destroy($id)
     {
         try {
             $pakanMasuk = PakanMasuk::findOrFail($id);
-            // Hapus data berdasarkan ID
+            $pakan = Pakan::findOrFail($pakanMasuk->pakan_id);
+
+            // Kurangi stok sesuai jumlah pakan masuk yang akan dihapus
+            $pakan->jumlah_pakan -= $pakanMasuk->jumlah_masuk;
+            $pakan->save();
+
             $pakanMasuk->delete();
 
-            return redirect()->route('index.pakan.masuk')->with('success', 'Data Berhasil Dihapus');
+            return redirect()->route('index.pakan.masuk')->with('success', 'Data dan Stok Berhasil Dihapus');
         } catch (\Throwable $th) {
             return redirect()->route('index.pakan.masuk')->with('error', 'Terjadi Kesalahan: ' . $th->getMessage());
         }

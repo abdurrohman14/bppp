@@ -185,7 +185,7 @@ Route::middleware(['auth', 'role:petugasKolam'])->group(function() {
         Route::get('/create', [SpsController::class, 'create'])->name('create.petugas.spesies');
         Route::post('/store', [SpsController::class, 'store'])->name('store.petugas.spesies');
         Route::get('/edit/{id}', [SpsController::class, 'edit'])->name('edit.petugas.spesies');
-        Route::post('/update/{id}', [SpsController::class, 'update'])->name('update.petugas.spesies');
+        Route::put('/update/{id}', [SpsController::class, 'update'])->name('update.petugas.spesies');
         Route::delete('/delete/{id}', [SpsController::class, 'destroy'])->name('delete.petugas.spesies');
     });
 
@@ -195,7 +195,7 @@ Route::middleware(['auth', 'role:petugasKolam'])->group(function() {
         Route::get('/create', [BnhController::class, 'create'])->name('create.petugas.benih');
         Route::post('/store', [BnhController::class, 'store'])->name('store.petugas.benih');
         Route::get('/edit/{id}', [BnhController::class, 'edit'])->name('edit.petugas.benih');
-        Route::post('/update/{id}', [BnhController::class, 'update'])->name('update.petugas.benih');
+        Route::put('/update/{id}', [BnhController::class, 'update'])->name('update.petugas.benih');
         Route::delete('/delete/{id}', [BnhController::class, 'destroy'])->name('delete.petugas.benih');
     });
 

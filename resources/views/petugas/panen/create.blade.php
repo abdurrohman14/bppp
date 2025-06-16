@@ -29,19 +29,23 @@
                 </div>
                 <div class="mb-3">
                     <label for="tanggal_panen" class="form-label">Tanggal Panen</label>
-                    <input type="date" class="form-control" id="tanggal_panen" name="tanggal_panen" required>
+                    <input type="date" class="form-control" name="tanggal_panen" required>
                 </div>
                 <div class="mb-3">
                     <label for="berat_total" class="form-label">Berat Total Panen (kg)</label>
-                    <input type="number" class="form-control" id="berat_total" name="berat_total" required step="any">
+                    <input type="number" class="form-control" name="berat_total" required step="any">
                 </div>
                 <div class="mb-3">
                     <label for="harga_per_kg" class="form-label">Harga per/kg (Rp)</label>
-                    <input type="number" class="form-control" id="harga_per_kg" name="harga_per_kg" required>
+                    <input type="number" class="form-control" name="harga_per_kg" required>
+                </div>
+                <div class="mb-3">
+                    <label for="jumlah_ikan" class="form-label">Jumlah Ikan</label>
+                    <input type="number" class="form-control" name="jumlah_ikan" required step="any">
                 </div>
                 <div class="mb-3">
                     <label for="tujuan_distribusi" class="form-label">Tujuan Distribusi</label>
-                    <input type="text" class="form-control" id="tujuan_distribusi" name="tujuan_distribusi" required>
+                    <input type="text" name="tujuan_distribusi" class="form-control" required>
                     @error('tujuan_distribusi')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

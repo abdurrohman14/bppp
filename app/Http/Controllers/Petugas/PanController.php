@@ -38,12 +38,22 @@ class PanController extends Controller
             $request->validate([
                 'kolam_id' => 'required',
                 'spesies_id' => 'required',
-                'tanggal_panen' => 'required|date',
-                'berat_total' => 'required|numeric',
+                'tanggal_panen' => 'required',
+                'berat_total' => 'required',
                 'jumlah_ikan' => 'required|integer',
-                'harga_per_kg' => 'required|numeric',
-                'tujuan_distribusi' => 'required|string',
+                'harga_per_kg' => 'required',
+                'tujuan_distribusi' => 'required',
             ]);
+
+            $kolam = Kolam::findOrFail($request->kolam_id);
+
+            if ($kolam->jumlah_ikan < $request->jumlah_ikan) {
+                return redirect()->back()->with('error', 'Jumlah ikan panen melebihi jumlah ikan di kolam.');
+            }
+
+            // Kurangi jumlah ikan di kolam
+            $kolam->jumlah_ikan -= $request->jumlah_ikan;
+            $kolam->save();
 
             Panen::create([
                 'kolam_id' => $request->kolam_id,
@@ -81,14 +91,29 @@ class PanController extends Controller
             $request->validate([
                 'kolam_id' => 'required',
                 'spesies_id' => 'required',
-                'tanggal_panen' => 'required|date',
-                'berat_total' => 'required|numeric',
+                'tanggal_panen' => 'required',
+                'berat_total' => 'required',
                 'jumlah_ikan' => 'required|integer',
-                'harga_per_kg' => 'required|numeric',
-                'tujuan_distribusi' => 'required|string',
+                'harga_per_kg' => 'required',
+                'tujuan_distribusi' => 'required',
             ]);
 
-            Panen::findOrFail($id)->update([
+            $panen = Panen::findOrFail($id);
+            $kolam = Kolam::findOrFail($request->kolam_id);
+
+            // Kembalikan jumlah ikan sebelumnya
+            $kolam->jumlah_ikan += $panen->jumlah_ikan;
+
+            // Cek apakah cukup untuk dikurangi
+            if ($kolam->jumlah_ikan < $request->jumlah_ikan) {
+                return redirect()->back()->with('error', 'Jumlah ikan panen melebihi jumlah ikan di kolam.');
+            }
+
+            // Kurangi sesuai jumlah baru
+            $kolam->jumlah_ikan -= $request->jumlah_ikan;
+            $kolam->save();
+
+            $panen->update([
                 'kolam_id' => $request->kolam_id,
                 'spesies_id' => $request->spesies_id,
                 'tanggal_panen' => $request->tanggal_panen,
@@ -107,7 +132,15 @@ class PanController extends Controller
     public function destroy($id)
     {
         try {
-            Panen::findOrFail($id)->delete();
+            $panen = Panen::findOrFail($id);
+            $kolam = Kolam::findOrFail($panen->kolam_id);
+
+            // Kembalikan jumlah ikan ke kolam
+            $kolam->jumlah_ikan += $panen->jumlah_ikan;
+            $kolam->save();
+
+            $panen->delete();
+
             return redirect()->route('index.petugas.panen')->with('success', 'Data berhasil dihapus');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());

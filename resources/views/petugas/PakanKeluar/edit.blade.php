@@ -60,8 +60,8 @@
                 </div>
 
                 <div class="d-flex justify-content-end">
-                    <a href="{{ route('index.petugas.PakanKeluar') }}" class="btn btn-secondary me-2">Batal</a>
-                    <button type="submit" class="btn btn-danger">Update</button>
+                    <a href="{{ route('index.petugas.PakanKeluar') }}" class="btn btn-info me-2 text-white">Batal</a>
+                    <button type="submit" class="btn btn-danger text-white">Update</button>
                 </div>
             </form>
         </div>

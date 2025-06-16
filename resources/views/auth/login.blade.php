@@ -10,36 +10,46 @@
 
   <style>
     body {
-      background-color: white;
-      height: 100vh;
+      background-image: url('{{ asset('assets/img/SFV.jpg') }}'); /* Ganti dengan nama file gambarmu */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      margin: 0;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .login-card {
-      background: #3A86D1;
+
+        .login-card {
+      background-color: #006edb; /* Warna biru solid */
       border-radius: 12px;
       padding: 40px 30px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
       width: 100%;
       max-width: 400px;
       text-align: center;
     }
+
     .login-card img {
       width: 100px;
       margin-bottom: 20px;
     }
+
     .smart-title {
       font-family: 'Sedan SC', serif;
       color: white;
     }
+
     .bppp-title {
       font-family: 'Sanista One', cursive;
       color: white;
     }
+
     .form-control::placeholder {
       color: #999;
     }
+
     .form-icon {
       position: absolute;
       top: 50%;
@@ -49,12 +59,14 @@
       font-size: 1.1rem;
       z-index: 3;
     }
+
     .form-control {
       padding-left: 45px !important;
       background-color: #ffffff !important;
       border: 1px solid #ffffff;
       font-weight: bold;
     }
+
     .btn-dark {
       background-color: #f0f0f0;
       color: #000;
@@ -62,6 +74,7 @@
       font-family: 'Roboto', sans-serif;
       font-weight: 700;
     }
+
     .btn-dark:hover {
       background-color: #f0f0f0;
       color: #000;

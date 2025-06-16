@@ -21,12 +21,10 @@ class KmtnController extends Controller
 
     public function create()
     {
-        $kolam = Kolam::all();
-        $spesies = Spesies::all();
         return view('petugas.kematian.create', [
             'title' => 'Tambah Data Kematian',
-            'kolam' => $kolam,
-            'spesies' => $spesies,
+            'kolam' => Kolam::all(),
+            'spesies' => Spesies::all(),
         ]);
     }
 
@@ -41,7 +39,14 @@ class KmtnController extends Controller
                 'penyebab' => 'required|string',
             ]);
 
-            $kematian = Kematian::create($request->only([
+            $kolam = Kolam::findOrFail($request->kolam_id);
+
+            // Kurangi jumlah ikan di kolam
+            $jumlahBaru = $kolam->jumlah_ikan - $request->jumlah_mati;
+            if ($jumlahBaru < 0) $jumlahBaru = 0;
+            $kolam->update(['jumlah_ikan' => $jumlahBaru]);
+
+            Kematian::create($request->only([
                 'kolam_id', 'spesies_id', 'tanggal_kematian', 'jumlah_mati', 'penyebab'
             ]));
 
@@ -49,15 +54,15 @@ class KmtnController extends Controller
                 ->where('tanggal_kematian', $request->tanggal_kematian)
                 ->sum('jumlah_mati');
 
-            $batasMortalitas = 5;
-
+            $batasMortalitas = 3;
             if ($totalHariIni > $batasMortalitas) {
                 return redirect()->route('index.petugas.kematian')
                     ->with('success', 'Data Kematian Berhasil Ditambahkan')
-                    ->with('warning', 'Peringatan: Jumlah kematian ikan di kolam ini melebihi batas aman 5 ekor hari ini. Harap periksa keadaan kolam.');
+                    ->with('warning', 'Peringatan: Jumlah kematian ikan melebihi batas aman (3 ekor) di hari ini.');
             }
 
             return redirect()->route('index.petugas.kematian')->with('success', 'Data Kematian Berhasil Ditambahkan');
+
         } catch (\Throwable $th) {
             return redirect()->route('index.petugas.kematian')->with('error', $th->getMessage());
         }
@@ -65,15 +70,11 @@ class KmtnController extends Controller
 
     public function edit($id)
     {
-        $kematian = Kematian::findOrFail($id);
-        $kolam = Kolam::all();
-        $spesies = Spesies::all();
-
         return view('petugas.kematian.edit', [
             'title' => 'Edit Data Kematian',
-            'kematian' => $kematian,
-            'kolam' => $kolam,
-            'spesies' => $spesies,
+            'kematian' => Kematian::findOrFail($id),
+            'kolam' => Kolam::all(),
+            'spesies' => Spesies::all(),
         ]);
     }
 
@@ -89,28 +90,37 @@ class KmtnController extends Controller
             ]);
 
             $kematian = Kematian::findOrFail($id);
+            $kolam = Kolam::findOrFail($kematian->kolam_id);
+
+            // Tambahkan kembali jumlah_mati lama
+            $kolam->jumlah_ikan += $kematian->jumlah_mati;
+
+            // Kurangi dengan jumlah_mati baru
+            $kolam->jumlah_ikan -= $request->jumlah_mati;
+            if ($kolam->jumlah_ikan < 0) $kolam->jumlah_ikan = 0;
+
+            $kolam->save();
+
             $kematian->update($request->only([
                 'kolam_id', 'spesies_id', 'tanggal_kematian', 'jumlah_mati', 'penyebab'
             ]));
 
-            // Hitung ulang jumlah kematian hari itu tanpa data ini
             $totalHariIni = Kematian::where('kolam_id', $request->kolam_id)
                 ->where('tanggal_kematian', $request->tanggal_kematian)
                 ->where('id', '!=', $kematian->id)
                 ->sum('jumlah_mati');
 
-            // Tambahkan jumlah dari data yang baru diupdate
             $totalHariIni += $request->jumlah_mati;
 
-            $batasMortalitas = 5;
-
+            $batasMortalitas = 3;
             if ($totalHariIni > $batasMortalitas) {
                 return redirect()->route('index.petugas.kematian')
                     ->with('success', 'Data Kematian Berhasil Diupdate')
-                    ->with('warning', 'Peringatan: Jumlah kematian ikan di kolam ini melebihi batas aman 5 ekor hari ini. Harap periksa keadaan kolam.');
+                    ->with('warning', 'Peringatan: Jumlah kematian ikan melebihi batas aman (3 ekor) di hari ini.');
             }
 
             return redirect()->route('index.petugas.kematian')->with('success', 'Data Kematian Berhasil Diupdate');
+
         } catch (\Throwable $th) {
             return redirect()->route('index.petugas.kematian')->with('error', $th->getMessage());
         }
@@ -119,7 +129,14 @@ class KmtnController extends Controller
     public function destroy($id)
     {
         try {
-            Kematian::findOrFail($id)->delete();
+            $kematian = Kematian::findOrFail($id);
+            $kolam = Kolam::findOrFail($kematian->kolam_id);
+
+            $kolam->jumlah_ikan += $kematian->jumlah_mati;
+            $kolam->save();
+
+            $kematian->delete();
+
             return redirect()->route('index.petugas.kematian')->with('success', 'Data Kematian Berhasil Dihapus');
         } catch (\Throwable $th) {
             return redirect()->route('index.petugas.kematian')->with('error', $th->getMessage());

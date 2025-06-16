@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="ukuran_kolam" class="form-label">Ukuran Kolam (m) </label>
+                    <label for="ukuran_kolam" class="form-label">Diameter Kolam</label>
                     <input type="text" class="form-control" id="ukuran_kolam" name="ukuran_kolam">
                 </div>
 

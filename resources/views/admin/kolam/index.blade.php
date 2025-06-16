@@ -36,7 +36,7 @@
                                 <th>Budaya</th>
                                 <th>Status</th>
                                 <th class="text-start">Jumlah Ikan</th>
-                                <th class="text-start">Ukuran Kolam (mm)</th>
+                                <th class="text-start">Diameter Kolam</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>

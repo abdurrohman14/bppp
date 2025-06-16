@@ -32,7 +32,7 @@
 
             <div class="mb-3">
                 <button class="btn btn-primary btn-sm">
-                    <a href="{{ route('create.petugas.kematian') }}" class="text-decoration-none text-white">Tambah Mortalitas</a>
+                    <a href="{{ route('create.petugas.kematian') }}" class="text-decoration-none text-white">Tambah</a>
                 </button>
             </div>
 

@@ -41,8 +41,8 @@ class pakanKeluarController extends Controller
                 'pakan_id' => 'required|exists:pakans,id',
                 'kolam_id' => 'required|exists:kolams,id',
                 'spesies_id' => 'required|exists:spesies,id',
-                'tanggal_keluar' => 'required',
-                'jumlah_keluar' => 'required|numeric',
+                'tanggal_keluar' => 'required|date',
+                'jumlah_keluar' => 'required|numeric|min:1',
             ]);
 
             $pakan = Pakan::findOrFail($request->pakan_id);
@@ -84,29 +84,24 @@ class pakanKeluarController extends Controller
                 'pakan_id' => 'required|exists:pakans,id',
                 'kolam_id' => 'required|exists:kolams,id',
                 'spesies_id' => 'required|exists:spesies,id',
-                'tanggal_keluar' => 'required',
-                'jumlah_keluar' => 'required|numeric',
+                'tanggal_keluar' => 'required|date',
+                'jumlah_keluar' => 'required|numeric|min:1',
             ]);
 
             $pakanKeluar = pakanKeluar::findOrFail($id);
             $pakan = Pakan::findOrFail($request->pakan_id);
 
-            // Hitung selisih dari jumlah keluar sebelumnya dan sekarang
             $jumlahLama = $pakanKeluar->jumlah_keluar;
             $jumlahBaru = $request->jumlah_keluar;
             $selisih = $jumlahBaru - $jumlahLama;
 
-            // Koreksi stok pakan
             $stokBaru = $pakan->jumlah_pakan - $selisih;
 
             if ($stokBaru < 0) {
                 return redirect()->back()->with('error', 'Jumlah pakan tidak cukup setelah perubahan');
             }
 
-            // Update data pakan keluar
             $pakanKeluar->update($request->all());
-
-            // Update stok pakan
             $pakan->update(['jumlah_pakan' => $stokBaru]);
 
             return redirect()->route('index.pakan.Keluar')->with('success', 'Data Berhasil Diupdate');
@@ -118,7 +113,13 @@ class pakanKeluarController extends Controller
     public function destroy($id)
     {
         try {
-            pakanKeluar::findOrFail($id)->delete();
+            $data = pakanKeluar::findOrFail($id);
+            $pakan = Pakan::findOrFail($data->pakan_id);
+
+            // Kembalikan stok pakan yang sebelumnya keluar
+            $pakan->update(['jumlah_pakan' => $pakan->jumlah_pakan + $data->jumlah_keluar]);
+
+            $data->delete();
             return redirect()->route('index.pakan.Keluar')->with('success', 'Data Berhasil Dihapus');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', $th->getMessage());
