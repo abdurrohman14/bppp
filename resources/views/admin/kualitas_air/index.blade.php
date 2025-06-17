@@ -40,7 +40,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($air as $key => $kualitas)
+                        @foreach($air as $key => $kualitas)
                             <tr>
                                 <td class="text-start">{{ $key + 1 }}</td>
                                 <td class="text-start">{{ $kualitas->kolam->nama }}</td>
@@ -60,11 +60,11 @@
                                     </div>
                                 </td>
                             </tr>
-                        @empty
+                        {{-- @empty
                             <tr>
                                 <td colspan="7" class="text-center">Data kualitas air belum tersedia.</td>
-                            </tr>
-                        @endforelse
+                            </tr> --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>
