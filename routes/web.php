@@ -44,6 +44,9 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+// Route Public Detail Kolam
+Route::get('/detail-kolam/{id}', [KolamController::class, 'showPublic'])->name('show.public.kolam');
+
 Route::middleware(['auth', 'role:admin'])->group(function() {
     Route::get('/admin', [RoleController::class, 'admin'])->name('admin.dashboard');
 

@@ -52,7 +52,8 @@ class KolamController extends Controller
             ]);
 
             // Buat data untun QR Code
-            $qrData = route('detail.kolam', $kolam->id); // pastikan route ini ada
+            // $qrData = route('detail.kolam', $kolam->id); // pastikan route ini ada
+            $qrData = 'http://192.168.1.8:8000/detail-kolam/' . $kolam->id;
 
             $qrImageName = 'qr_kolam_' . $kolam->id . '.svg';
             $qrPath = 'qrcodes/' . $qrImageName;
@@ -131,5 +132,10 @@ class KolamController extends Controller
         } catch (\Throwable $th) {
             return redirect()->route('index.kolam')->with('error', $th->getMessage());
         }
+    }
+
+    public function showPublic($id) {
+        $kolam = Kolam::find($id);
+        return view('public.detail_kolam', compact('kolam'));
     }
 }
