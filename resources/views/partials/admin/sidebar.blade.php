@@ -150,10 +150,14 @@
                 <i class="bi bi-bar-chart-line me-2"></i>
                 Dashboard
             </a>
+<<<<<<< HEAD
             {{-- <a href="{{ route('index.manajer.lprn') }}" class="d-flex align-items-center px-3 py-2" style="font-size: 12px;">
+=======
+            <a href="{{ route('index.manajer.lprn') }}" class="d-flex align-items-center px-3 py-2" style="font-size: 12px;">
+>>>>>>> 171a468918d4207432b6593010003e6832a9a297
                 <i class="bi bi-file-earmark-pdf-fill me-2"></i>
                 Laporan
-            </a> --}}
+            </a>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit"
