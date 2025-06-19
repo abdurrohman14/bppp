@@ -3,7 +3,7 @@
 @section('content')
 <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4 content">
     <div class="card shadow border-0" style="min-height: 550px;">
-        <div class="card-header bg-primary text-white">
+        <div class="card-header">
             <h5 class="fw-bold">Data Pakan Keluar</h5>
         </div>
         <div class="card-body">

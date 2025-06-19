@@ -31,7 +31,7 @@
                             <tr>
                                 <th class="text-start">No</th>
                                 <th class="text-start">Jenis Pakan</th>
-                                <th class="text-start">Asal Pakan</th>
+                                {{-- <th class="text-start">Asal Pakan</th> --}}
                                 {{-- <th class="text-start">Ukuran Pakan</th> --}}
                                 <th class="text-start">Jumlah Pakan</th>
                                 <th class="text-start">Aksi</th>
@@ -42,7 +42,7 @@
                                 <tr>
                                     <td class="text-start">{{ $index + 1 }}</td>
                                     <td class="text-start">{{ $item->jenis_pakan }}</td>
-                                    <td class="text-start">{{ $item->asal_pakan }}</td>
+                                    {{-- <td class="text-start">{{ $item->asal_pakan }}</td> --}}
                                     {{-- <td class="text-start">{{ $item->ukuran_pakan }}</td> --}}
                                     <td class="text-start">{{ $item->jumlah_pakan }}</td>
                                     <td style="padding-left: 12px;">

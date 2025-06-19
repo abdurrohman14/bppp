@@ -59,8 +59,8 @@
                             </td>
                         </tr>
                         @empty
-                        {{-- Jika ingin tampilkan pesan kosong, bisa aktifkan baris ini --}}
-                        {{-- <tr><td colspan="7" class="text-center">Tidak ada data</td></tr> --}}
+                        Jika ingin tampilkan pesan kosong, bisa aktifkan baris ini
+                        <tr><td colspan="7" class="text-center">Tidak ada data</td></tr>
                         @endforelse
                     </tbody>
                 </table>

@@ -54,11 +54,11 @@ class KematianController extends Controller
                 ->where('tanggal_kematian', $request->tanggal_kematian)
                 ->sum('jumlah_mati');
 
-            $batasMortalitas = 3;
+            $batasMortalitas = 2;
             if ($totalHariIni > $batasMortalitas) {
                 return redirect()->route('index.kematian')
                     ->with('success', 'Data Kematian Berhasil Ditambahkan')
-                    ->with('warning', 'Peringatan: Jumlah kematian ikan melebihi batas aman (3 ekor) di hari ini.');
+                    ->with('warning', 'Peringatan: Jumlah kematian ikan melebihi batas aman (2 ekor) di hari ini.');
             }
 
             return redirect()->route('index.kematian')->with('success', 'Data Kematian Berhasil Ditambahkan');
@@ -112,7 +112,7 @@ class KematianController extends Controller
 
             $totalHariIni += $request->jumlah_mati;
 
-            $batasMortalitas = 3;
+            $batasMortalitas = 2;
             if ($totalHariIni > $batasMortalitas) {
                 return redirect()->route('index.kematian')
                     ->with('success', 'Data Kematian Berhasil Diupdate')

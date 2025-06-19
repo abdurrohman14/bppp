@@ -29,7 +29,7 @@ class JenisPController extends Controller
         try {
             $request->validate([
                 'jenis_pakan' => 'required|string|max:255',
-                'asal_pakan' => 'required|string|max:255',
+                // 'asal_pakan' => 'required|string|max:255',
                 // 'ukuran_pakan' => 'required|string|max:100',
                 'jumlah_pakan' => 'required|integer',
             ]);
@@ -62,7 +62,7 @@ class JenisPController extends Controller
         try {
             $request->validate([
                 'jenis_pakan' => 'required|string|max:255',
-                'asal_pakan' => 'required|string|max:255',
+                // 'asal_pakan' => 'required|string|max:255',
                 // 'ukuran_pakan' => 'required|string|max:100',
                 'jumlah_pakan' => 'required|integer',
             ]);

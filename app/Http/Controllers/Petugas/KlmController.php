@@ -53,6 +53,7 @@ class KlmController extends Controller
             ]);
 
             $qrData = route('detail.petugas.kolam', $kolam->id); // pastikan route ini ada
+            // $qrData = 'http://192.168.1.39:8000/detail-kolam/' . $kolam->id;
             $qrImageName = 'qr_kolam_' . $kolam->id . '.svg';
             $qrPath = 'qrcodes/' . $qrImageName;
 

@@ -16,12 +16,12 @@
                     <input type="text" name="jenis_pakan" class="form-control" value="{{ $pakan->jenis_pakan }}" required>
                 </div>
 
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label for="asal_pakan">Asal Pakan</label>
                     <input type="text" name="asal_pakan" class="form-control" value="{{ $pakan->asal_pakan }}" required>
                 </div>
 
-                {{-- <div class="mb-3">
+                <div class="mb-3">
                     <label for="ukuran_pakan">Ukuran Pakan</label>
                     <input type="text" name="ukuran_pakan" class="form-control" value="{{ $pakan->ukuran_pakan }}" required>
                 </div> --}}

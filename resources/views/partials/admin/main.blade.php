@@ -68,26 +68,26 @@
         toggleBtn.addEventListener("click", function() {
             sidebar.classList.toggle("show");
         });
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     @if (session('success'))
-        //         Swal.fire({
-        //             icon: 'success',
-        //             title: 'Berhasil',
-        //             text: '{{ session('success') }}',
-        //             confirmButtonText: 'OK',
-        //         });
-        //     @endif
+        document.addEventListener('DOMContentLoaded', function() {
+    //         @if (session('success'))
+    //             Swal.fire({
+    //                 icon: 'success',
+    //                 title: 'Berhasil',
+    //                 text: '{{ session('success') }}',
+    //                 confirmButtonText: 'OK',
+    //             });
+    //         @endif
 
-        //     @if (session('error'))
-        //         Swal.fire({
-        //             icon: 'error',
-        //             title: 'Gagal',
-        //             text: '{{ session('error') }}',
-        //             confirmButtonText: 'OK',
-        //         });
-        //     @endif
-        // });
-    </script>
+    //         @if (session('error'))
+    //             Swal.fire({
+    //                 icon: 'error',
+    //                 title: 'Gagal',
+    //                 text: '{{ session('error') }}',
+    //                 confirmButtonText: 'OK',
+    //             });
+    //         @endif
+    //     });
+    // </script>
     <script>
         $(function() {
             $("#example1").DataTable({

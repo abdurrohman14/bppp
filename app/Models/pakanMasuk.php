@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PakanMasuk extends Model
 {
     protected $fillable = [
-        'pakan_id', 'tanggal_masuk', 'jumlah_masuk'
+        'pakan_id', 'tanggal_masuk', 'jumlah_masuk',
     ];
 
     public function pakan()

@@ -116,7 +116,7 @@ class KmtnController extends Controller
             if ($totalHariIni > $batasMortalitas) {
                 return redirect()->route('index.petugas.kematian')
                     ->with('success', 'Data Kematian Berhasil Diupdate')
-                    ->with('warning', 'Peringatan: Jumlah kematian ikan melebihi batas aman (3 ekor) di hari ini.');
+                    ->with('warning', 'Peringatan: Jumlah kematian ikan melebihi batas aman (2 ekor) di hari ini.');
             }
 
             return redirect()->route('index.petugas.kematian')->with('success', 'Data Kematian Berhasil Diupdate');
