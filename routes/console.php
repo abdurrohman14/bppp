@@ -10,4 +10,4 @@ Artisan::command('inspire', function () {
 
 Schedule::command('send-pakan-reminder')->at('08:00');
 Schedule::command('send-pakan-reminder')->at('13:00');
-Schedule::command('send-pakan-reminder')->at('16:00');
+Schedule::command('send-pakan-reminder')->at('22:29');
