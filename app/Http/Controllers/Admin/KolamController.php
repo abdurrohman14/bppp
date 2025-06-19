@@ -52,8 +52,8 @@ class KolamController extends Controller
             ]);
 
             // Buat data untun QR Code
-            // $qrData = route('detail.kolam', $kolam->id); // pastikan route ini ada
-            $qrData = 'http://192.168.1.39:8000/detail-kolam/' . $kolam->id;
+            $qrData = route('detail.kolam', $kolam->id); // pastikan route ini ada
+            // $qrData = 'http://192.168.1.39:8000/detail-kolam/' . $kolam->id;
 
             $qrImageName = 'qr_kolam_' . $kolam->id . '.svg';
             $qrPath = 'qrcodes/' . $qrImageName;
